@@ -80,7 +80,6 @@ src/
     vaccineRules.js            vaccine schedule rules per species
   types/index.ts               shared types
 supabase/                      SQL for the database tables
-design/                        UI mockups and reference designs (not part of the build)
 ```
 
 ## Known limitations / next steps
