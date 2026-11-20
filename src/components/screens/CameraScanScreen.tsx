@@ -3,14 +3,15 @@ import { motion } from 'motion/react';
 import { useLanguage } from '../../context/LanguageContext';
 
 const TEXT = {
-  en: { gallery: 'Gallery', flip: 'Flip', hint: 'Please click the picture of the affected area', torch: 'Torch', done: 'Done', retake: 'Retake', reselect: 'Reselect', use: 'Use Photo', preview: 'Preview', noCam: 'Live camera unavailable — tap the shutter to open your camera app', scanning: 'Scanning' },
-  hi: { gallery: 'गैलरी', flip: 'पलटें', hint: 'कृपया प्रभावित हिस्से की तस्वीर लें', torch: 'टॉर्च', done: 'हो गया', retake: 'फिर से लें', reselect: 'फिर से चुनें', use: 'फोटो उपयोग करें', preview: 'पूर्वावलोकन', noCam: 'कैमरा उपलब्ध नहीं — डेमो व्यूफाइंडर दिख रहा है', scanning: 'स्कैन' },
-  mr: { gallery: 'गॅलरी', flip: 'फिरवा', hint: 'कृपया बाधित भागाचा फोटो घ्या', torch: 'टॉर्च', done: 'झाले', retake: 'पुन्हा घ्या', reselect: 'पुन्हा निवडा', use: 'फोटो वापरा', preview: 'पूर्वावलोकन', noCam: 'कॅमेरा उपलब्ध नाही — डेमो व्ह्यूफाइंडर दाखवत आहे', scanning: 'स्कॅन' },
+  en: { gallery: 'Gallery', flip: 'Flip', hint: 'Please click the picture of the affected area', torch: 'Torch', done: 'Analyze AI', retake: 'Retake', reselect: 'Reselect', use: 'Use Photo', preview: 'Preview', noCam: 'Live camera unavailable — tap the shutter to open your camera app', scanning: 'Scanning' },
+  hi: { gallery: 'गैलरी', flip: 'पलटें', hint: 'कृपया प्रभावित हिस्से की तस्वीर लें', torch: 'टॉर्च', done: 'एआई जांच करें', retake: 'फिर से लें', reselect: 'फिर से चुनें', use: 'फोटो उपयोग करें', preview: 'पूर्वावलोकन', noCam: 'कैमरा उपलब्ध नहीं — डेमो व्यूफाइंडर दिख रहा है', scanning: 'स्कैन' },
+  mr: { gallery: 'गॅलरी', flip: 'फिरवा', hint: 'कृपया बाधित भागाचा फोटो घ्या', torch: 'टॉर्च', done: 'एआय निदान करा', retake: 'पुन्हा घ्या', reselect: 'पुन्हा निवडा', use: 'फोटो वापरा', preview: 'पूर्वावलोकन', noCam: 'कॅमेरा उपलब्ध नाही — डेमो व्ह्यूफाइंडर दाखवत आहे', scanning: 'स्कॅन' },
 } as const;
 
 interface CameraScanScreenProps {
   /** Name of the animal being scanned (or a "new animal" label). */
   subject?: string;
+  species?: string;
   onClose: () => void;
   /** Called with the confirmed photo (data URL). */
   onUsePhoto?: (photo: string) => void;
@@ -41,13 +42,23 @@ interface PhotoConfirmScreenProps {
   secondary: 'retake' | 'reselect';
   onSecondary: () => void;
   onDone: () => void;
+  primaryLabel?: string;
+  isProcessing?: boolean;
 }
 
 /** Full-screen photo preview with a Retake/Reselect + Done action row. */
-export const PhotoConfirmScreen: React.FC<PhotoConfirmScreenProps> = ({ photo, secondary, onSecondary, onDone }) => {
+export const PhotoConfirmScreen: React.FC<PhotoConfirmScreenProps> = ({
+  photo,
+  secondary,
+  onSecondary,
+  onDone,
+  primaryLabel,
+  isProcessing,
+}) => {
   const { language } = useLanguage();
   const T = TEXT[language as 'en' | 'hi' | 'mr'] ?? TEXT.en;
   const secondaryLabel = T[secondary];
+  const mainLabel = primaryLabel || T.done;
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -72,6 +83,7 @@ export const PhotoConfirmScreen: React.FC<PhotoConfirmScreenProps> = ({ photo, s
             type="button"
             aria-label={secondaryLabel}
             whileTap={{ scale: 0.94 }}
+            disabled={isProcessing}
             onClick={onSecondary}
             className="flex-1 py-3 px-6 rounded-full border border-white/20 bg-neutral-900/80 hover:border-neutral-400 text-white font-medium text-xs tracking-wider uppercase flex items-center justify-center gap-2 transition-colors cursor-pointer"
           >
@@ -80,13 +92,18 @@ export const PhotoConfirmScreen: React.FC<PhotoConfirmScreenProps> = ({ photo, s
           </motion.button>
           <motion.button
             type="button"
-            aria-label={T.done}
+            aria-label={mainLabel}
             whileTap={{ scale: 0.94 }}
+            disabled={isProcessing}
             onClick={onDone}
             className="flex-1 py-3 px-6 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg transition-colors cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[18px]">check</span>
-            {T.done}
+            {isProcessing ? (
+              <span className="animate-spin material-symbols-outlined text-[18px]">progress_activity</span>
+            ) : (
+              <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
+            )}
+            {mainLabel}
           </motion.button>
         </div>
       </footer>

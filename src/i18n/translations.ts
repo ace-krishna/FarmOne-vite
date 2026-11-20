@@ -52,6 +52,9 @@ export const translations = {
     openingPhotoPicker: 'Opening photo picker...',
     ready: 'Ready',
     or: 'OR',
+    aiAnalyzing: 'Analyzing Animal Health...',
+    aiAnalyzingDesc: 'Evaluating visual symptoms with YOLOv8 Dual Model Engine...',
+    analyzeAI: 'Analyze with AI',
   },
 
   hi: {
@@ -99,6 +102,9 @@ export const translations = {
     openingPhotoPicker: 'फोटो पिकर खुल रहा है...',
     ready: 'तैयार',
     or: 'या',
+    aiAnalyzing: 'पशु स्वास्थ्य का विश्लेषण जारी है...',
+    aiAnalyzingDesc: 'YOLOv8 मॉडल से लक्षणों की जांच हो रही है...',
+    analyzeAI: 'एआई से विश्लेषण करें',
   },
 
   mr: {
@@ -146,6 +152,9 @@ export const translations = {
     openingPhotoPicker: 'फोटो पिकर उघडत आहे...',
     ready: 'तयार',
     or: 'किंवा',
+    aiAnalyzing: 'जनावर आरोग्याचे विश्लेषण सुरू आहे...',
+    aiAnalyzingDesc: 'YOLOv8 मॉडेलद्वारे लक्षणांची तपासणी सुरू आहे...',
+    analyzeAI: 'एआयने निदान करा',
   },
 };
 

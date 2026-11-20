@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../../context/LanguageContext';
 import { CameraScanScreen, PhotoConfirmScreen } from './CameraScanScreen';
 import { fetchAnimals, getCachedAnimals, type Animal, type Species } from '../../lib/animals';
+import { DiagnosisResultModal } from './DiagnosisResultModal';
+import { diagnoseAnimalImage, type DiagnosisResult } from '../../lib/aiDiagnosis';
 
 interface AnimalItem {
   id: string;
@@ -10,6 +12,7 @@ interface AnimalItem {
   breed: string; // shown as the species label, e.g. "Cow"
   tag: string; // e.g. "#8841", empty if the animal has no ear tag
   emoji: string;
+  species: Species;
 }
 
 const SPECIES_LABEL: Record<Species, string> = { cow: 'Cow', buffalo: 'Buffalo', goat: 'Goat', hen: 'Hen' };
@@ -21,6 +24,7 @@ const toAnimalItem = (a: Animal): AnimalItem => ({
   breed: SPECIES_LABEL[a.species],
   tag: a.ear_tag ? `#${a.ear_tag}` : '',
   emoji: SPECIES_EMOJI[a.species],
+  species: a.species,
 });
 
 const animalSubtitle = (item: AnimalItem) => (item.tag ? `${item.breed} • ${item.tag}` : item.breed);
@@ -65,6 +69,37 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
   const [cameraSubject, setCameraSubject] = useState<string | null>(null); // non-null = camera screen open
   const [selectedCameraAnimal, setSelectedCameraAnimal] = useState<string | null>(null);
   const [selectedGalleryAnimal, setSelectedGalleryAnimal] = useState<string | null>(null);
+  const [activeScanAnimal, setActiveScanAnimal] = useState<{ id: string; name: string; species: Species } | null>(null);
+
+  // AI Diagnostic Scanning & Results
+  const [isDiagnosing, setIsDiagnosing] = useState(false);
+  const [diagnosingPhoto, setDiagnosingPhoto] = useState<string | null>(null);
+  const [diagnosisResult, setDiagnosisResult] = useState<{
+    result: DiagnosisResult;
+    photo: string;
+    animalName: string;
+    species: string;
+  } | null>(null);
+
+  const handleStartDiagnosis = async (photoDataUrl: string, targetSpecies?: string, animalName?: string) => {
+    setIsDiagnosing(true);
+    setDiagnosingPhoto(photoDataUrl);
+    setCameraSubject(null);
+    setGalleryPhoto(null);
+    try {
+      const res = await diagnoseAnimalImage(photoDataUrl, targetSpecies);
+      setDiagnosisResult({
+        result: res,
+        photo: photoDataUrl,
+        animalName: animalName || (targetSpecies === 'hen' ? 'Poultry / Hen' : 'Cattle / Cow'),
+        species: targetSpecies || 'cow',
+      });
+    } catch (err) {
+      console.error('Diagnosis failed:', err);
+    } finally {
+      setIsDiagnosing(false);
+    }
+  };
 
   // Bottom dock active tab (Home = 0, Marketplace = 1, Farmer Profile = 2)
   const [activeDockIndex, setActiveDockIndex] = useState(0);
@@ -85,18 +120,20 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
 
   const handleCameraAnimalClick = (animal: AnimalItem) => {
     setSelectedCameraAnimal(animal.id);
+    setActiveScanAnimal({ id: animal.id, name: animal.name, species: animal.species });
     setTimeout(() => {
       setIsScanCameraOpen(false);
       setCameraSubject(animal.name);
-    }, 700);
+    }, 400);
   };
 
-  const handleCameraNewAnimalClick = () => {
+  const handleCameraNewAnimalClick = (species: Species = 'cow', label = 'New Cattle') => {
     setSelectedCameraAnimal('new');
+    setActiveScanAnimal({ id: 'new', name: label, species });
     setTimeout(() => {
       setIsScanCameraOpen(false);
-      setCameraSubject('New animal');
-    }, 700);
+      setCameraSubject(label);
+    }, 400);
   };
 
   // Gallery flow: pick an animal -> system photo library -> confirmation (Reselect / Done).
@@ -107,11 +144,13 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
 
   const handleGalleryAnimalClick = (animal: AnimalItem) => {
     setSelectedGalleryAnimal(animal.id);
+    setActiveScanAnimal({ id: animal.id, name: animal.name, species: animal.species });
     openGalleryPicker();
   };
 
-  const handleGalleryNewAnimalClick = () => {
+  const handleGalleryNewAnimalClick = (species: Species = 'cow', label = 'New Cattle') => {
     setSelectedGalleryAnimal('new');
+    setActiveScanAnimal({ id: 'new', name: label, species });
     openGalleryPicker();
   };
 
@@ -551,13 +590,62 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
         <PhotoConfirmScreen
           photo={galleryPhoto}
           secondary="reselect"
+          primaryLabel={t('analyzeAI')}
+          isProcessing={isDiagnosing}
           onSecondary={openGalleryPicker}
-          onDone={closeGalleryConfirm}
+          onDone={() => handleStartDiagnosis(galleryPhoto, activeScanAnimal?.species, activeScanAnimal?.name)}
         />
       )}
 
       {cameraSubject !== null && (
-        <CameraScanScreen subject={cameraSubject} onClose={() => setCameraSubject(null)} />
+        <CameraScanScreen
+          subject={cameraSubject}
+          species={activeScanAnimal?.species}
+          onClose={() => setCameraSubject(null)}
+          onUsePhoto={(photo) => handleStartDiagnosis(photo, activeScanAnimal?.species, activeScanAnimal?.name)}
+        />
+      )}
+
+      {/* Real-time AI Analysis Scanner Overlay */}
+      {isDiagnosing && diagnosingPhoto && (
+        <div className="absolute inset-0 z-[65] bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-6 text-white text-center">
+          <div className="relative w-52 h-52 rounded-3xl overflow-hidden border-2 border-emerald-400 shadow-[0_0_35px_rgba(52,211,153,0.35)] mb-6">
+            <img src={diagnosingPhoto} alt="Diagnosing" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-emerald-950/20" />
+            <motion.div
+              animate={{ y: [0, 208, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_15px_#34d399]"
+            />
+          </div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="material-symbols-outlined text-emerald-400 animate-spin text-[22px]">
+              progress_activity
+            </span>
+            <h3 className="text-[17px] font-bold text-white tracking-wide">
+              {t('aiAnalyzing')}
+            </h3>
+          </div>
+          <p className="text-[12px] text-neutral-300 max-w-[280px] leading-relaxed">
+            {t('aiAnalyzingDesc')}
+          </p>
+        </div>
+      )}
+
+      {/* Diagnosis Report Modal */}
+      {diagnosisResult && (
+        <DiagnosisResultModal
+          photo={diagnosisResult.photo}
+          initialResult={diagnosisResult.result}
+          animalName={diagnosisResult.animalName}
+          species={diagnosisResult.species}
+          onClose={() => setDiagnosisResult(null)}
+          onOpenVaccination={onOpenVaccination}
+          onScanAnother={() => {
+            setDiagnosisResult(null);
+            setIsScanCameraOpen(true);
+          }}
+        />
       )}
 
       {/* POPUP 1: Dedicated Modal for "Scan Animal Now" (Live AI Camera) */}
@@ -707,34 +795,58 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
                 <div className="flex-1 h-px bg-[#e5e7e3]" />
               </div>
 
-              {/* Scan New / Unregistered Animal Action Card */}
-              <motion.button
-                type="button"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ type: 'spring', damping: 22, stiffness: 300, delay: 0.2 + registeredLivestock.length * 0.05 }}
-                whileHover={{ y: -1 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={handleCameraNewAnimalClick}
-                className="group w-full p-2.5 px-3 rounded-2xl bg-white border border-[#e5e7e3] hover:border-[#00362a] hover:shadow-md flex items-center justify-between gap-3 text-left transition-[border-color,box-shadow] shadow-2xs cursor-pointer mb-1"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-full bg-[#b5efda] flex items-center justify-center text-[#00362a] shrink-0">
-                    <span className="material-symbols-outlined text-[22px]">add_a_photo</span>
+              {/* Scan New Animal Dual Choice Cards (Cattle & Poultry) */}
+              <div className="flex flex-col gap-2 mb-1">
+                <motion.button
+                  type="button"
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => handleCameraNewAnimalClick('cow', 'New Cattle (Cow/Buffalo/Goat)')}
+                  className="group w-full p-2.5 px-3 rounded-2xl bg-white border border-[#e5e7e3] hover:border-[#00362a] hover:shadow-md flex items-center justify-between gap-3 text-left transition-[border-color,box-shadow] shadow-2xs cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-full bg-[#b5efda] flex items-center justify-center text-[#00362a] shrink-0 text-xl">
+                      🐮
+                    </div>
+                    <div>
+                      <p className="text-[13px] font-bold text-[#191c1b]">
+                        Scan Cattle / Ruminant
+                      </p>
+                      <p className="text-[10px] text-[#707975] leading-tight mt-0.5">
+                        Detect FMD, Lumpy Skin Disease & health
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[13px] font-bold text-[#191c1b]">
-                      {t('scanNewUnregistered')}
-                    </p>
-                    <p className="text-[10px] text-[#707975] leading-tight mt-0.5">
-                      {t('scanNewDesc')}
-                    </p>
+                  <span className="material-symbols-outlined text-[#191c1b] text-[18px] transition-transform duration-200 group-hover:translate-x-1">
+                    arrow_forward
+                  </span>
+                </motion.button>
+
+                <motion.button
+                  type="button"
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => handleCameraNewAnimalClick('hen', 'New Poultry (Hen/Chicken)')}
+                  className="group w-full p-2.5 px-3 rounded-2xl bg-white border border-[#e5e7e3] hover:border-[#00362a] hover:shadow-md flex items-center justify-between gap-3 text-left transition-[border-color,box-shadow] shadow-2xs cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-full bg-amber-100 flex items-center justify-center text-amber-900 shrink-0 text-xl">
+                      🐔
+                    </div>
+                    <div>
+                      <p className="text-[13px] font-bold text-[#191c1b]">
+                        Scan Poultry / Hen
+                      </p>
+                      <p className="text-[10px] text-[#707975] leading-tight mt-0.5">
+                        Detect Bumblefoot, Fowlpox, Coryza, CRD
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <span className="material-symbols-outlined text-[#191c1b] text-[18px] transition-transform duration-200 group-hover:translate-x-1">
-                  arrow_forward
-                </span>
-              </motion.button>
+                  <span className="material-symbols-outlined text-[#191c1b] text-[18px] transition-transform duration-200 group-hover:translate-x-1">
+                    arrow_forward
+                  </span>
+                </motion.button>
+              </div>
             </motion.div>
           </div>
         )}
@@ -840,31 +952,54 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
                   </span>
                 </div>
 
-                {/* Upload for New / Unregistered Animal Action */}
-                <button
-                  type="button"
-                  onClick={handleGalleryNewAnimalClick}
-                  className="w-full p-2.5 rounded-full bg-white border border-dashed border-[#00362a]/50 hover:border-[#00362a] hover:bg-[#b5efda]/20 flex items-center justify-between gap-2.5 text-left transition-all group active:scale-[0.99] shadow-2xs cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-full bg-[#b5efda] flex items-center justify-center text-[#00362a] shrink-0 shadow-inner">
-                      <span className="material-symbols-outlined text-[18px]">
-                        drive_folder_upload
-                      </span>
+                {/* Upload for New Cattle or Poultry Actions */}
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleGalleryNewAnimalClick('cow', 'New Cattle (Cow/Buffalo/Goat)')}
+                    className="w-full p-2.5 rounded-2xl bg-white border border-dashed border-[#00362a]/50 hover:border-[#00362a] hover:bg-[#b5efda]/20 flex items-center justify-between gap-2.5 text-left transition-all group active:scale-[0.99] shadow-2xs cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-full bg-[#b5efda] flex items-center justify-center text-[#00362a] shrink-0 shadow-inner text-lg">
+                        🐮
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-bold text-[#191c1b]">
+                          Upload Cattle Image (Cow / Buffalo / Goat)
+                        </p>
+                        <p className="text-[9px] text-[#404945]">
+                          Run Cattle YOLOv8 Model (FMD, Lumpy, Healthy)
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[11px] font-bold text-[#191c1b]">
-                        {t('uploadNewUnregistered')}
-                      </p>
-                      <p className="text-[9px] text-[#404945]">
-                        {t('uploadNewDesc')}
-                      </p>
+                    <span className="material-symbols-outlined text-[#00362a] text-[16px] group-hover:translate-x-0.5 transition-transform pr-1">
+                      arrow_forward
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleGalleryNewAnimalClick('hen', 'New Poultry (Hen/Chicken)')}
+                    className="w-full p-2.5 rounded-2xl bg-white border border-dashed border-amber-600/50 hover:border-amber-700 hover:bg-amber-50 flex items-center justify-between gap-2.5 text-left transition-all group active:scale-[0.99] shadow-2xs cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center text-amber-900 shrink-0 shadow-inner text-lg">
+                        🐔
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-bold text-[#191c1b]">
+                          Upload Poultry Image (Hen / Chicken)
+                        </p>
+                        <p className="text-[9px] text-[#404945]">
+                          Run Poultry YOLOv8 Model (Bumblefoot, Fowlpox, Coryza, CRD)
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <span className="material-symbols-outlined text-[#00362a] text-[16px] group-hover:translate-x-0.5 transition-transform pr-1">
-                    arrow_forward
-                  </span>
-                </button>
+                    <span className="material-symbols-outlined text-amber-800 text-[16px] group-hover:translate-x-0.5 transition-transform pr-1">
+                      arrow_forward
+                    </span>
+                  </button>
+                </div>
               </div>
             </motion.div>
           </div>

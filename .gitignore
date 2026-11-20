@@ -12,3 +12,6 @@ node_modules/.vite/
 *.pem
 *.key
 design/
+.venv/
+__pycache__/
+*.pyc
