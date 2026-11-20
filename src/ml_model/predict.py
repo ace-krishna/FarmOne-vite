@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
 Prediction script and micro-service for FarmOne ML models.
-Handles both Cattle (cattle_best.pt) and Poultry (poultry_best.pt) models.
+Handles both Cattle (cattle_best.pt / cattle_best.onnx)
+and Poultry (poultry_best.pt / poultry_best.onnx) models.
+
+Supports both Ultralytics YOLO (PyTorch) and ONNX Runtime backends
+for cross-platform reliability on Windows, Linux, and macOS.
 """
 
 import sys
@@ -9,30 +13,73 @@ import os
 import json
 import base64
 import io
+import time
 from pathlib import Path
 from PIL import Image
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-CATTLE_MODEL_PATH = SCRIPT_DIR / "cattle_best.pt"
-POULTRY_MODEL_PATH = SCRIPT_DIR / "poultry_best.pt"
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
+
+CATTLE_PT_PATH = SCRIPT_DIR / "cattle_best.pt"
+POULTRY_PT_PATH = SCRIPT_DIR / "poultry_best.pt"
+
+# Find ONNX models in src/ml_model or public/models
+CATTLE_ONNX_PATH = SCRIPT_DIR / "cattle_best.onnx"
+if not CATTLE_ONNX_PATH.exists():
+    CATTLE_ONNX_PATH = PROJECT_ROOT / "public" / "models" / "cattle_best.onnx"
+
+POULTRY_ONNX_PATH = SCRIPT_DIR / "poultry_best.onnx"
+if not POULTRY_ONNX_PATH.exists():
+    POULTRY_ONNX_PATH = PROJECT_ROOT / "public" / "models" / "poultry_best.onnx"
+
+CATTLE_CLASSES = {0: "foot-and-mouth", 1: "healthy", 2: "lumpy"}
+POULTRY_CLASSES = {0: "Bumblefoot", 1: "Fowlpox", 2: "Healthy", 3: "coryza", 4: "crd"}
 
 # Cache models in memory
 _cattle_model = None
 _poultry_model = None
+_cattle_backend = None  # 'yolo' or 'onnx'
+_poultry_backend = None
 
 def get_cattle_model():
-    global _cattle_model
+    global _cattle_model, _cattle_backend
     if _cattle_model is None:
-        from ultralytics import YOLO
-        _cattle_model = YOLO(str(CATTLE_MODEL_PATH))
-    return _cattle_model
+        try:
+            if CATTLE_PT_PATH.exists():
+                from ultralytics import YOLO
+                _cattle_model = YOLO(str(CATTLE_PT_PATH))
+                _cattle_backend = "yolo"
+        except Exception:
+            pass
+
+        if _cattle_model is None and CATTLE_ONNX_PATH.exists():
+            import onnxruntime as ort
+            _cattle_model = ort.InferenceSession(str(CATTLE_ONNX_PATH))
+            _cattle_backend = "onnx"
+
+        if _cattle_model is None:
+            raise RuntimeError(f"Could not load cattle model from {CATTLE_PT_PATH} or {CATTLE_ONNX_PATH}")
+    return _cattle_model, _cattle_backend
 
 def get_poultry_model():
-    global _poultry_model
+    global _poultry_model, _poultry_backend
     if _poultry_model is None:
-        from ultralytics import YOLO
-        _poultry_model = YOLO(str(POULTRY_MODEL_PATH))
-    return _poultry_model
+        try:
+            if POULTRY_PT_PATH.exists():
+                from ultralytics import YOLO
+                _poultry_model = YOLO(str(POULTRY_PT_PATH))
+                _poultry_backend = "yolo"
+        except Exception:
+            pass
+
+        if _poultry_model is None and POULTRY_ONNX_PATH.exists():
+            import onnxruntime as ort
+            _poultry_model = ort.InferenceSession(str(POULTRY_ONNX_PATH))
+            _poultry_backend = "onnx"
+
+        if _poultry_model is None:
+            raise RuntimeError(f"Could not load poultry model from {POULTRY_PT_PATH} or {POULTRY_ONNX_PATH}")
+    return _poultry_model, _poultry_backend
 
 DISEASE_METADATA = {
     # Cattle diseases
@@ -190,6 +237,24 @@ def decode_image(data_str: str) -> Image.Image:
     raw = base64.b64decode(data_str)
     return Image.open(io.BytesIO(raw)).convert("RGB")
 
+def preprocess_for_onnx(pil_img: Image.Image):
+    """YOLOv8 classification standard preprocessing: Resize(224) + CenterCrop(224)"""
+    import numpy as np
+    w, h = pil_img.size
+    if w < h:
+        new_w = 224
+        new_h = int(round(h * 224 / w))
+    else:
+        new_h = 224
+        new_w = int(round(w * 224 / h))
+    resized = pil_img.resize((new_w, new_h), Image.BILINEAR)
+    left = (new_w - 224) // 2
+    top = (new_h - 224) // 2
+    cropped = resized.crop((left, top, left + 224, top + 224))
+    arr = np.array(cropped).astype(np.float32) / 255.0
+    arr = np.transpose(arr, (2, 0, 1))
+    return np.expand_dims(arr, axis=0)
+
 def predict(image_input, species: str = None, model_name: str = None):
     # Route model
     is_poultry = (
@@ -198,7 +263,7 @@ def predict(image_input, species: str = None, model_name: str = None):
     )
 
     selected_model_type = "poultry" if is_poultry else "cattle"
-    model = get_poultry_model() if is_poultry else get_cattle_model()
+    model, backend = get_poultry_model() if is_poultry else get_cattle_model()
 
     if isinstance(image_input, str):
         if image_input.startswith("data:image") or len(image_input) > 500:
@@ -208,16 +273,44 @@ def predict(image_input, species: str = None, model_name: str = None):
     else:
         pil_img = image_input
 
-    results = model(pil_img, imgsz=224, verbose=False)
-    probs_obj = results[0].probs
-    top1_idx = int(probs_obj.top1)
-    confidence = float(probs_obj.top1conf)
-    names = model.names
-    condition_key = names[top1_idx]
+    if backend == "onnx":
+        import numpy as np
+        t0 = time.perf_counter()
+        inp = preprocess_for_onnx(pil_img)
+        input_name = model.get_inputs()[0].name
+        raw = model.run(None, {input_name: inp})[0][0]
 
-    all_probs = {}
-    for idx, name in names.items():
-        all_probs[name] = round(float(probs_obj.data[idx]), 4)
+        # Apply softmax only if not already normalized probabilities
+        s = float(np.sum(raw))
+        if abs(s - 1.0) > 0.05:
+            e_x = np.exp(raw - np.max(raw))
+            probs = e_x / np.sum(e_x)
+        else:
+            probs = raw
+
+        top1_idx = int(np.argmax(probs))
+        confidence = float(probs[top1_idx])
+        names = POULTRY_CLASSES if is_poultry else CATTLE_CLASSES
+        condition_key = names[top1_idx]
+
+        all_probs = {}
+        for idx, name in names.items():
+            all_probs[name] = round(float(probs[idx]), 4)
+
+        elapsed_ms = (time.perf_counter() - t0) * 1000
+        speed_info = {"inference": round(elapsed_ms, 2)}
+    else:
+        results = model(pil_img, imgsz=224, verbose=False)
+        probs_obj = results[0].probs
+        top1_idx = int(probs_obj.top1)
+        confidence = float(probs_obj.top1conf)
+        names = model.names
+        condition_key = names[top1_idx]
+
+        all_probs = {}
+        for idx, name in names.items():
+            all_probs[name] = round(float(probs_obj.data[idx]), 4)
+        speed_info = results[0].speed
 
     is_healthy = condition_key.lower() == "healthy"
     meta = DISEASE_METADATA.get(condition_key, {
@@ -239,7 +332,8 @@ def predict(image_input, species: str = None, model_name: str = None):
         "symptoms": meta["symptoms"],
         "action": meta["action"],
         "probabilities": all_probs,
-        "timestamp": results[0].speed
+        "backend": backend,
+        "timestamp": speed_info
     }
 
 if __name__ == "__main__":
@@ -261,13 +355,13 @@ if __name__ == "__main__":
                     self.send_header("Content-Type", "application/json")
                     self.send_header("Access-Control-Allow-Origin", "*")
                     self.end_headers()
-                    self.wfile.write(json.dumps({"status": "ok", "models": ["cattle_best.pt", "poultry_best.pt"]}).encode())
+                    self.wfile.write(json.dumps({"status": "ok", "models": ["cattle", "poultry"]}).encode())
                 else:
                     self.send_response(404)
                     self.end_headers()
 
             def do_POST(self):
-                if self.path == "/predict" or self.path == "/api/diagnose":
+                if self.path in ("/predict", "/api/diagnose"):
                     content_length = int(self.headers.get("Content-Length", 0))
                     post_data = self.rfile.read(content_length)
                     try:

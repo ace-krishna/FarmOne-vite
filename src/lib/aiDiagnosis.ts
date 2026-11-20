@@ -3,6 +3,8 @@
  * Injects and coordinates:
  * 1. cattle_best.pt / cattle_best.onnx (YOLOv8n-cls for Cattle: Foot-and-mouth, Healthy, Lumpy)
  * 2. poultry_best.pt / poultry_best.onnx (YOLOv8n-cls for Poultry: Bumblefoot, Fowlpox, Healthy, Coryza, CRD)
+ *
+ * Designed for reliable cross-platform operation across Linux, Windows, macOS, and mobile Android browsers.
  */
 
 export type AnimalModelType = 'cattle' | 'poultry';
@@ -199,7 +201,11 @@ export function getModelForSpecies(species?: string | null): AnimalModelType {
   return 'cattle';
 }
 
-/** Preprocess an image DataURL into [1, 3, 224, 224] Float32Array RGB normalized to 0..1 */
+/**
+ * Preprocess an image DataURL into [1, 3, 224, 224] Float32Array RGB normalized to 0..1.
+ * Uses center-crop preserving aspect ratio to match YOLOv8-cls Resize(224) + CenterCrop(224).
+ * This prevents distortions on camera and smartphone aspect ratios.
+ */
 async function preprocessImageData(dataUrl: string): Promise<Float32Array> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -211,7 +217,24 @@ async function preprocessImageData(dataUrl: string): Promise<Float32Array> {
       const ctx = canvas.getContext('2d');
       if (!ctx) return reject(new Error('Canvas 2D context unavailable'));
 
-      ctx.drawImage(img, 0, 0, 224, 224);
+      const w = img.naturalWidth || img.width;
+      const h = img.naturalHeight || img.height;
+
+      // Center crop preserving aspect ratio
+      let sx = 0;
+      let sy = 0;
+      let sWidth = w;
+      let sHeight = h;
+
+      if (w > h) {
+        sWidth = h;
+        sx = Math.floor((w - h) / 2);
+      } else if (h > w) {
+        sHeight = w;
+        sy = Math.floor((h - w) / 2);
+      }
+
+      ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, 224, 224);
       const imgData = ctx.getImageData(0, 0, 224, 224);
       const { data } = imgData;
 
@@ -231,7 +254,7 @@ async function preprocessImageData(dataUrl: string): Promise<Float32Array> {
 
       resolve(floatArr);
     };
-    img.onerror = (e) => reject(new Error('Failed to load image for model preprocessing'));
+    img.onerror = () => reject(new Error('Failed to load image for model preprocessing'));
     img.src = dataUrl;
   });
 }
@@ -240,24 +263,68 @@ async function preprocessImageData(dataUrl: string): Promise<Float32Array> {
 let ortModule: any = null;
 const sessionCache: Partial<Record<AnimalModelType, any>> = {};
 
-async function runClientOnnx(dataUrl: string, modelType: AnimalModelType, species: string): Promise<DiagnosisResult> {
+async function initOrt(): Promise<any> {
   if (!ortModule) {
     ortModule = await import('onnxruntime-web');
-    // Configure wasm paths
+
+    // Single-thread avoids SharedArrayBuffer / COOP requirement on Android mobile browsers
     ortModule.env.wasm.numThreads = 1;
     ortModule.env.wasm.simd = true;
+
+    // Check if wasm is served locally, else use CDN
+    try {
+      const res = await fetch('/ort-wasm-simd-threaded.wasm', { method: 'HEAD' });
+      if (res.ok) {
+        ortModule.env.wasm.wasmPaths = '/';
+      } else {
+        const wasmRes = await fetch('/wasm/ort-wasm-simd-threaded.wasm', { method: 'HEAD' });
+        if (wasmRes.ok) {
+          ortModule.env.wasm.wasmPaths = '/wasm/';
+        } else {
+          ortModule.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/';
+        }
+      }
+    } catch {
+      ortModule.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/';
+    }
+  }
+  return ortModule;
+}
+
+async function getSession(modelType: AnimalModelType): Promise<any> {
+  if (sessionCache[modelType]) {
+    return sessionCache[modelType];
   }
 
-  if (!sessionCache[modelType]) {
-    const modelUrl = modelType === 'poultry' ? '/models/poultry_best.onnx' : '/models/cattle_best.onnx';
-    sessionCache[modelType] = await ortModule.InferenceSession.create(modelUrl, {
+  const ort = await initOrt();
+  const modelUrl = modelType === 'poultry' ? '/models/poultry_best.onnx' : '/models/cattle_best.onnx';
+
+  try {
+    sessionCache[modelType] = await ort.InferenceSession.create(modelUrl, {
       executionProviders: ['wasm'],
     });
+  } catch (err) {
+    // If SIMD fails on an older mobile Android browser, try without SIMD
+    console.warn('WASM initialization failed, attempting fallback...', err);
+    if (ort.env.wasm.simd) {
+      ort.env.wasm.simd = false;
+      sessionCache[modelType] = await ort.InferenceSession.create(modelUrl, {
+        executionProviders: ['wasm'],
+      });
+    } else {
+      throw err;
+    }
   }
 
-  const session = sessionCache[modelType];
+  return sessionCache[modelType];
+}
+
+async function runClientOnnx(dataUrl: string, modelType: AnimalModelType, species: string): Promise<DiagnosisResult> {
+  const ort = await initOrt();
+  const session = await getSession(modelType);
+
   const inputTensorData = await preprocessImageData(dataUrl);
-  const inputTensor = new ortModule.Tensor('float32', inputTensorData, [1, 3, 224, 224]);
+  const inputTensor = new ort.Tensor('float32', inputTensorData, [1, 3, 224, 224]);
 
   const feeds = { [session.inputNames[0]]: inputTensor };
   const results = await session.run(feeds);
@@ -266,11 +333,10 @@ async function runClientOnnx(dataUrl: string, modelType: AnimalModelType, specie
 
   const classNames = modelType === 'poultry' ? POULTRY_CLASSES : CATTLE_CLASSES;
 
-  // Apply softmax if needed
+  // Apply softmax only if raw logits are returned
   let probs = Array.from(outputData);
   const sum = probs.reduce((a, b) => a + b, 0);
-  if (Math.abs(sum - 1.0) > 0.1) {
-    // raw logits -> softmax
+  if (Math.abs(sum - 1.0) > 0.05) {
     const maxVal = Math.max(...probs);
     const exp = probs.map(v => Math.exp(v - maxVal));
     const expSum = exp.reduce((a, b) => a + b, 0);
@@ -319,7 +385,6 @@ async function runClientOnnx(dataUrl: string, modelType: AnimalModelType, specie
 /** Client fallback with realistic clinical analysis */
 function runClientFallback(modelType: AnimalModelType, species: string): DiagnosisResult {
   const classNames = modelType === 'poultry' ? POULTRY_CLASSES : CATTLE_CLASSES;
-  // Pick healthy by default or balanced probability
   const conditionKey = modelType === 'poultry' ? 'Healthy' : 'healthy';
   const meta = DISEASE_CATALOG[conditionKey];
 
@@ -346,9 +411,9 @@ function runClientFallback(modelType: AnimalModelType, species: string): Diagnos
 
 /**
  * Main diagnose function:
- * 1. Tries Server PyTorch API (/api/diagnose)
- * 2. If server fails or offline, runs in-browser ONNX WebAssembly (/models/*.onnx)
- * 3. Gracefully falls back if WebAssembly is not available
+ * 1. Tries Server Python ML API (/api/diagnose) - works on Linux and Windows dev servers
+ * 2. If server fails or unavailable (e.g. Android mobile device or static deployment), runs in-browser ONNX WebAssembly
+ * 3. Gracefully falls back only if neither is reachable
  */
 export async function diagnoseAnimalImage(
   imageDataUrl: string,
