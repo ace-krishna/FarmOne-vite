@@ -75,7 +75,6 @@ function mlInferencePlugin(): Plugin {
             const scriptPath = path.join(rootDir, 'src', 'ml_model', 'predict.py');
 
             const proc = spawn(pythonExecutable, [scriptPath], {
-              shell: process.platform === 'win32',
               windowsHide: true,
             });
 
