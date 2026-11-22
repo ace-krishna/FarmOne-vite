@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: apply in six steps</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:2900px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">FARM SETUP · DAIRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:55%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#DDF4EA;color:#0F6B50;border-radius:6px;padding:4px 8px">APPLY</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">DAIRY</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Apply in six steps, in the right order</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">The order matters more than anything else. Buy first, and you can lose the subsidy.</div>
+<div style="display:flex;align-items:center;gap:10px;border-top:1px solid #DCDACF;margin-top:6px;padding-top:14px">
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #123B2C; color: #E5F27A; display: none; align-items: center; justify-content: center; font: 700 14px Inter,sans-serif">F1</span>
+<span style="display:flex;flex-direction:column;font:500 13px Inter,sans-serif;color:#44504A"><span style="font-weight:700;color:#1A1F1B">Farm One editors</span><span>6 min read · Based on the Government Dairy Subsidies Directory</span></span>
+</div>
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#DDF4EA;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<g stroke="#0F6B50" stroke-width="3" stroke-linecap="round"><path d="M60 100h40M140 100h40M220 100h40M300 100h40"></path></g>
+<g fill="#FFFFFF" stroke="#0F6B50" stroke-width="3"><circle cx="40" cy="100" r="22"></circle><circle cx="120" cy="100" r="22"></circle><circle cx="200" cy="100" r="22"></circle><circle cx="280" cy="100" r="22"></circle><circle cx="355" cy="100" r="22"></circle></g>
+<g font-family="Inter,sans-serif" font-weight="700" font-size="18" fill="#0F6B50" text-anchor="middle"><text x="40" y="106">1</text><text x="120" y="106">2</text><text x="200" y="106">3</text><text x="280" y="106">4</text><text x="355" y="106">5</text></g>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Government subsidies are paid <em>after</em> you buy, and only if the department has approved the purchase first. That one idea explains the whole process.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Walk through it</h2>
+<p style="margin:0">Tap Next to move step by step.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">TRY IT · STEP GUIDE</div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="6">
+<button type="button" aria-label="{{d.aria}}" onClick="{{d.pick}}" style="flex:1;min-height:44px;border:0;background:transparent;padding:0;display:flex;align-items:center"><span style="width:100%;height:8px;border-radius:4px;background:{{d.bg}}"></span></button>
+</sc-for>
+</div>
+<div style="background:{{tint}};border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.1em;color:{{ink}}">STEP {{n}} OF 6</div>
+<div style="font:700 24px 'Source Serif 4',Georgia,serif;line-height:1.2;color:{{ink}}">{{title}}</div>
+<div style="font:400 15px Inter,sans-serif;line-height:1.55;color:#1A1F1B">{{body}}</div>
+<div style="font:600 13px Inter,sans-serif;color:{{ink}}">{{who}}</div>
+</div>
+<div style="display:flex;gap:10px">
+<button type="button" onClick="{{onPrev}}" style="flex:1;min-height:48px;border:1px solid #DCDACF;background:#FFFFFF;border-radius:999px;font:600 14px Inter,sans-serif;color:#1A1F1B;opacity:{{prevOp}}">Back</button>
+<button type="button" onClick="{{onNext}}" style="flex:2;min-height:48px;border:0;background:#123B2C;border-radius:999px;font:600 14px Inter,sans-serif;color:#FFFFFF;opacity:{{nextOp}}">{{nextLabel}}</button>
+</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #A3173F;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“Do not buy cattle or equipment before you receive the Pre-Sanction Order.”</div>
+<p style="margin:0">This is the rule that costs farmers the most money. If you buy first, the department has nothing to inspect and nothing to approve. Wait for the letter, then go shopping.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Where do you register?</h2>
+<p style="margin:0">It depends on the scheme. Pick one.</p>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="display:flex;gap:6px;background:#F2F0E6;border-radius:999px;padding:4px">
+<button type="button" aria-pressed="{{cOn}}" onClick="{{pickC}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{cBg}};color:{{cFg}};font:600 13px Inter,sans-serif">Central</button>
+<button type="button" aria-pressed="{{mOn}}" onClick="{{pickM}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{mBg}};color:{{mFg}};font:600 13px Inter,sans-serif">Maharashtra</button>
+</div>
+<sc-for list="{{portals}}" as="p" hint-placeholder-count="3">
+<div style="background:#F2F0E6;border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px"><div style="font:700 14px Inter,sans-serif">{{p.name}}</div><div style="font:500 13px Inter,sans-serif;color:#1F4E9A">{{p.site}}</div></div>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Keep these ready</h2>
+<p style="margin:0">Most delays come from one missing paper. Tick off what you already have.</p>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;font-family:Inter,sans-serif">
+<div style="display:flex;align-items:center;justify-content:space-between"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5C6862">DOCUMENTS · {{docDone}} OF 6</div><div style="font:700 14px Inter,sans-serif;color:#0F6B50">{{docPct}}%</div></div>
+<div style="height:8px;border-radius:4px;background:#E7E5DA;overflow:hidden"><div style="width:{{docPct}}%;height:100%;background:#0F6B50"></div></div>
+<sc-for list="{{docs}}" as="d" hint-placeholder-count="6">
+<button type="button" aria-pressed="{{d.on}}" onClick="{{d.toggle}}" style="min-height:52px;border:0;background:transparent;display:flex;align-items:center;gap:12px;text-align:left;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #123B2C;background:{{d.bg}};color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{d.mark}}</span>{{d.label}}</button>
+</sc-for>
+<div style="font:600 14px Inter,sans-serif;color:{{docInk}};padding-top:6px">{{docMsg}}</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">What goes in your project report?</h2>
+<p style="margin:0">The report is called a DPR. It is simply your farm plan on paper. It should say:</p>
+</div>
+<div style="margin:14px 16px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div style="background:#FFE2D3;border-radius:18px;padding:14px;font:600 15px Inter,sans-serif;line-height:1.35">How many animals (for example, 10 cows)</div>
+<div style="background:#DDEBFF;border-radius:18px;padding:14px;font:600 15px Inter,sans-serif;line-height:1.35">The shed design</div>
+<div style="background:#FFF2D0;border-radius:18px;padding:14px;font:600 15px Inter,sans-serif;line-height:1.35">Machinery and its cost</div>
+<div style="background:#DDF4EA;border-radius:18px;padding:14px;font:600 15px Inter,sans-serif;line-height:1.35">Your fodder plan and the money you expect</div>
+</div>
+
+<div style="margin:28px 16px 0;background:#E5F27A;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:10px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#123B2C">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.5;display:flex;flex-direction:column;gap:6px">
+<li>Plan, papers, register, wait, buy, then receive the subsidy.</li>
+<li>Do not buy before the Pre-Sanction Order.</li>
+<li>An officer will inspect and geo-tag what you bought.</li>
+<li>The subsidy goes to your Aadhaar-linked bank account.</li>
+</ul>
+</div>
+
+<div style="margin:16px 16px 0;background:#E1F0F3;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div>
+<div style="font-weight:700;font-size:21px;line-height:1.25">What will you really get?</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#44504A">Try the subsidy calculator with your own numbers.</div>
+</div>
+
+<div style="padding:22px 22px 40px;font:400 13px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Government Subsidies Directory for Dairy Farming in India, section on how to apply.</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2900}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const step = s.step === undefined ? 0 : s.step;
+const lvl = s.lvl || 'c';
+const dd = s.docs || [false, false, false, false, false, false];
+const steps = [
+ { t: 'Prepare your project report', b: 'Write down your herd size, shed design, machinery cost, fodder plan and the money you expect. Banks and departments will ask for this first.', w: 'Who acts: you', tint: '#FFE2D3', ink: '#A04000' },
+ { t: 'Collect your papers', b: 'Keep your 7/12 land extract or a registered lease, Aadhaar, PAN, passport photos and bank passbook ready.', w: 'Who acts: you', tint: '#FFF2D0', ink: '#7A4E00' },
+ { t: 'Register online', b: 'Central schemes such as AHIDF and NLM: apply on udyamimitra.in. Maharashtra schemes: register on ah.mahabms.com or mahadbt.maharashtra.gov.in.', w: 'Who acts: you, on the portal', tint: '#DDEBFF', ink: '#1F4E9A' },
+ { t: 'Wait for the Pre-Sanction Order', b: 'Wait for the official approval from the bank or the department, or for your name in the lottery. Do not buy any animals or equipment yet.', w: 'Who acts: the department or bank', tint: '#FFDDE5', ink: '#A3173F' },
+ { t: 'Buy, then get it inspected', b: 'Buy animals or machines only from registered or empanelled sellers. The Talathi or Veterinary Officer will inspect and geo-tag what you bought.', w: 'Who acts: you, then the officer', tint: '#DDF4EA', ink: '#0F6B50' },
+ { t: 'Receive your subsidy', b: 'After the physical check, the subsidy is sent straight to your Aadhaar-linked bank account, or to your loan account.', w: 'Who acts: the government (DBT)', tint: '#EADDFB', ink: '#5B2E91' }
+];
+const cur = steps[step];
+const portals = lvl === 'c'
+ ? [{ name: 'AHIDF', site: 'ahidf.udyamimitra.in' }, { name: 'National Livestock Mission', site: 'nlm.udyamimitra.in' }, { name: 'Rashtriya Gokul Mission', site: 'dahd.nic.in' }]
+ : [{ name: 'MahaBMS: animals, sheds', site: 'ah.mahabms.com' }, { name: 'MahaDBT: fodder, machines', site: 'mahadbt.maharashtra.gov.in' }, { name: 'Dairy Entrepreneurship scheme', site: 'dahd.maharashtra.gov.in' }];
+const labels = ['Project report (DPR)', '7/12 extract or registered lease', 'Aadhaar card', 'PAN card', 'Passport photos', 'Bank passbook'];
+const done = dd.filter(Boolean).length;
+const pct = Math.round(done * 100 / 6);
+return {
+ dots: steps.map((x, i) => ({ aria: 'Go to step ' + (i + 1), bg: i <= step ? '#0F6B50' : '#E7E5DA', pick: () => this.setState({ step: i }) })),
+ n: step + 1, title: cur.t, body: cur.b, who: cur.w, tint: cur.tint, ink: cur.ink,
+ onPrev: () => this.setState({ step: Math.max(0, step - 1) }),
+ onNext: () => this.setState({ step: step === 5 ? 0 : step + 1 }),
+ prevOp: step === 0 ? 0.4 : 1,
+ nextOp: 1,
+ nextLabel: step === 5 ? 'Start again' : 'Next',
+ cOn: lvl === 'c', mOn: lvl === 'm',
+ cBg: lvl === 'c' ? '#123B2C' : 'transparent', cFg: lvl === 'c' ? '#FFFFFF' : '#1A1F1B',
+ mBg: lvl === 'm' ? '#123B2C' : 'transparent', mFg: lvl === 'm' ? '#FFFFFF' : '#1A1F1B',
+ pickC: () => this.setState({ lvl: 'c' }), pickM: () => this.setState({ lvl: 'm' }),
+ portals: portals,
+ docs: labels.map((t, i) => ({ label: t, on: dd[i], bg: dd[i] ? '#123B2C' : '#FFFFFF', mark: dd[i] ? '✓' : '', toggle: () => { const n = dd.slice(); n[i] = !n[i]; this.setState({ docs: n }); } })),
+ docDone: done, docPct: pct,
+ docMsg: done === 6 ? 'You are ready to register.' : (done === 0 ? 'Tick what you already have.' : (6 - done) + ' more to collect.'),
+ docInk: done === 6 ? '#0F6B50' : '#44504A'
+};
+}
+}
+</script>
+</body>
+</html>

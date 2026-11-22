@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: water</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:2500px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">I-LEARNING</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:55%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#DDEBFF;color:#1F4E9A;border-radius:6px;padding:4px 8px">WATER</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">MORE MILK</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Water is the cheapest feed you are not measuring</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">Milk is mostly water. A cow that cannot drink enough cannot make enough.</div>
+<div style="display: flex; align-items: flex-start; gap: 10px; border-top: 1px solid #DCDACF; margin-top: 6px; padding-top: 14px; font-family: DM Sans, sans-serif; color: #1A1F1B; position: static; justify-content: flex-start">
+<span style="width:40px;height:40px;border-radius:50%;background:#123B2C;color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">F1</span>
+<span style="display: flex; flex-direction: column; font: 500 13px Inter,sans-serif; color: #44504A"><span style="font-weight:700;color:#1A1F1B">Farm One editors</span><span>5 min read · reviewed by [Vet reviewer name]</span></span>
+</div>
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#DDEBFF;position:relative;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<path d="M0 120c40-16 80 16 120 0s80-16 120 0 80 16 150 0V190H0z" fill="#9CC3F2"></path>
+<path d="M0 145c40-14 80 14 120 0s80-14 120 0 80 14 150 0V190H0z" fill="#5E9BE6"></path>
+<path d="M195 22c26 34 40 54 40 74a40 40 0 0 1-80 0c0-20 14-40 40-74z" fill="#FFFFFF" opacity="0.95"></path>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">A litre of milk is close to nine-tenths water. Where does the cow get it? From the trough, mostly.</p>
+<p style="margin:0">The guide puts the need at <strong>4 to 5 litres of water for every litre of milk</strong>. A cow giving 12 litres a day should be drinking something like 48 to 60 litres. Most farmers never check.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Do the sum for your herd</h2>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#1F4E9A">TRY IT · DAILY WATER CALCULATOR</div>
+<div style="display:flex;align-items:center;justify-content:space-between;background:#F2F0E6;border-radius:16px;padding:6px">
+<button type="button" aria-label="Less milk" onClick="{{down}}" style="width:48px;height:48px;border:0;border-radius:12px;background:#FFFFFF;font:600 24px Inter,sans-serif;color:#1A1F1B">−</button>
+<div style="text-align:center"><div style="font:700 30px Inter,sans-serif">{{yld}} L</div><div style="font:500 12px Inter,sans-serif;color:#44504A">milk per cow per day</div></div>
+<button type="button" aria-label="More milk" onClick="{{up}}" style="width:48px;height:48px;border:0;border-radius:12px;background:#FFFFFF;font:600 24px Inter,sans-serif;color:#1A1F1B">+</button>
+</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{herds}}" as="h" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{h.on}}" onClick="{{h.pick}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{h.bg}};color:{{h.fg}};font:600 14px Inter,sans-serif">{{h.label}}</button>
+</sc-for>
+</div>
+<div style="background:#DDEBFF;border-radius:18px;padding:16px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.1em;color:#1F4E9A">DRINKING WATER PER DAY</div>
+<div style="font:700 34px Inter,sans-serif;margin-top:4px">{{low}} to {{high}} L</div>
+<div style="display:flex;gap:2px;margin-top:10px;flex-wrap:wrap">
+<sc-for list="{{drops}}" as="d" hint-placeholder-count="12"><span style="width:12px;height:16px;border-radius:6px 6px 8px 8px;background:#5E9BE6;display:inline-block"></span></sc-for>
+</div>
+<div style="font:400 13px Inter,sans-serif;line-height:1.5;color:#2F3F39;margin-top:8px">Each drop is about 10 litres, using the 4 L low end. For {{herdText}}.</div>
+</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“A trough that is too far away is a feed shortage in disguise.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Where to put the trough</h2>
+<p style="margin:0">The guide recommends troughs within <strong>15 metres</strong> of the cows and cleaned <strong>every day</strong>. Stale, dirty water cuts drinking, and drinking drives how much dry feed a cow can eat.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;font-family:Inter,sans-serif;display:flex;flex-direction:column;gap:10px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#1F4E9A">SEE IT · DISTANCE TO WATER</div>
+<svg viewBox="0 0 330 110" width="100%" role="img" aria-label="A shed with a trough 15 metres away">
+<rect x="10" y="30" width="150" height="56" rx="8" fill="#F2F0E6" stroke="#DCDACF"></rect>
+<text x="85" y="62" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#1A1F1B">Shed</text>
+<path d="M160 58h110" stroke="#1F4E9A" stroke-width="2" stroke-dasharray="5 4"></path>
+<rect x="270" y="44" width="50" height="28" rx="8" fill="#5E9BE6"></rect>
+<text x="295" y="62" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Trough</text>
+<text x="215" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1F4E9A">15 m or less</text>
+</svg>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>Plan for 4 to 5 litres of water per litre of milk.</li>
+<li>Keep troughs within 15 m of the cows.</li>
+<li>Clean troughs daily so cows keep drinking.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#1F4E9A">BEFORE YOU MOVE ON · WATER CHECK</div>
+<sc-for list="{{checks}}" as="c" hint-placeholder-count="3">
+<button type="button" role="checkbox" aria-checked="{{c.on}}" onClick="{{c.toggle}}" style="display:flex;align-items:center;gap:12px;text-align:left;border:0;background:transparent;min-height:52px;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B"><span style="flex:none;width:28px;height:28px;border-radius:8px;border:2px solid #123B2C;background:{{c.fill}};color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span><span style="line-height:1.4">{{c.label}}</span></button>
+</sc-for>
+<div style="font:600 13px Inter,sans-serif;color:#1F4E9A;padding-top:4px">{{checkText}}</div>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">Clean milk starts at the teat</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">6 min · Checklist</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+
+
+</div>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap"></helmet></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2500}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const yld = s.yld === undefined ? 12 : s.yld;
+const herd = s.herd === undefined ? 1 : s.herd;
+const chk = s.chk || {};
+const hD = [[1, 'One cow'], [5, '5 cows'], [10, '10 cows']];
+const herds = hD.map((d) => { const on = d[0] === herd; return { label: d[1], on: on, bg: on ? '#123B2C' : '#F2F0E6', fg: on ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ herd: d[0] }) }; });
+const low = yld * herd * 4;
+const nDrops = Math.min(60, Math.max(1, Math.round(low / 10)));
+const drops = [];
+for (let i = 0; i < nDrops; i++) drops.push(i);
+const cD = ['Every cow has a trough within 15 m', 'Troughs are cleaned every day', 'I know how much my cows drink'];
+const checks = cD.map((label, i) => { const on = !!chk[i]; return { label: label, on: on, fill: on ? '#123B2C' : '#FFFFFF', mark: on ? '✓' : '', toggle: () => { const n = Object.assign({}, chk); n[i] = !on; this.setState({ chk: n }); } }; });
+const cn = Object.keys(chk).filter((k) => chk[k]).length;
+return {
+yld: yld, herds: herds, low: low, high: yld * herd * 5, drops: drops,
+herdText: herd === 1 ? 'one cow' : herd + ' cows',
+down: () => this.setState({ yld: Math.max(1, yld - 1) }),
+up: () => this.setState({ yld: Math.min(40, yld + 1) }),
+checks: checks, checkText: cn === 3 ? 'Water set for the herd' : cn + ' of 3 done'
+};
+}
+}
+</script>
+</body>
+</html>

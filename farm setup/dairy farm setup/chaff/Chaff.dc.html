@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: chaff cutter</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+input[type=range]{width:100%;accent-color:#123B2C;height:44px;margin:0}
+</style>
+</helmet>
+<div style="width:390px;min-height:2900px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">I-LEARNING · DAIRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:35%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#DDF4EA;color:#0F6B50;border-radius:6px;padding:4px 8px">FEED &amp; FODDER</span>
+<span style="background:#FFDDE5;color:#A3173F;border-radius:6px;padding:4px 8px">SAFETY</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Choosing and using a chaff cutter, safely</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">Chopped fodder means less waste and more milk. A chaff cutter is also one of the most dangerous machines on a farm.</div>
+<div style="display:flex;align-items:center;gap:10px;border-top:1px solid #DCDACF;margin-top:6px;padding-top:14px">
+<span style="width:40px;height:40px;border-radius:50%;background:#123B2C;color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">F1</span>
+<span style="display:flex;flex-direction:column;font:500 13px Inter,sans-serif;color:#44504A"><span style="font-weight:700;color:#1A1F1B">Farm One editors</span><span>6 min read · Based on TNAU data and BIS safety standards</span></span>
+</div>
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#DDF4EA;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<rect x="70" y="110" width="250" height="40" rx="8" fill="#FFFFFF" stroke="#0F6B50" stroke-width="3"></rect>
+<path d="M110 110 L150 56 H250 L290 110" fill="#FFFFFF" stroke="#0F6B50" stroke-width="3" stroke-linejoin="round"></path>
+<circle cx="285" cy="130" r="28" fill="#E5F27A" stroke="#0F6B50" stroke-width="3"></circle>
+<g stroke="#0F6B50" stroke-width="3" stroke-linecap="round"><path d="M285 130 l16 -10 M285 130 l-14 14 M285 130 l-4 -18"></path></g>
+<g stroke="#0F6B50" stroke-width="4" stroke-linecap="round"><path d="M96 86 l32 14 M92 100 l30 6"></path></g>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Cows eat more when fodder is cut short, and they waste less of it. Mixing green and dry fodder is easier too. A chaff cutter does this in minutes instead of hours.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Three kinds of machine</h2>
+<p style="margin:0">Tap each one to compare.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">TRY IT · MACHINE TYPES</div>
+<div style="display:flex;gap:6px;background:#F2F0E6;border-radius:999px;padding:4px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{t.on}}" onClick="{{t.pick}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{t.bg}};color:{{t.fg}};font:600 12px Inter,sans-serif">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="background:#DDF4EA;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 22px 'Source Serif 4',Georgia,serif;color:#0F6B50;line-height:1.2">{{name}}</div>
+<div style="font:700 16px Inter,sans-serif">{{capacity}}</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5">{{note}}</div>
+<div style="font:600 13px Inter,sans-serif;color:#0F6B50">Chop length: {{chop}}</div>
+</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Will it keep up with your herd?</h2>
+<p style="margin:0">Divide the fodder you cut each day by the machine's hourly capacity. That gives your working hours.</p>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">TRY IT · WORKING HOURS</div>
+<div style="display:flex;justify-content:space-between;font:600 14px Inter,sans-serif"><label for="k">Fodder cut per day</label><span>{{kg}} kg</span></div>
+<input id="k" type="range" min="100" max="3000" step="100" value="{{kg}}" onInput="{{onKg}}">
+<div style="display:flex;gap:8px">
+<div style="flex:1;background:#F2F0E6;border-radius:14px;padding:12px"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.08em;color:#5C6862">HAND MACHINE</div><div style="font:700 20px Inter,sans-serif;margin-top:4px;color:{{handInk}}">{{handHours}}</div><div style="font:500 12px Inter,sans-serif;color:#44504A">{{handNote}}</div></div>
+<div style="flex:1;background:#F2F0E6;border-radius:14px;padding:12px"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.08em;color:#5C6862">1.5 HP ELECTRIC</div><div style="font:700 20px Inter,sans-serif;margin-top:4px;color:{{elInk}}">{{elShare}}</div><div style="font:500 12px Inter,sans-serif;color:#44504A">{{elNote}}</div></div>
+</div>
+<div style="font:400 13px Inter,sans-serif;line-height:1.5;color:#5C6862">Hand machine: about 300 kg of green fodder an hour. 1.5 HP electric: about 1.6 to 3.2 tonnes a day.</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #A3173F;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“Most chaff cutter accidents happen when you are tired, between 3 and 6 in the evening.”</div>
+<p style="margin:0">A study in Gurdaspur, Punjab linked chaff cutters to most amputation injuries. Of those, 45% happened between 3 and 6 PM, and 30% were linked to fatigue.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Check before you buy or use</h2>
+<p style="margin:0">A safe machine meets the BIS standard. Tick each feature you can see.</p>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;font-family:Inter,sans-serif">
+<div style="display:flex;align-items:center;gap:14px">
+<div style="flex:none;width:64px;height:64px;border-radius:50%;background:conic-gradient({{ringInk}} 0 {{ringDeg}}deg,#E7E5DA {{ringDeg}}deg 360deg);display:flex;align-items:center;justify-content:center"><div style="width:44px;height:44px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{sDone}}/6</div></div>
+<div style="font:700 15px Inter,sans-serif;color:{{ringInk}}">{{sMsg}}</div>
+</div>
+<sc-for list="{{safety}}" as="c" hint-placeholder-count="6">
+<button type="button" aria-pressed="{{c.on}}" onClick="{{c.toggle}}" style="min-height:52px;border:0;background:transparent;display:flex;align-items:center;gap:12px;text-align:left;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #123B2C;background:{{c.bg}};color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span>{{c.label}}</button>
+</sc-for>
+</div>
+<div style="margin:12px 16px 0;background:#FFF2D0;border-radius:18px;padding:14px;font:500 14px Inter,sans-serif;line-height:1.5">Run the machine empty for 5 minutes before first use. Ask the seller for a test report and a manual in your local language.</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Keep it in shape</h2>
+<p style="margin:0">A few minutes of care keeps the machine safe and the blades sharp.</p>
+</div>
+<div style="margin:14px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="display:flex;gap:6px;background:#F2F0E6;border-radius:999px;padding:4px">
+<button type="button" aria-pressed="{{dailyOn}}" onClick="{{pickDaily}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{dBg}};color:{{dFg}};font:600 13px Inter,sans-serif">Every day</button>
+<button type="button" aria-pressed="{{weeklyOn}}" onClick="{{pickWeekly}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{wBg}};color:{{wFg}};font:600 13px Inter,sans-serif">Every week</button>
+</div>
+<sc-for list="{{maint}}" as="m" hint-placeholder-count="3">
+<div style="display:flex;gap:10px;align-items:flex-start;font:500 15px Inter,sans-serif;line-height:1.45"><span style="flex:none;width:8px;height:8px;border-radius:50%;background:#0F6B50;margin-top:7px"></span>{{m}}</div>
+</sc-for>
+<div style="font:400 13px Inter,sans-serif;color:#5C6862">Sharpen or replace blades on time.</div>
+</div>
+
+<div style="margin:28px 16px 0;background:#E5F27A;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:10px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#123B2C">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.5;display:flex;flex-direction:column;gap:6px">
+<li>Match the machine to your daily fodder and your power supply.</li>
+<li>Hand: about 300 kg an hour. Electric 1.5 HP: 1.6 to 3.2 tonnes a day.</li>
+<li>Look for the locking pin, front guard, long feed chute and blade covers.</li>
+<li>Do not work when tired, especially in the late afternoon.</li>
+</ul>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5C6862">BEFORE YOU MOVE ON · {{doneCount}} OF 3</div>
+<sc-for list="{{checks}}" as="c" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{c.on}}" onClick="{{c.toggle}}" style="min-height:48px;border:0;background:transparent;display:flex;align-items:center;gap:12px;text-align:left;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #123B2C;background:{{c.bg}};color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span>{{c.label}}</button>
+</sc-for>
+</div>
+
+<div style="margin:16px 16px 0;background:#E1F0F3;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">GOOD TO KNOW · FARM SETUP</div>
+<div style="font-weight:700;font-size:20px;line-height:1.25">Subsidies for fodder machines</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#44504A">The National Livestock Mission pays 50% for hay and silage units, which can include heavy-duty chaff cutters.</div>
+</div>
+
+<div style="padding:22px 22px 40px;font:400 13px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: TNAU machinery data; BIS IS 15542:2005, carried into IS 11459:2024; National Livestock Mission guidelines (Jan 2025).</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2900}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const tab = s.tab || 'hand';
+const kg = s.kg === undefined ? 800 : s.kg;
+const sf = s.sf || [false, false, false, false, false, false];
+const when = s.when || 'daily';
+const checks = s.checks || [false, false, false];
+const T = {
+ hand: { label: 'Hand', name: 'Hand or hand-and-pedal', capacity: 'About 300 kg of green fodder an hour', note: 'No power needed. Good for a few animals, or where electricity is unreliable.', chop: 'about 1 to 4 cm' },
+ elec: { label: 'Electric', name: 'Electric motor', capacity: '1.5 HP: 1.6 to 3.2 tonnes a day', note: 'Fed by a chute or a conveyor. The usual choice for a growing herd.', chop: 'about 25 mm' },
+ pto: { label: 'Tractor PTO', name: 'Tractor-driven (PTO)', capacity: 'Needs a tractor of 30 HP or more, at 540 rpm', note: 'For large herds and big fodder volumes where a tractor is already on the farm.', chop: '5 to 10 mm' }
+};
+const cur = T[tab];
+const hours = kg / 300;
+const hh = Math.round(hours * 10) / 10;
+const elLow = Math.round(kg / 1600 * 100);
+const elHigh = Math.round(kg / 3200 * 100);
+const labels = ['Flywheel locking pin', 'Front guard on each knife', 'Feed chute at least 900 mm long, with a cover or warning roller', 'Blade cover and guards on gears and blower', 'Operator manual in my local language', 'Passed a 5-minute idle run'];
+const done = sf.filter(Boolean).length;
+const M = {
+ daily: ['Check the guards and the locking pin before starting.', 'Keep the feed chute and the area around the machine clear.', 'Switch off and wait for the blades to stop before you clear a jam.'],
+ weekly: ['Check the belts and tighten the bolts.', 'Look at the blades for wear, and sharpen or replace them.', 'Check that every guard is firmly fixed.']
+};
+const cl = ['I know the three machine types', 'I can work out my daily hours', 'I know the six safety features to look for'];
+return {
+ tabs: Object.keys(T).map(k => ({ label: T[k].label, on: k === tab, bg: k === tab ? '#123B2C' : 'transparent', fg: k === tab ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ tab: k }) })),
+ name: cur.name, capacity: cur.capacity, note: cur.note, chop: cur.chop,
+ kg: kg, onKg: (e) => this.setState({ kg: Number(e.target.value) }),
+ handHours: hh + ' hours', handInk: hours > 8 ? '#A3173F' : '#0F6B50', handNote: hours > 8 ? 'More than a working day' : 'Doable in a day',
+ elShare: elHigh + '% to ' + elLow + '%', elInk: elLow > 100 ? '#A3173F' : '#0F6B50', elNote: elLow > 100 ? 'May need a bigger machine' : 'of a day’s capacity',
+ safety: labels.map((t, i) => ({ label: t, on: sf[i], bg: sf[i] ? '#123B2C' : '#FFFFFF', mark: sf[i] ? '✓' : '', toggle: () => { const n = sf.slice(); n[i] = !n[i]; this.setState({ sf: n }); } })),
+ sDone: done, ringDeg: Math.round(done / 6 * 360), ringInk: done === 6 ? '#0F6B50' : '#A3173F',
+ sMsg: done === 6 ? 'Safe to buy' : (done === 0 ? 'Tick what you can see' : (6 - done) + ' still missing'),
+ dailyOn: when === 'daily', weeklyOn: when === 'weekly',
+ dBg: when === 'daily' ? '#123B2C' : 'transparent', dFg: when === 'daily' ? '#FFFFFF' : '#1A1F1B',
+ wBg: when === 'weekly' ? '#123B2C' : 'transparent', wFg: when === 'weekly' ? '#FFFFFF' : '#1A1F1B',
+ pickDaily: () => this.setState({ when: 'daily' }), pickWeekly: () => this.setState({ when: 'weekly' }),
+ maint: M[when],
+ checks: cl.map((t, i) => ({ label: t, on: checks[i], bg: checks[i] ? '#123B2C' : '#FFFFFF', mark: checks[i] ? '✓' : '', toggle: () => { const n = checks.slice(); n[i] = !n[i]; this.setState({ checks: n }); } })),
+ doneCount: checks.filter(Boolean).length
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: livestock insurance</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+input[type=range]{width:100%;accent-color:#123B2C;height:44px;margin:0}
+</style>
+</helmet>
+<div style="width:390px;min-height:3000px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">FARM SETUP · DAIRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:40%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#FFDDE5;color:#A3173F;border-radius:6px;padding:4px 8px">PROTECT</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">DAIRY · GOAT</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Insure your cow or buffalo for less than you think</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">The government pays most of the premium. Here is what it costs you, and what you must do so a claim is never refused.</div>
+<div style="display:flex;align-items:center;gap:10px;border-top:1px solid #DCDACF;margin-top:6px;padding-top:14px">
+<span style="width:40px;height:40px;border-radius:50%;background:#123B2C;color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">F1</span>
+<span style="display:flex;flex-direction:column;font:500 13px Inter,sans-serif;color:#44504A"><span style="font-weight:700;color:#1A1F1B">Farm One editors</span><span>6 min read · Based on the National Livestock Mission insurance scheme</span></span>
+</div>
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#FFDDE5;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<path d="M195 26 L290 56 V106 C290 146 246 166 195 180 C144 166 100 146 100 106 V56 Z" fill="#FFFFFF" stroke="#A3173F" stroke-width="4" stroke-linejoin="round"></path>
+<path d="M160 104 l26 26 l46 -52" fill="none" stroke="#A3173F" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">One cow dying can wipe out a year of income. Under the government's livestock insurance, the farmer pays only <strong>15%</strong> of the premium. The Centre and the State pay the other <strong>85%</strong>.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">What will it cost you?</h2>
+<p style="margin:0">Enter your animal's daily milk. We work out its minimum insured value and your share of the premium.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#A3173F">TRY IT · PREMIUM CALCULATOR</div>
+<div style="display:flex;gap:6px;background:#F2F0E6;border-radius:999px;padding:4px">
+<button type="button" aria-pressed="{{cowOn}}" onClick="{{pickCow}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{cowBg}};color:{{cowFg}};font:600 13px Inter,sans-serif">Cow</button>
+<button type="button" aria-pressed="{{bufOn}}" onClick="{{pickBuf}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{bufBg}};color:{{bufFg}};font:600 13px Inter,sans-serif">Buffalo</button>
+</div>
+<div style="display:flex;justify-content:space-between;font:600 14px Inter,sans-serif"><label for="m">Daily milk</label><span>{{milk}} litres</span></div>
+<input id="m" type="range" min="2" max="25" step="1" value="{{milk}}" onInput="{{onMilk}}">
+<div style="background:#FFDDE5;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.1em;color:#A3173F">MINIMUM INSURED VALUE</div>
+<div style="font:700 28px 'Source Serif 4',Georgia,serif;color:#A3173F">{{value}}</div>
+<div style="font:400 13px Inter,sans-serif;color:#1A1F1B">₹{{rate}} per litre of daily milk</div>
+</div>
+<div style="display:flex;gap:8px">
+<div style="flex:1;background:#F2F0E6;border-radius:14px;padding:12px"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.08em;color:#5C6862">FULL PREMIUM, 1 YEAR</div><div style="font:700 17px Inter,sans-serif;margin-top:4px">{{premium}}</div></div>
+<div style="flex:1;background:#DDF4EA;border-radius:14px;padding:12px"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.08em;color:#0F6B50">YOU PAY (15%)</div><div style="font:700 17px Inter,sans-serif;margin-top:4px;color:#0F6B50">{{youPay}}</div></div>
+</div>
+<div style="font:400 13px Inter,sans-serif;line-height:1.5;color:#5C6862">Uses the highest allowed rate of 4.5% a year. Your state insurer may charge less.</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #A3173F;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“No ear tag, no claim. Keep the tag safe, and replace it at once if it is lost.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">How many animals get the subsidy?</h2>
+<p style="margin:0">The subsidy covers up to <strong>10 cattle units</strong> per family. Animals above that are still insured, but at the full premium. Different animals count differently.</p>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#A3173F">TRY IT · CATTLE UNITS</div>
+<div style="display:flex;align-items:center;justify-content:space-between;min-height:44px"><span style="font:600 14px Inter,sans-serif">Cows or buffaloes <span style="color:#5C6862;font-weight:500">(1 unit each)</span></span>
+<span style="display:flex;align-items:center;gap:10px"><button type="button" aria-label="Fewer cows or buffaloes" onClick="{{cowMinus}}" style="width:44px;height:44px;border-radius:50%;border:1px solid #DCDACF;background:#FFFFFF;font:600 20px Inter,sans-serif">−</button><span style="min-width:22px;text-align:center;font:700 16px Inter,sans-serif">{{cows}}</span><button type="button" aria-label="More cows or buffaloes" onClick="{{cowPlus}}" style="width:44px;height:44px;border-radius:50%;border:1px solid #DCDACF;background:#FFFFFF;font:600 20px Inter,sans-serif">+</button></span></div>
+<div style="display:flex;align-items:center;justify-content:space-between;min-height:44px"><span style="font:600 14px Inter,sans-serif">Goats or sheep <span style="color:#5C6862;font-weight:500">(10 = 1 unit)</span></span>
+<span style="display:flex;align-items:center;gap:10px"><button type="button" aria-label="Fewer goats or sheep" onClick="{{goatMinus}}" style="width:44px;height:44px;border-radius:50%;border:1px solid #DCDACF;background:#FFFFFF;font:600 20px Inter,sans-serif">−</button><span style="min-width:22px;text-align:center;font:700 16px Inter,sans-serif">{{goats}}</span><button type="button" aria-label="More goats or sheep" onClick="{{goatPlus}}" style="width:44px;height:44px;border-radius:50%;border:1px solid #DCDACF;background:#FFFFFF;font:600 20px Inter,sans-serif">+</button></span></div>
+<div style="height:12px;border-radius:6px;background:#E7E5DA;overflow:hidden"><div style="width:{{barPct}}%;height:100%;background:{{barColor}}"></div></div>
+<div style="display:flex;justify-content:space-between;font:700 15px Inter,sans-serif"><span>{{units}} of 10 units</span><span style="color:{{barColor}}">{{unitMsg}}</span></div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Is it covered?</h2>
+<p style="margin:0">Tap each case to find out whether an insurer will pay.</p>
+</div>
+<div style="margin:14px 16px 0;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<sc-for list="{{cases}}" as="c" hint-placeholder-count="6">
+<button type="button" aria-expanded="{{c.open}}" onClick="{{c.toggle}}" style="border:0;border-radius:18px;background:{{c.bg}};padding:14px 16px;text-align:left;display:flex;flex-direction:column;gap:6px;min-height:56px">
+<span style="font:600 15px Inter,sans-serif;color:#1A1F1B">{{c.text}}</span>
+<sc-if value="{{c.open}}" hint-placeholder-val="true">
+<span style="font:700 14px Inter,sans-serif;color:{{c.ink}}">{{c.verdict}}</span>
+</sc-if>
+</button>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Sign up in four steps</h2>
+<p style="margin:0">Use the 1962 / NDLM app. Keep your phone and your animal's ear tag number handy.</p>
+</div>
+<div style="margin:14px 16px 0;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{enrol}}" as="s" hint-placeholder-count="4">
+<div style="display:flex;gap:12px;align-items:flex-start;background:{{s.tint}};border-radius:18px;padding:14px"><span style="flex:none;width:34px;height:34px;border-radius:50%;background:#FFFFFF;color:{{s.ink}};display:flex;align-items:center;justify-content:center;font:700 15px Inter,sans-serif">{{s.n}}</span><span style="font:600 15px Inter,sans-serif;line-height:1.4">{{s.text}}</span></div>
+</sc-for>
+</div>
+<div style="margin:12px 16px 0;background:#FFF2D0;border-radius:18px;padding:14px;font:500 14px Inter,sans-serif;line-height:1.5">A vet will examine the animal and agree its value. You also need two photos: you with the animal, and a close-up of the ear tag.</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">If an animal dies</h2>
+<p style="margin:0">Follow the order. Tap Next.</p>
+</div>
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#A3173F">TRY IT · CLAIM GUIDE</div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="6">
+<button type="button" aria-label="{{d.aria}}" onClick="{{d.pick}}" style="flex:1;min-height:44px;border:0;background:transparent;padding:0;display:flex;align-items:center"><span style="width:100%;height:8px;border-radius:4px;background:{{d.bg}}"></span></button>
+</sc-for>
+</div>
+<div style="background:#FFDDE5;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.1em;color:#A3173F">STEP {{n}} OF 6</div>
+<div style="font:700 22px 'Source Serif 4',Georgia,serif;line-height:1.2">{{title}}</div>
+<div style="font:400 15px Inter,sans-serif;line-height:1.55">{{body}}</div>
+</div>
+<div style="display:flex;gap:10px">
+<button type="button" onClick="{{onPrev}}" style="flex:1;min-height:48px;border:1px solid #DCDACF;background:#FFFFFF;border-radius:999px;font:600 14px Inter,sans-serif;opacity:{{prevOp}}">Back</button>
+<button type="button" onClick="{{onNext}}" style="flex:2;min-height:48px;border:0;background:#123B2C;border-radius:999px;font:600 14px Inter,sans-serif;color:#FFFFFF">{{nextLabel}}</button>
+</div>
+<div style="font:500 13px Inter,sans-serif;line-height:1.5;color:#44504A">Claims are usually settled within 21 to 25 days of the last document. Late payment earns you 12% interest a year.</div>
+</div>
+
+<div style="margin:28px 16px 0;background:#E5F27A;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:10px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#123B2C">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.5;display:flex;flex-direction:column;gap:6px">
+<li>You pay 15% of the premium. The government pays 85%.</li>
+<li>The subsidy covers up to 10 cattle units per family.</li>
+<li>Every animal needs a 12-digit ear tag. No tag, no claim.</li>
+<li>Tell the insurer the same day, and do not dispose of the carcass before inspection.</li>
+</ul>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5C6862">BEFORE YOU MOVE ON · {{doneCount}} OF 4</div>
+<sc-for list="{{checks}}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{c.on}}" onClick="{{c.toggle}}" style="min-height:48px;border:0;background:transparent;display:flex;align-items:center;gap:12px;text-align:left;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #123B2C;background:{{c.bg}};color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span>{{c.label}}</button>
+</sc-for>
+</div>
+
+<div style="margin:16px 16px 0;background:#E1F0F3;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div>
+<div style="font-weight:700;font-size:21px;line-height:1.25">Poultry: what it costs and who funds it</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#44504A">Real project numbers for a 10,000-bird unit, and the subsidy for rural poultry.</div>
+</div>
+
+<div style="padding:22px 22px 40px;font:400 13px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: National Livestock Mission livestock insurance (Pashudhan Bima Yojana) and the DAHD portal FAQ.</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3000}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const animal = s.animal || 'cow';
+const milk = s.milk === undefined ? 10 : s.milk;
+const cows = s.cows === undefined ? 4 : s.cows;
+const goats = s.goats === undefined ? 20 : s.goats;
+const open = s.open === undefined ? -1 : s.open;
+const step = s.step === undefined ? 0 : s.step;
+const checks = s.checks || [false, false, false, false];
+const rate = animal === 'cow' ? 3000 : 4000;
+const value = milk * rate;
+const prem = Math.round(value * 0.045);
+const you = Math.round(prem * 0.15);
+const inr = (n) => '₹' + n.toLocaleString('en-IN');
+const units = Math.round((cows + goats / 10) * 10) / 10;
+const over = units > 10;
+const cases = [
+ { t: 'Your cow dies of an infection that started after the policy began.', v: 'Covered, after the 15-day waiting period for disease.', ok: true },
+ { t: 'The animal had an illness before the policy started.', v: 'Not covered. Existing illness is excluded.', ok: false },
+ { t: 'The ear tag is missing at the time of the claim.', v: 'Not covered. Claims without an intact tag are refused.', ok: false },
+ { t: 'Death from flood, fire or lightning (commercial policy).', v: 'Usually covered under commercial cattle policies.', ok: true },
+ { t: 'You lose milk income while the animal is sick.', v: 'Not covered. Losses that follow from the death are excluded.', ok: false },
+ { t: 'Death caused by neglect or overloading the animal.', v: 'Not covered. Wilful injury, neglect and overloading are excluded.', ok: false }
+];
+const en = ['Open the 1962 / NDLM app and find the livestock insurance link.', 'Register with your NDLM mobile number and one ear tag number.', 'Confirm your address and choose your animals by tag number.', 'Submit, then log in again to track the status.'];
+const tints = [['#DDEBFF', '#1F4E9A'], ['#FFF2D0', '#7A4E00'], ['#DDF4EA', '#0F6B50'], ['#EADDFB', '#5B2E91']];
+const cl = [
+ { t: 'Tell the insurer the same day', b: 'Call or message the insurer on the day the animal dies. Waiting makes a claim harder.' },
+ { t: 'Get a vet to examine the animal', b: 'The vet checks the animal and gives a death certificate.' },
+ { t: 'Get the post-mortem done', b: 'Keep the report. Do not dispose of the carcass before the inspection is done.' },
+ { t: 'Photograph the animal and the tag', b: 'Take clear photos, and keep the ear tag safe. You will need both.' },
+ { t: 'Fill the claim form online', b: 'Log in, open My Claims, fill the form and upload your documents.' },
+ { t: 'Save the claim number', b: 'Keep the claim number and every SMS confirmation until you are paid.' }
+];
+const labels = ['I know I pay only 15% of the premium', 'I know the subsidy stops at 10 cattle units', 'I know every animal needs an intact ear tag', 'I know to inform the insurer on the same day'];
+return {
+ cowOn: animal === 'cow', bufOn: animal === 'buf',
+ cowBg: animal === 'cow' ? '#123B2C' : 'transparent', cowFg: animal === 'cow' ? '#FFFFFF' : '#1A1F1B',
+ bufBg: animal === 'buf' ? '#123B2C' : 'transparent', bufFg: animal === 'buf' ? '#FFFFFF' : '#1A1F1B',
+ pickCow: () => this.setState({ animal: 'cow' }), pickBuf: () => this.setState({ animal: 'buf' }),
+ milk: milk, onMilk: (e) => this.setState({ milk: Number(e.target.value) }),
+ rate: rate.toLocaleString('en-IN'), value: inr(value), premium: inr(prem), youPay: inr(you),
+ cows: cows, goats: goats,
+ cowMinus: () => this.setState({ cows: Math.max(0, cows - 1) }), cowPlus: () => this.setState({ cows: Math.min(20, cows + 1) }),
+ goatMinus: () => this.setState({ goats: Math.max(0, goats - 5) }), goatPlus: () => this.setState({ goats: Math.min(100, goats + 5) }),
+ units: units, barPct: Math.min(100, units * 10), barColor: over ? '#A3173F' : '#0F6B50',
+ unitMsg: over ? 'Extra animals at full premium' : 'All with subsidy',
+ cases: cases.map((c, i) => ({ text: c.t, verdict: c.v, open: open === i, bg: open === i ? (c.ok ? '#DDF4EA' : '#FFDDE5') : '#F2F0E6', ink: c.ok ? '#0F6B50' : '#A3173F', toggle: () => this.setState({ open: open === i ? -1 : i }) })),
+ enrol: en.map((t, i) => ({ n: i + 1, text: t, tint: tints[i][0], ink: tints[i][1] })),
+ dots: cl.map((x, i) => ({ aria: 'Go to step ' + (i + 1), bg: i <= step ? '#A3173F' : '#E7E5DA', pick: () => this.setState({ step: i }) })),
+ n: step + 1, title: cl[step].t, body: cl[step].b,
+ onPrev: () => this.setState({ step: Math.max(0, step - 1) }), onNext: () => this.setState({ step: step === 5 ? 0 : step + 1 }),
+ prevOp: step === 0 ? 0.4 : 1, nextLabel: step === 5 ? 'Start again' : 'Next',
+ checks: labels.map((t, i) => ({ label: t, on: checks[i], bg: checks[i] ? '#123B2C' : '#FFFFFF', mark: checks[i] ? '✓' : '', toggle: () => { const n = checks.slice(); n[i] = !n[i]; this.setState({ checks: n }); } })),
+ doneCount: checks.filter(Boolean).length
+};
+}
+}
+</script>
+</body>
+</html>

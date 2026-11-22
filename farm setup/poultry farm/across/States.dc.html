@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: poultry across India</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:2200px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">FARM SETUP · POULTRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:90%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#FFF2D0;color:#7A4E00;border-radius:6px;padding:4px 8px">MARKET</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">POULTRY</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Poultry across India: where the birds are</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">India keeps more than 850 million poultry birds. See how your state stacks up.</div>
+<div style="display:flex;align-items:center;gap:10px;border-top:1px solid #DCDACF;margin-top:6px;padding-top:14px">
+<span style="width:40px;height:40px;border-radius:50%;background:#123B2C;color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">F1</span>
+<span style="display:flex;flex-direction:column;font:500 13px Inter,sans-serif;color:#44504A"><span style="font-weight:700;color:#1A1F1B">Farm One editors</span><span>4 min read · 20th Livestock Census figures</span></span>
+</div>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Poultry farming in India has grown into a large, lively industry. The 20th Livestock Census counts <strong>851.8 million birds</strong> across the country.</p>
+<p style="margin:0">The leading states are Tamil Nadu, Andhra Pradesh, Telangana and West Bengal, followed by Maharashtra, Karnataka, Assam, Haryana, Kerala and Odisha.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">The ten biggest states</h2>
+<p style="margin:0">Tap a bar to see the numbers.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#7A4E00">TRY IT · BIRDS BY STATE (MILLIONS)</div>
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="10">
+<button type="button" aria-pressed="{{b.on}}" onClick="{{b.pick}}" style="display:flex;align-items:center;gap:8px;text-align:left;border:0;background:transparent;min-height:44px;padding:0;font-family:Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:92px;font:{{b.fw}} 12px Inter,sans-serif">{{b.name}}</span>
+<span style="flex:1;height:22px;background:#F2F0E6;border-radius:6px;position:relative;display:block"><span style="position:absolute;left:0;top:0;bottom:0;width:{{b.w}}%;border-radius:6px;background:{{b.color}}"></span></span>
+<span style="flex:none;width:40px;text-align:right;font:700 12px Inter,sans-serif">{{b.val}}</span>
+</button>
+</sc-for>
+<div style="background:#FFF2D0;border-radius:16px;padding:14px;margin-top:8px;display:flex;flex-direction:column;gap:4px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.1em;color:#7A4E00">{{selName}}</div>
+<div style="font:700 22px Inter,sans-serif">{{selVal}} million birds</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#3F2A00">{{selNote}}</div>
+</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“Five states hold more than half of all poultry in India.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">How concentrated is it?</h2>
+<p style="margin:0">The top five states together hold <strong>{{top5pct}}%</strong> of India’s birds. The other 31 states and territories share the rest.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;align-items:center;gap:18px;font-family:Inter,sans-serif">
+<div style="flex:none;position:relative;width:120px;height:120px;border-radius:50%;background:{{donut}}"><div style="position:absolute;inset:26px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 18px Inter,sans-serif">{{top5pct}}%</div></div>
+<div style="display:flex;flex-direction:column;gap:8px;font:500 13px Inter,sans-serif">
+<span style="display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:4px;background:#E07B00"></span>Top five states</span>
+<span style="display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:4px;background:#DCDACF"></span>All others</span>
+</div>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>India has about 851.8 million poultry birds.</li>
+<li>Tamil Nadu leads, followed by Andhra Pradesh and Telangana.</li>
+<li>Maharashtra is fifth, with 74.3 million birds.</li>
+<li>Use these numbers to see how busy your state is before you start.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">KEEP LEARNING</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">i-Learning: Is your manure pile healthy?</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">5 min · Pile checker</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+<div style="padding:18px 22px 40px;font:400 12px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Central Pollution Control Board, Environmental Guidelines for Poultry Farms (August 2021), citing the 20th Livestock Census, Department of Animal Husbandry and Dairying.</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2200}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const sel = s.sel === undefined ? 4 : s.sel;
+const total = 851.809;
+const D = [
+['Tamil Nadu', 120.781], ['Andhra Pradesh', 107.863], ['Telangana', 79.999], ['West Bengal', 77.322], ['Maharashtra', 74.297],
+['Karnataka', 59.494], ['Assam', 46.712], ['Haryana', 46.24], ['Kerala', 29.771], ['Odisha', 27.439]
+];
+const max = D[0][1];
+const bars = D.map((d, i) => {
+const on = sel === i;
+return { name: d[0], val: d[1].toFixed(1), w: Math.round(d[1] / max * 100), on: on, fw: on ? '700' : '500', color: on ? '#E07B00' : (i < 5 ? '#1B7F5F' : '#8FBFAA'), pick: () => this.setState({ sel: i }) };
+});
+const top5 = D.slice(0, 5).reduce((a, d) => a + d[1], 0);
+const pct5 = Math.round(top5 / total * 100);
+const d = D[sel];
+const share = (d[1] / total * 100).toFixed(1);
+return {
+bars: bars,
+selName: d[0].toUpperCase() + ' · RANK ' + (sel + 1),
+selVal: d[1].toFixed(1),
+selNote: 'That is ' + share + '% of all the poultry in India.',
+top5pct: pct5,
+donut: 'conic-gradient(#E07B00 0 ' + pct5 + '%, #DCDACF ' + pct5 + '% 100%)'
+};
+}
+}
+</script>
+</body>
+</html>

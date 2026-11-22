@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: egg to bird</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:3100px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">FARM SETUP · POULTRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:25%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#EADDFB;color:#5B2E91;border-radius:6px;padding:4px 8px">PLAN</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">POULTRY</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">From egg to bird: how a poultry farm works</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">Before you pick a shed or a supplier, know the path a bird takes. It decides what you build.</div>
+
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#EADDFB;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<ellipse cx="110" cy="100" rx="42" ry="54" fill="#FFFFFF"></ellipse>
+<path d="M110 60l-10 18 14 8-12 20" stroke="#5B2E91" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M170 100h50" stroke="#5B2E91" stroke-width="5" stroke-linecap="round"></path><path d="M210 90l12 10-12 10" stroke="#5B2E91" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+<circle cx="290" cy="112" r="34" fill="#F5D77A"></circle><circle cx="302" cy="100" r="22" fill="#F5D77A"></circle>
+<circle cx="310" cy="96" r="3.5" fill="#1A1F1B"></circle><path d="M322 102l16 5-16 5z" fill="#E07B00"></path>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Poultry farming is not one job. It is a chain, and most farms handle one link of it: breeding, hatching, laying eggs, or growing meat birds.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">The chain, link by link</h2>
+<p style="margin:0">Tap a link to see what happens there.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5B2E91">TRY IT · THE CHAIN</div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{chain}}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="flex:1;min-height:56px;border:0;border-radius:14px;background:{{c.bg}};color:{{c.fg}};font:700 12px Inter,sans-serif;padding:6px 2px;line-height:1.25">{{c.n}}<br>{{c.label}}</button>
+</sc-for>
+</div>
+<div style="background:#F2F0E6;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 16px Inter,sans-serif">{{linkTitle}}</div>
+<div style="font:400 15px Inter,sans-serif;line-height:1.55;color:#2F3F39">{{linkBody}}</div>
+</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“A broiler is ready in about six weeks. A layer works for a year and a half.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Layer or broiler? See the timeline</h2>
+<p style="margin:0">Layers give eggs. Broilers give meat. Their lives look very different.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5B2E91">TRY IT · A BIRD’S LIFE</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{kinds}}" as="k" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{k.on}}" onClick="{{k.pick}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{k.bg}};color:{{k.fg}};font:600 14px Inter,sans-serif">{{k.label}}</button>
+</sc-for>
+</div>
+<div style="display:flex;height:52px;gap:3px">
+<sc-for list="{{phases}}" as="p" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{p.on}}" aria-label="{{p.aria}}" onClick="{{p.pick}}" style="flex:{{p.grow}};min-width:0;border:2px solid {{p.bc}};background:{{p.color}};border-radius:10px;font:700 11px Inter,sans-serif;color:#FFFFFF;padding:0 2px">{{p.short}}</button>
+</sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;font:500 11px Inter,sans-serif;color:#5C6862"><span>Day 1</span><span>{{endLabel}}</span></div>
+<div style="background:#F2F0E6;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 16px Inter,sans-serif">{{pTitle}}</div>
+<div style="font:600 13px Inter,sans-serif;color:#5B2E91">{{pWhen}}</div>
+<div style="font:400 15px Inter,sans-serif;line-height:1.55;color:#2F3F39">{{pBody}}</div>
+</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:0;font-weight:700;font-size:26px;line-height:1.2">Two ways to house birds</h2>
+<p style="margin:0">Your housing choice changes your daily work and your waste. Compare them.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5B2E91">COMPARE · HOUSING</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{houses}}" as="h" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{h.on}}" onClick="{{h.pick}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{h.bg}};color:{{h.fg}};font:600 14px Inter,sans-serif">{{h.label}}</button>
+</sc-for>
+</div>
+<sc-for list="{{houseRows}}" as="r" hint-placeholder-count="4">
+<div style="display:flex;gap:12px;align-items:flex-start;background:#F2F0E6;border-radius:14px;padding:12px">
+<span style="flex:none;width:84px;font:700 12px Inter,sans-serif;color:#5B2E91;padding-top:2px">{{r.k}}</span>
+<span style="font:400 14px Inter,sans-serif;line-height:1.5">{{r.v}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>Hatching takes about 21 days. Broilers go to market at 40 to 45 days.</li>
+<li>Layers move through three houses, and lay from 18 weeks to about 75 weeks.</li>
+<li>Most broilers live on deep litter. Most layers live in cages.</li>
+<li>Pick your link in the chain before you plan the shed.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">Where can you build? The siting rules</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">5 min · Distance checker</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+<div style="padding:18px 22px 40px;font:400 12px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Central Pollution Control Board, Environmental Guidelines for Poultry Farms (August 2021).</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3100}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const link = s.link === undefined ? 0 : s.link;
+const kind = s.kind || 'layer';
+const ph = s.ph === undefined ? 0 : s.ph;
+const house = s.house || 'deep';
+
+const lD = [
+['Breeding', 'Breeder farms', 'Breeder farms produce the fertilised eggs. Breeders mostly live in cages, and eggs come from artificial insemination. Eggs are collected daily, checked, and stored in trays in a controlled room.'],
+['Hatching', 'Hatchery', 'Eggs rest for 4 to 10 days, then go into incubators that control heat and humidity. Hatching takes about 21 days. Chicks are vaccinated and graded for even quality.'],
+['Laying', 'Layer farms', 'Female chicks go to layer farms and start laying eggs from about 18 weeks. Only female chicks from laying stock are sent on.'],
+['Meat', 'Broiler farms', 'Day-old broiler chicks arrive mixed, male and female together. They are reared for about 40 to 45 days until they weigh 2.5 to 3 kg.']
+];
+const chain = lD.map((d, i) => { const on = link === i; return { n: String(i + 1), label: d[0], on: on, bg: on ? '#5B2E91' : '#F2F0E6', fg: on ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ link: i }) }; });
+
+const T = {
+layer: {
+end: '75 weeks',
+phases: [
+['Chick house', 'Chick', 6.4, '#8A4FD0', '0 to 45 days', 'Chicks are warmed in an enclosed area for the first 3 to 4 weeks, using gas brooders, electric hovers, infra-red bulbs or coal brooders.'],
+['Grower house', 'Grower', 11.6, '#1B7F5F', '45 days to 18 weeks', 'Birds move to open growing houses. These can be deep litter or cages. Birds under six months are called pullets.'],
+['Layer house', 'Laying', 57, '#E07B00', '18 weeks to 72–75 weeks', 'Hens move into laying cages and stay until the end of their laying life. After about 72 to 75 weeks, laying slows and stops paying.']
+]
+},
+broiler: {
+end: '45 days',
+phases: [
+['Brooding', 'Brooding', 3.5, '#8A4FD0', 'First 3 to 4 weeks', 'Chicks get extra warmth in an enclosed area. The length depends on the season.'],
+['Growing', 'Growing', 3, '#1B7F5F', 'Until day 40 to 45', 'Birds grow on a bed of dry litter, with hanging feeders and drinkers. Most reach 2.5 to 3 kg by day 40 to 45.'],
+['Market', 'Sale', 1, '#E07B00', 'Day 40 to 45', 'Birds are sold for slaughter depending on weight. Then the shed is cleaned and rested.']
+]
+}
+};
+const t = T[kind];
+const phases = t.phases.map((p, i) => { const on = ph === i; return { short: p[1], grow: p[2], color: p[3], aria: p[0], on: on, bc: on ? '#1A1F1B' : 'transparent', pick: () => this.setState({ ph: i }) }; });
+const cur = t.phases[Math.min(ph, t.phases.length - 1)];
+const kinds = [['layer', 'Layer (eggs)'], ['broiler', 'Broiler (meat)']].map((d) => { const on = kind === d[0]; return { label: d[1], on: on, bg: on ? '#123B2C' : '#F2F0E6', fg: on ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ kind: d[0], ph: 0 }) }; });
+
+const H = {
+deep: [['What it is', 'Birds live on a bed of rice husk, sawdust, groundnut hulls, wood shavings or dried leaves.'], ['Best for', 'Most broilers, and layers up to 18 weeks.'], ['Feed and water', 'Done by hand on small farms, with automatic equipment on large ones.'], ['Waste', 'Droppings mix into the bed, which is removed at the end of the batch.']],
+cage: [['What it is', 'Cages on raised platforms in open sheds, three or four birds to a cage.'], ['Best for', 'Commercial layers, breeders, and these days some broiler breeders.'], ['Feed and water', 'Water through nipples on a closed pipe. Feed in a trough along the front.'], ['Waste', 'Droppings fall through gaps onto the floor below and are collected there.']]
+};
+const houses = [['deep', 'Deep litter'], ['cage', 'Cage system']].map((d) => { const on = house === d[0]; return { label: d[1], on: on, bg: on ? '#123B2C' : '#F2F0E6', fg: on ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ house: d[0] }) }; });
+const houseRows = H[house].map((d) => ({ k: d[0], v: d[1] }));
+
+return {
+chain: chain, linkTitle: lD[link][1], linkBody: lD[link][2],
+kinds: kinds, phases: phases, endLabel: t.end, pTitle: cur[0], pWhen: cur[4], pBody: cur[5],
+houses: houses, houseRows: houseRows
+};
+}
+}
+</script>
+</body>
+</html>

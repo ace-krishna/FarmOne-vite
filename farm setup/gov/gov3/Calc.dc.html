@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: what will you really get</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+input[type=range]{width:100%;accent-color:#123B2C;height:44px;margin:0}
+</style>
+</helmet>
+<div style="width:390px;min-height:2500px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">FARM SETUP · DAIRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:80%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#FFF2D0;color:#7A4E00;border-radius:6px;padding:4px 8px">PLAN</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">DAIRY</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">What will you really get?</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">A subsidy sounds big until you see the rupees. Try your own numbers.</div>
+<div style="display:flex;align-items:center;gap:10px;border-top:1px solid #DCDACF;margin-top:6px;padding-top:14px">
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #123B2C; color: #E5F27A; display: none; align-items: center; justify-content: center; font: 700 14px Inter,sans-serif">F1</span>
+<span style="display:flex;flex-direction:column;font:500 13px Inter,sans-serif;color:#44504A"><span style="font-weight:700;color:#1A1F1B">Farm One editors</span><span>4 min read · Based on the Government Dairy Subsidies Directory</span></span>
+</div>
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#FFF2D0;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<g fill="#FFFFFF" stroke="#7A4E00" stroke-width="3"><circle cx="110" cy="100" r="48"></circle><circle cx="200" cy="100" r="48"></circle><circle cx="290" cy="100" r="48"></circle></g>
+<g font-family="Inter,sans-serif" font-weight="700" font-size="34" fill="#7A4E00" text-anchor="middle"><text x="110" y="112">₹</text><text x="200" y="112">%</text><text x="290" y="112">₹</text></g>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Every subsidy has two parts: a percentage and a project cost. Change the cost and the money changes with it. Pick a scheme, set your cost and see who pays what.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Your project, in rupees</h2>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#7A4E00">TRY IT · SUBSIDY CALCULATOR</div>
+<div style="font:600 14px Inter,sans-serif">Scheme</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{schemes}}" as="p" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{p.on}}" onClick="{{p.pick}}" style="min-height:44px;border:0;border-radius:999px;padding:0 14px;background:{{p.bg}};color:{{p.fg}};font:600 13px Inter,sans-serif">{{p.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{hasCat}}" hint-placeholder-val="true">
+<div style="display:flex;gap:6px;background:#F2F0E6;border-radius:999px;padding:4px">
+<button type="button" aria-pressed="{{genOn}}" onClick="{{pickGen}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{genBg}};color:{{genFg}};font:600 13px Inter,sans-serif">{{lowLabel}}</button>
+<button type="button" aria-pressed="{{scOn}}" onClick="{{pickSc}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{scBg}};color:{{scFg}};font:600 13px Inter,sans-serif">{{highLabel}}</button>
+</div>
+</sc-if>
+<div style="display:flex;justify-content:space-between;font:600 14px Inter,sans-serif"><label for="c">Project cost</label><span>{{costText}}</span></div>
+<input id="c" type="range" min="1" max="30" step="0.5" value="{{cost}}" onInput="{{onCost}}">
+
+<div style="display:flex;align-items:center;gap:18px;background:#F2F0E6;border-radius:18px;padding:16px">
+<div style="flex:none;width:112px;height:112px;border-radius:50%;background:conic-gradient(#0F6B50 0 {{subDeg}}deg,#E5F27A {{subDeg}}deg 360deg);display:flex;align-items:center;justify-content:center">
+<div style="width:68px;height:68px;border-radius:50%;background:#F2F0E6;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font:700 20px Inter,sans-serif">{{pctText}}</div><div style="font:500 10px Inter,sans-serif;color:#5C6862">subsidy</div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;flex:1">
+<div><div style="display:flex;align-items:center;gap:6px;font:600 12px Inter,sans-serif;color:#0F6B50"><span style="width:10px;height:10px;border-radius:3px;background:#0F6B50"></span>Government pays</div><div style="font:700 22px 'Source Serif 4',Georgia,serif">{{subText}}</div></div>
+<div><div style="display:flex;align-items:center;gap:6px;font:600 12px Inter,sans-serif;color:#44504A"><span style="width:10px;height:10px;border-radius:3px;background:#E5F27A;border:1px solid #BFCB4A"></span>You pay</div><div style="font:700 22px 'Source Serif 4',Georgia,serif">{{youText}}</div></div>
+</div>
+</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#44504A">{{note}}</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“A subsidy rarely covers the whole cost. Plan for your own share from day one.”</div>
+<p style="margin:0">The subsidy arrives <em>after</em> you buy and after inspection. So you or your bank must first pay the full amount, then wait for the money to come back.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Running costs: the Kisan Credit Card</h2>
+<p style="margin:0">Feed, fodder, medicine, power and labour never stop. The Kisan Credit Card gives you a working loan at about 4% a year. Move the slider to see the yearly interest.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#7A4E00">TRY IT · KCC INTEREST</div>
+<div style="display:flex;justify-content:space-between;font:600 14px Inter,sans-serif"><label for="k">Working loan</label><span>{{kText}}</span></div>
+<input id="k" type="range" min="0.5" max="3" step="0.5" value="{{kcc}}" onInput="{{onKcc}}">
+<div style="display:flex;gap:8px">
+<div style="flex:1;background:#F2F0E6;border-radius:14px;padding:12px"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.08em;color:#5C6862">COLLATERAL</div><div style="font:700 16px Inter,sans-serif;margin-top:4px;color:{{kInk}}">{{kColl}}</div></div>
+<div style="flex:1;background:#F2F0E6;border-radius:14px;padding:12px"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.08em;color:#5C6862">INTEREST IN A YEAR</div><div style="font:700 16px Inter,sans-serif;margin-top:4px">{{kInt}}</div></div>
+</div>
+<div style="font:400 13px Inter,sans-serif;line-height:1.5;color:#5C6862">Based on an effective rate of about 4%, if you repay on time.</div>
+</div>
+
+<div style="margin:28px 16px 0;background:#E5F27A;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:10px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#123B2C">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.5;display:flex;flex-direction:column;gap:6px">
+<li>Subsidy is a percentage of your project cost.</li>
+<li>You pay the rest, and often the full amount first.</li>
+<li>The Kisan Credit Card covers day-to-day costs at about 4%.</li>
+<li>Up to ₹2 lakh needs no collateral.</li>
+</ul>
+</div>
+
+<div style="margin:16px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5C6862">BEFORE YOU MOVE ON · {{doneCount}} OF 3</div>
+<sc-for list="{{checks}}" as="c" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{c.on}}" onClick="{{c.toggle}}" style="min-height:48px;border:0;background:transparent;display:flex;align-items:center;gap:12px;text-align:left;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #123B2C;background:{{c.bg}};color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span>{{c.label}}</button>
+</sc-for>
+</div>
+
+<div style="margin:16px 16px 0;background:#E1F0F3;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div>
+<div style="font-weight:700;font-size:21px;line-height:1.25">The 10-cow dairy setup guide</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#44504A">See the real shed, animal and machine costs to put in your project report.</div>
+</div>
+
+<div style="padding:22px 22px 40px;font:400 13px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Government Subsidies Directory for Dairy Farming in India. Figures are illustrations of the stated percentages; your sanctioned amount may differ.</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2500}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const sch = s.sch || 'maha';
+const hi = !!s.hi;
+const cost = s.cost === undefined ? 8 : s.cost;
+const kcc = s.kcc === undefined ? 2 : s.kcc;
+const checks = s.checks || [false, false, false];
+const defs = {
+ maha: { label: 'MahaBMS animals', lo: 50, hi: 75, lowL: 'General 50%', highL: 'SC/ST 75%', cat: true, note: 'MahaBMS pays 50% for General and 75% for SC/ST farmers on a unit of 2, 4 or 6 milch animals.' },
+ nabard: { label: 'NABARD dairy unit', lo: 25, hi: 33.33, lowL: 'General 25%', highL: 'SC/ST/Women 33.33%', cat: true, note: 'NABARD pays a back-ended subsidy, which means it comes after the loan is running.' },
+ nlm: { label: 'NLM fodder / breeding', lo: 50, hi: 50, lowL: '', highL: '', cat: false, note: 'The National Livestock Mission pays 50%, up to ₹50 lakh.' },
+ dbt: { label: 'MahaDBT fodder / machines', lo: 50, hi: 80, lowL: 'Lower rate 50%', highL: 'Higher rate 80%', cat: true, note: 'MahaDBT pays between 50% and 80% depending on the item.' }
+};
+const d = defs[sch];
+const pct = hi ? d.hi : d.lo;
+let sub = cost * pct / 100;
+if (sch === 'nlm' && sub > 50) sub = 50;
+const you = cost - sub;
+const fmt = (v) => '₹' + (Math.round(v * 100) / 100) + ' lakh';
+const deg = Math.round((sub / cost) * 360);
+const kcoll = kcc <= 2 ? 'Not needed' : 'Interest help applies';
+const labels = ['I know my own share of the cost', 'I know the subsidy comes after I buy', 'I know the KCC rate is about 4%'];
+const done = checks.filter(Boolean).length;
+return {
+ schemes: Object.keys(defs).map(k => ({ label: defs[k].label, on: k === sch, bg: k === sch ? '#123B2C' : '#F2F0E6', fg: k === sch ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ sch: k }) })),
+ hasCat: d.cat, lowLabel: d.lowL, highLabel: d.highL,
+ genOn: !hi, scOn: hi,
+ genBg: !hi ? '#123B2C' : 'transparent', genFg: !hi ? '#FFFFFF' : '#1A1F1B',
+ scBg: hi ? '#123B2C' : 'transparent', scFg: hi ? '#FFFFFF' : '#1A1F1B',
+ pickGen: () => this.setState({ hi: false }), pickSc: () => this.setState({ hi: true }),
+ cost: cost, costText: '₹' + cost + ' lakh', onCost: (e) => this.setState({ cost: Number(e.target.value) }),
+ subDeg: deg, pctText: Math.round(sub / cost * 100) + '%',
+ subText: fmt(sub), youText: fmt(you), note: d.note,
+ kcc: kcc, kText: '₹' + kcc + ' lakh', onKcc: (e) => this.setState({ kcc: Number(e.target.value) }),
+ kColl: kcoll, kInk: kcc <= 2 ? '#0F6B50' : '#7A4E00',
+ kInt: '₹' + Math.round(kcc * 100000 * 0.04).toLocaleString('en-IN'),
+ checks: labels.map((t, i) => ({ label: t, on: checks[i], bg: checks[i] ? '#123B2C' : '#FFFFFF', mark: checks[i] ? '✓' : '', toggle: () => { const n = checks.slice(); n[i] = !n[i]; this.setState({ checks: n }); } })),
+ doneCount: done
+};
+}
+}
+</script>
+</body>
+</html>

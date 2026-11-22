@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { CameraScanScreen, PhotoConfirmScreen } from './CameraScanScreen';
 import { fetchAnimals, getCachedAnimals, type Animal, type Species } from '../../lib/animals';
 import { DiagnosisResultModal } from './DiagnosisResultModal';
+import { useBackLayer } from '../../lib/backStack';
 import { diagnoseAnimalImage, type DiagnosisResult } from '../../lib/aiDiagnosis';
 
 interface AnimalItem {
@@ -38,9 +39,11 @@ const HOME_TEXT = {
 interface StitchHomeScreenProps {
   onAddAnimal?: () => void;
   onOpenVaccination?: () => void;
+  onOpenILearning?: () => void;
+  onOpenFarmSetup?: () => void;
 }
 
-export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal, onOpenVaccination }) => {
+export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal, onOpenVaccination, onOpenILearning, onOpenFarmSetup }) => {
   const { language, setLanguage, t } = useLanguage();
   const H = HOME_TEXT[language as 'en' | 'hi' | 'mr'] ?? HOME_TEXT.en;
 
@@ -101,10 +104,16 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
     }
   };
 
-  // Bottom dock active tab (Home = 0, Marketplace = 1, Farmer Profile = 2)
+  // Bottom dock active tab (Home = 0, Farm Setup = 1, Marketplace = 2, Farmer Profile = 3)
   const [activeDockIndex, setActiveDockIndex] = useState(0);
   const [dockNotification, setDockNotification] = useState<string | null>(null);
 
+
+  // Phone Back / back gesture closes the top-most sheet or screen first
+  useBackLayer(isScanCameraOpen, () => setIsScanCameraOpen(false));
+  useBackLayer(isUploadGalleryOpen, () => setIsUploadGalleryOpen(false));
+  useBackLayer(cameraSubject !== null, () => setCameraSubject(null));
+  useBackLayer(diagnosisResult !== null, () => setDiagnosisResult(null));
 
   // Close modals on Escape key
   useEffect(() => {
@@ -175,6 +184,10 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
   useEffect(() => () => { if (dockToastTimer.current) clearTimeout(dockToastTimer.current); }, []);
 
   const handleDockItemClick = (index: number, label: string) => {
+    if (index === 1 && onOpenFarmSetup) {
+      onOpenFarmSetup();
+      return;
+    }
     setActiveDockIndex(index);
     if (dockToastTimer.current) clearTimeout(dockToastTimer.current);
     if (index !== 0) {
@@ -306,7 +319,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
           </div>
 
           {/* Horizontal Animal Avatars */}
-          <div className="flex overflow-x-auto scrollbar-none gap-3 py-1 px-0.5">
+          <div className="flex overflow-x-auto scrollbar-none gap-3 py-1 -mx-4 px-4">
             {registeredLivestock.length === 0 && (
               <p className="text-[11px] text-[#404945] py-3 px-1">No animals registered yet.</p>
             )}
@@ -334,7 +347,18 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
 
           {/* Register / Add Farm Animal Card (Full Pill Container) */}
           <div className="mt-2.5">
-            <div className="p-2 pl-2.5 pr-2.5 rounded-[28px] bg-[#f3f4f2] border border-[#bfc9c3]/30 flex items-center justify-between gap-2 shadow-sm">
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={onAddAnimal}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onAddAnimal?.();
+                }
+              }}
+              className="p-2 pl-2.5 pr-2.5 rounded-[28px] bg-[#f3f4f2] border border-[#bfc9c3]/30 flex items-center justify-between gap-2 shadow-sm cursor-pointer active:scale-[0.99] transition-transform"
+            >
               <div className="flex items-center gap-2.5 overflow-hidden">
                 <div className="w-10 h-10 rounded-full bg-[#b5efda] flex items-center justify-center text-[#002018] shrink-0">
                   <span className="material-symbols-outlined text-[22px]">add</span>
@@ -351,7 +375,6 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
               <motion.button
                 whileTap={{ scale: 0.96 }}
                 type="button"
-                onClick={onAddAnimal}
                 className="px-3 py-2 rounded-full bg-[#00362a] text-white text-[10px] font-bold flex items-center gap-1 shrink-0 shadow-xs cursor-pointer hover:bg-[#00261d] transition-all"
               >
                 <span>{t('addAnimalBtn')}</span>
@@ -447,7 +470,10 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
 
           <div className="flex flex-col gap-4">
             {/* i-Learning & Guides (Deep Rounded Card with Pill Button) */}
-            <div className="w-full rounded-[32px] bg-white border border-[#bfc9c3]/30 shadow-sm p-4 flex flex-col justify-between gap-2.5">
+            <div
+              onClick={onOpenILearning}
+              className="w-full rounded-[32px] bg-white border border-[#bfc9c3]/30 shadow-sm p-4 flex flex-col justify-between gap-2.5 cursor-pointer"
+            >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="w-10 h-10 rounded-full bg-[#cce5ff] flex items-center justify-center text-[#001d31] shrink-0">
@@ -519,7 +545,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
       >
         <div
           id="liquidGlassDock"
-          className="relative w-full rounded-full p-1.5 grid grid-cols-3 items-center"
+          className="relative w-full rounded-full p-1.5 grid grid-cols-[repeat(4,minmax(0,1fr))] items-center"
           style={{
             background: 'rgba(255, 255, 255, 0.72)',
             backdropFilter: 'blur(28px) saturate(190%)',
@@ -531,7 +557,8 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
         >
           {([
             { icon: 'home', label: t('home') },
-            { icon: 'storefront', label: t('marketplace') },
+            { icon: 'storefront', label: t('farmSetup') },
+            { icon: 'shopping_cart', label: t('marketplace') },
             { icon: 'account_circle', label: t('farmerProfile') },
           ] as const).map((tab, index) => {
             const active = activeDockIndex === index;
@@ -541,7 +568,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
                 type="button"
                 onClick={() => handleDockItemClick(index, tab.label)}
                 aria-current={active ? 'page' : undefined}
-                className={`relative flex flex-col items-center justify-center h-[52px] rounded-full cursor-pointer transition-colors duration-200 ${
+                className={`relative flex flex-col items-center justify-center h-[52px] min-w-0 whitespace-nowrap rounded-full cursor-pointer transition-colors duration-200 ${
                   active ? 'text-[#00362a]' : 'text-[#404945] hover:text-[#00362a]'
                 }`}
               >
@@ -564,7 +591,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
                 >
                   {tab.icon}
                 </span>
-                <span className="relative text-[11px] leading-tight tracking-tight mt-0.5 font-semibold">{tab.label}</span>
+                <span className="relative text-[10.5px] leading-tight tracking-tight mt-0.5 font-semibold">{tab.label}</span>
               </button>
             );
           })}

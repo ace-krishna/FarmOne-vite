@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: shed routine</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:2800px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">I-LEARNING · POULTRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:60%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#DDF4EA;color:#0F6B50;border-radius:6px;padding:4px 8px">SHED CARE</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">DAILY ROUTINE</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Dry litter, fresh air: the daily shed routine</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">A dry shed with moving air is a healthier shed. Here is what to do every day, every batch and every few months.</div>
+
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#DDF4EA;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<rect x="40" y="70" width="310" height="90" fill="#FFFFFF"></rect>
+<path d="M30 74l165-48 165 48z" fill="#1B7F5F"></path>
+<rect x="40" y="140" width="310" height="20" fill="#E5C58A"></rect>
+<g fill="#F5B73B"><circle cx="90" cy="130" r="9"></circle><circle cx="140" cy="134" r="9"></circle><circle cx="200" cy="130" r="9"></circle><circle cx="260" cy="134" r="9"></circle><circle cx="310" cy="130" r="9"></circle></g>
+<g stroke="#1B7F5F" stroke-width="3" stroke-linecap="round" fill="none"><path d="M64 96c14-8 28 8 42 0"></path><path d="M164 96c14-8 28 8 42 0"></path><path d="M264 96c14-8 28 8 42 0"></path></g>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Wet bedding is the start of most shed problems. It turns sour, gives off a sharp smell and gases that bother both birds and workers.</p>
+<p style="margin:0">The cure is not complicated. Keep the litter dry, and keep fresh air moving over it.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Build the bed right</h2>
+<p style="margin:0">In a deep litter shed, birds live on a bed of rice husk, sawdust, groundnut hulls, wood shavings or dried leaves. Use whatever is easy to get near you.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">TRY IT · LITTER DEPTH</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{phases}}" as="p" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{p.on}}" onClick="{{p.pick}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{p.bg}};color:{{p.fg}};font:600 13px Inter,sans-serif">{{p.label}}</button>
+</sc-for>
+</div>
+<div style="background:#F2F0E6;border-radius:16px;padding:14px;display:flex;align-items:flex-end;gap:16px;height:150px">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+<div style="height:{{topH}}px;background:#E5B94A;border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font:600 12px Inter,sans-serif;color:#3F2A00">{{topLabel}}</div>
+<div style="height:{{baseH}}px;background:#C9A878;display:flex;align-items:center;justify-content:center;font:600 12px Inter,sans-serif;color:#3F2A00">First layer 5 to 6 cm</div>
+<div style="height:8px;background:#8A8576;border-radius:0 0 4px 4px"></div>
+</div>
+<div style="flex:none;width:120px;font:700 28px Inter,sans-serif;text-align:center;color:#0F6B50">{{total}}<div style="font:500 12px Inter,sans-serif;color:#44504A">total depth</div></div>
+</div>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#44504A">{{phaseNote}}</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“Stir the bedding every day or two. Wet bedding in a corner is a problem waiting.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Your routine, by system</h2>
+<p style="margin:0">Pick the way your birds are housed. Then tap through the routine.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">TRY IT · ROUTINE PLANNER</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{systems}}" as="s" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{s.on}}" onClick="{{s.pick}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{s.bg}};color:{{s.fg}};font:600 14px Inter,sans-serif">{{s.label}}</button>
+</sc-for>
+</div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+<div style="display:flex;gap:12px;align-items:flex-start;background:{{r.bg}};border-radius:16px;padding:12px">
+<span style="flex:none;min-width:78px;text-align:center;background:#FFFFFF;border-radius:999px;font:700 12px Inter,sans-serif;padding:6px 10px;color:#0F6B50">{{r.when}}</span>
+<span style="font:400 15px Inter,sans-serif;line-height:1.5">{{r.what}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:0;font-weight:700;font-size:26px;line-height:1.2">Water: use less, spill less</h2>
+<p style="margin:0">Leaks and spills wet the litter. Fix drinkers that overflow, use well-kept self-watering drinkers, and clear standing water around the shed, because mosquitoes and flies love it.</p>
+<p style="margin:0">When you wash the shed between batches, try dry cleaning first. If you need water, hot water or a pressure pump uses less than plain cold water. Collect the wash water in a holding tank and use it on your garden or green belt.</p>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>Start with 5 to 6 cm of dry bedding and top up as birds grow.</li>
+<li>Stir the bed at least once every two days.</li>
+<li>Keep air moving and fix leaks fast.</li>
+<li>Between batches: clear out, wash, apply lime, and rest the shed.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">BEFORE YOU MOVE ON · SHED CHECK</div>
+<sc-for list="{{checks}}" as="c" hint-placeholder-count="5">
+<button type="button" role="checkbox" aria-checked="{{c.on}}" onClick="{{c.toggle}}" style="display:flex;align-items:center;gap:12px;text-align:left;border:0;background:transparent;min-height:52px;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B"><span style="flex:none;width:28px;height:28px;border-radius:8px;border:2px solid #123B2C;background:{{c.fill}};color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span><span style="line-height:1.4">{{c.label}}</span></button>
+</sc-for>
+<div style="font:600 13px Inter,sans-serif;color:#0F6B50;padding-top:4px">{{checkText}}</div>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">Keep flies and rats out, and medicine in its place</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">5 min · Checklist</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+<div style="padding:18px 22px 40px;font:400 12px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Central Pollution Control Board, Environmental Guidelines for Poultry Farms (August 2021).</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2800}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const phase = s.phase || 'start';
+const sys = s.sys || 'deep';
+const chk = s.chk || {0: true};
+
+const grown = phase === 'grown';
+const phases = [['start', 'Day one'], ['grown', 'As birds grow']].map((d) => { const on = phase === d[0]; return { label: d[1], on: on, bg: on ? '#123B2C' : '#F2F0E6', fg: on ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ phase: d[0] }) }; });
+
+const R = {
+deep: [
+['Every 1–2 days', 'Scratch or stir the bedding so it stays loose and dry.'],
+['All day', 'Keep air moving through the shed. Fix leaking drinkers at once.'],
+['End of batch', 'Take out the bed with the droppings (usually after 42 to 45 days for broilers) and send it for composting or sale.'],
+['After clearing', 'Wash the shed, apply lime as a disinfectant, and let it rest before the next chicks.']
+],
+cage: [
+['Every day', 'Look for wet spots under the cages. Keep air moving to dry the droppings.'],
+['All day', 'Check the drinker nipples and pipes for leaks.'],
+['Every 4–6 months', 'Take the manure out and sell it or compost it.'],
+['Between flocks', 'Clean the sheds, disinfect, and let them rest.']
+]
+};
+const systems = [['deep', 'Deep litter'], ['cage', 'Cages']].map((d) => { const on = sys === d[0]; return { label: d[1], on: on, bg: on ? '#123B2C' : '#F2F0E6', fg: on ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ sys: d[0] }) }; });
+const rows = R[sys].map((d, i) => ({ when: d[0], what: d[1], bg: i % 2 === 0 ? '#F2F0E6' : '#FBFAF6' }));
+
+const cD = ['I stir the litter every day or two', 'The air moves through the shed all day', 'Drinkers are checked for leaks', 'Standing water is cleared', 'I wash, lime and rest between batches'];
+const checks = cD.map((label, i) => { const on = !!chk[i]; return { label: label, on: on, fill: on ? '#123B2C' : '#FFFFFF', mark: on ? '✓' : '', toggle: () => { const n = Object.assign({}, chk); n[i] = !on; this.setState({ chk: n }); } }; });
+const cn = Object.keys(chk).filter((k) => chk[k]).length;
+
+return {
+phases: phases, topH: grown ? 40 : 0, baseH: 40, topLabel: grown ? 'Top-up 5 to 6 cm' : '',
+total: grown ? '10–12 cm' : '5–6 cm',
+phaseNote: grown ? 'As the birds get bigger, add another 5 to 6 cm of dry bedding on top.' : 'Start the batch with 5 to 6 cm of clean, dry bedding.',
+systems: systems, rows: rows,
+checks: checks, checkText: cn === 5 ? 'Shed routine in place' : cn + ' of 5 done'
+};
+}
+}
+</script>
+</body>
+</html>

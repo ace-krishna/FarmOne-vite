@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: pests and medicine</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:3200px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">I-LEARNING · POULTRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:75%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#FFF2D0;color:#7A4E00;border-radius:6px;padding:4px 8px">PESTS</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">BIRD HEALTH</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Keep flies and rats out, and medicine in its place</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">Pests are easier to prevent than to chase. So is the misuse of medicine.</div>
+
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#FFF2D0;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<g fill="#7A4E00"><ellipse cx="150" cy="100" rx="22" ry="14"></ellipse><circle cx="178" cy="96" r="9"></circle></g>
+<g stroke="#7A4E00" stroke-width="3" stroke-linecap="round"><path d="M132 92l-14-10M140 114l-8 16M158 114l4 18"></path></g>
+<g fill="#FFFFFF" opacity="0.9"><ellipse cx="148" cy="82" rx="18" ry="10"></ellipse><ellipse cx="164" cy="80" rx="16" ry="9"></ellipse></g>
+<circle cx="270" cy="95" r="50" fill="none" stroke="#C0392B" stroke-width="8"></circle>
+<path d="M235 130l70-70" stroke="#C0392B" stroke-width="8"></path>
+<g fill="#7A4E00"><ellipse cx="270" cy="98" rx="20" ry="12"></ellipse><circle cx="292" cy="94" r="8"></circle></g>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Flies breed in wet manure, spilled feed and rotting waste. Rats come for the feed and the shelter. Both carry disease, and both are a sign that something in the shed is untidy.</p>
+<p style="margin:0">The best fix is to take away what they come for.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Where do the flies come from?</h2>
+<p style="margin:0">Tap each spot to see how to stop it.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:8px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#7A4E00">TRY IT · FLY SPOTS</div>
+<sc-for list="{{spots}}" as="p" hint-placeholder-count="5">
+<button type="button" aria-expanded="{{p.on}}" onClick="{{p.pick}}" style="width:100%;text-align:left;border:2px solid {{p.bc}};background:{{p.bg}};border-radius:16px;padding:10px 14px;min-height:52px;font-family:Inter,sans-serif;color:#1A1F1B;display:flex;flex-direction:column;gap:6px">
+<span style="display:flex;align-items:center;justify-content:space-between;font:700 15px Inter,sans-serif"><span>{{p.name}}</span><span aria-hidden="true" style="font:500 20px Inter,sans-serif">{{p.sign}}</span></span>
+<sc-if value="{{p.on}}" hint-placeholder-val="{{false}}"><span style="font:400 14px Inter,sans-serif;line-height:1.5;color:#2F3F39">{{p.fix}}</span></sc-if>
+</button>
+</sc-for>
+<div style="font:400 13px Inter,sans-serif;line-height:1.5;color:#44504A;padding-top:4px">Add wire netting, traps, repellents or insecticides as extra help, but fix the source first.</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“A clean, dry shed gives flies nowhere to breed.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Keep rats out</h2>
+<p style="margin:0">Start with locking them out. Then trap the ones that get in.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#7A4E00">YOUR RAT-PROOFING LIST</div>
+<sc-for list="{{rats}}" as="c" hint-placeholder-count="4">
+<button type="button" role="checkbox" aria-checked="{{c.on}}" onClick="{{c.toggle}}" style="display:flex;align-items:flex-start;gap:12px;text-align:left;border:0;background:transparent;min-height:52px;padding:6px 0;font:500 15px Inter,sans-serif;color:#1A1F1B"><span style="flex:none;width:28px;height:28px;border-radius:8px;border:2px solid #123B2C;background:{{c.fill}};color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;line-height:1.35">{{c.label}}</span><span style="font:400 13px Inter,sans-serif;line-height:1.4;color:#44504A">{{c.note}}</span></span></button>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:0;font-weight:700;font-size:26px;line-height:1.2">Protect the feed store</h2>
+<p style="margin:0">The feed store pulls in pests and carries dust. Build and run it so it stays clean.</p>
+</div>
+
+<div style="margin:16px 22px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;font-family:Inter,sans-serif">
+<sc-for list="{{store}}" as="s" hint-placeholder-count="4">
+<div style="background:{{s.tint}};border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 22px Inter,sans-serif;color:{{s.ink}}">{{s.big}}</div>
+<div style="font:400 13px Inter,sans-serif;line-height:1.45;color:#1A1F1B">{{s.text}}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:0;font-weight:700;font-size:26px;line-height:1.2">Medicine is not a feed additive</h2>
+<p style="margin:0">Some farmers mix antibiotics into feed to make birds grow faster. Indian feed standards say not to. Tap each card to check what you know.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#7A4E00">MYTH OR FACT?</div>
+<sc-for list="{{cards}}" as="k" hint-placeholder-count="3">
+<button type="button" aria-expanded="{{k.on}}" onClick="{{k.pick}}" style="width:100%;text-align:left;border:0;background:{{k.bg}};border-radius:16px;padding:14px;font-family:Inter,sans-serif;color:#1A1F1B;display:flex;flex-direction:column;gap:8px;min-height:56px">
+<span style="font:600 15px Inter,sans-serif;line-height:1.4">“{{k.claim}}”</span>
+<sc-if value="{{k.on}}" hint-placeholder-val="{{false}}"><span style="display:flex;flex-direction:column;gap:4px"><span style="font:700 12px Inter,sans-serif;letter-spacing:0.08em;color:{{k.ink}}">{{k.verdict}}</span><span style="font:400 14px Inter,sans-serif;line-height:1.5;color:#2F3F39">{{k.why}}</span></span></sc-if>
+<sc-if value="{{k.off}}" hint-placeholder-val="{{true}}"><span style="font:500 12px Inter,sans-serif;color:#5C6862">Tap to reveal</span></sc-if>
+</button>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>Remove what flies and rats come for: wet manure, spilled feed, dead birds.</li>
+<li>Lock rats out first, then trap.</li>
+<li>Keep the feed store raised, concrete and clean.</li>
+<li>Use antibiotics only for sick birds, and only on a vet’s prescription.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">BACK TO</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">Is your manure pile healthy?</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">5 min · Pile checker</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+<div style="padding:18px 22px 40px;font:400 12px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Central Pollution Control Board, Environmental Guidelines for Poultry Farms (August 2021), citing Bureau of Indian Standards IS 1374:2007 on poultry feed.</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3200}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const spot = s.spot === undefined ? 0 : s.spot;
+const rchk = s.rchk || {0: true};
+const open = s.open || {};
+
+const sD = [
+['Wet manure', 'Keep it dry with moving air, treat and dispose of it properly, and cover storage.'],
+['Spilled feed', 'Sweep up spills and avoid overfilling feeders.'],
+['Leaking drinkers and pipes', 'Repair leaks quickly and clear standing water.'],
+['Broken eggs', 'Remove them straight away.'],
+['Dead birds', 'Take them out promptly and dispose of them within 24 hours.']
+];
+const spots = sD.map((d, i) => { const on = spot === i; return { name: d[0], fix: d[1], on: on, sign: on ? '−' : '+', bg: on ? '#FFF2D0' : '#FFFFFF', bc: on ? '#7A4E00' : '#E7E5DA', pick: () => this.setState({ spot: on ? -1 : i }) }; });
+
+const rD = [
+['Close them out', 'Use rodent-proof doors and windows, and seal gaps.'],
+['Trap the ones inside', 'Use traps and glue boards.'],
+['Use tracking powder', 'Place it along their runs, where they walk.'],
+['Keep feed covered', 'Store it so rats cannot get at it.']
+];
+const rats = rD.map((d, i) => { const on = !!rchk[i]; return { label: d[0], note: d[1], on: on, fill: on ? '#123B2C' : '#FFFFFF', mark: on ? '✓' : '', toggle: () => { const n = Object.assign({}, rchk); n[i] = !on; this.setState({ rchk: n }); } }; });
+
+const store = [
+{ big: '2 ft', text: 'Raise the floor at least 2 feet above the ground.', tint: '#DDF4EA', ink: '#0F6B50' },
+{ big: 'Concrete', text: 'Use a concrete floor in the feed mill and store.', tint: '#DDEBFF', ink: '#1F4E9A' },
+{ big: 'Tyre dip', text: 'Put one at the farm gate so vehicles do not bring in dirt.', tint: '#FFE2D3', ink: '#A04000' },
+{ big: 'Dust masks', text: 'Give them to workers, and fit a dust collector on the grinder.', tint: '#EADDFB', ink: '#5B2E91' }
+];
+
+const kD = [
+['Antibiotics in the feed make birds grow faster, so it pays to add them.', 'MYTH', 'The Indian feed standard says antibiotic growth promoters are not recommended in poultry feed.', '#A3173F', '#FFDDE5'],
+['Antibiotics are for sick birds, and for the vet to prescribe.', 'FACT', 'Use them only to treat diseased birds, with a prescription, following the rules of the animal husbandry and health departments.', '#0F6B50', '#DDF4EA'],
+['Fewer birds dying means less to dispose of.', 'FACT', 'Good care and disease prevention reduce deaths on the farm, and that cuts waste, smell and pests too.', '#0F6B50', '#DDF4EA']
+];
+const cards = kD.map((d, i) => { const on = !!open[i]; return { claim: d[0], verdict: d[1], why: d[2], ink: d[3], on: on, off: !on, bg: on ? d[4] : '#F2F0E6', pick: () => { const n = Object.assign({}, open); n[i] = !on; this.setState({ open: n }); } }; });
+
+return { spots: spots, rats: rats, store: store, cards: cards };
+}
+}
+</script>
+</body>
+</html>

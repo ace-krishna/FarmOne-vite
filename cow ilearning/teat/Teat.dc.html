@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: clean milk</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:3100px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">I-LEARNING</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:40%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#FFDDE5;color:#A3173F;border-radius:6px;padding:4px 8px">HYGIENE</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">BETTER MILK</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Clean milk starts at the teat</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">Four steps, thirty seconds of patience, and a lower cell count.</div>
+<div style="display:flex;align-items:center;gap:10px;border-top:1px solid #DCDACF;margin-top:6px;padding-top:14px">
+<span style="width:40px;height:40px;border-radius:50%;background:#123B2C;color:#E5F27A;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">F1</span>
+<span style="display:flex;flex-direction:column;font:500 13px Inter,sans-serif;color:#44504A"><span style="font-weight:700;color:#1A1F1B">Farm One editors</span><span>6 min read · reviewed by [Vet reviewer name]</span></span>
+</div>
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#FFDDE5;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<rect x="150" y="20" width="90" height="70" rx="30" fill="#FFFFFF"></rect>
+<g fill="#F4B6C6"><rect x="164" y="82" width="16" height="56" rx="8"></rect><rect x="187" y="82" width="16" height="56" rx="8"></rect><rect x="210" y="82" width="16" height="56" rx="8"></rect></g>
+<g fill="#A3173F"><rect x="164" y="118" width="16" height="22" rx="8"></rect><rect x="187" y="118" width="16" height="22" rx="8"></rect><rect x="210" y="118" width="16" height="22" rx="8"></rect></g>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Mastitis rarely arrives with a bang. It creeps in through the teat end after milking, when the canal is still open and the barn is full of bacteria.</p>
+<p style="margin:0">The fix in the guide is simple and repeatable. Dip with <strong>0.5% iodine or chlorhexidine</strong>, wait about <strong>30 seconds</strong>, <strong>wipe dry</strong>, and after milking finish with a <strong>barrier dip</strong>.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">The routine, one tap at a time</h2>
+<p style="margin:0">Tap each step as you finish it, the way you would at the shed.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:8px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#A3173F;padding:2px 2px 4px">TRY IT · MILKING-TIME STEPPER</div>
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{s.done}}" onClick="{{s.pick}}" style="width:100%;display:flex;align-items:flex-start;gap:12px;text-align:left;border:2px solid {{s.bc}};background:{{s.bg}};border-radius:16px;padding:12px;min-height:56px;font-family:Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:32px;height:32px;border-radius:50%;background:{{s.dot}};color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{s.mark}}</span>
+<span style="display:flex;flex-direction:column;gap:3px"><span style="font:700 15px Inter,sans-serif">{{s.name}}</span><span style="font:400 13px Inter,sans-serif;line-height:1.45;color:#44504A">{{s.note}}</span></span>
+</button>
+</sc-for>
+<div style="font:600 13px Inter,sans-serif;color:#A3173F;padding:2px">{{stepText}}</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“Wiping dry is the step most farmers skip, and the one that matters.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Who gets milked first?</h2>
+<p style="margin:0">Order matters. The guide milks <strong>heifers first</strong>, then <strong>healthy cows</strong>, and <strong>infected cows last</strong>, so one sick cow does not pass bacteria down the line.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#A3173F">SEE IT · MILKING ORDER</div>
+<div style="display:flex;align-items:center;gap:6px">
+<div style="flex:1;background:#DDF4EA;border-radius:14px;padding:12px 6px;text-align:center"><div style="font:700 20px Inter,sans-serif;color:#0F6B50">1</div><div style="font:600 12px Inter,sans-serif;color:#0F6B50">Heifers</div></div>
+<span aria-hidden="true" style="font:600 18px Inter,sans-serif;color:#44504A">›</span>
+<div style="flex:1;background:#FFF2D0;border-radius:14px;padding:12px 6px;text-align:center"><div style="font:700 20px Inter,sans-serif;color:#7A4E00">2</div><div style="font:600 12px Inter,sans-serif;color:#7A4E00">Healthy cows</div></div>
+<span aria-hidden="true" style="font:600 18px Inter,sans-serif;color:#44504A">›</span>
+<div style="flex:1;background:#FFDDE5;border-radius:14px;padding:12px 6px;text-align:center"><div style="font:700 20px Inter,sans-serif;color:#A3173F">3</div><div style="font:600 12px Inter,sans-serif;color:#A3173F">Infected cows</div></div>
+</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:0;font-weight:700;font-size:26px;line-height:1.2">Find hidden mastitis before it spreads</h2>
+<p style="margin:0">Some infections never show in the milk. The guide suggests a California Mastitis Test (CMT) every <strong>fortnight</strong>. Dry cows get their own protection: dry-cow therapy and bismuth teat sealants.</p>
+</div>
+
+<div style="margin:16px 22px 0;background:#FFF2D0;border-radius:16px;padding:14px;font:400 14px Inter,sans-serif;line-height:1.55;color:#5B3A00"><span style="font-weight:700">Safety:</span> Dry-cow antibiotics should only be used on your vet’s advice, and you must respect the milk withdrawal period.</div>
+
+<div style="margin:22px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#A3173F">QUICK QUIZ</div>
+<div style="font:700 16px Inter,sans-serif;line-height:1.4">How long should the pre-dip stay on the teat?</div>
+<sc-for list="{{opts}}" as="o" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{o.picked}}" onClick="{{o.pick}}" style="text-align:left;border:2px solid {{o.bc}};background:{{o.bg}};color:#1A1F1B;border-radius:14px;padding:8px 14px;min-height:48px;font:500 15px Inter,sans-serif">{{o.label}}</button>
+</sc-for>
+<sc-if value="{{answered}}" hint-placeholder-val="{{true}}"><div style="font:600 14px Inter,sans-serif;line-height:1.5;color:{{fbInk}}">{{fb}}</div></sc-if>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>Pre-dip, wait 30 seconds, wipe dry, post-dip.</li>
+<li>Milk heifers, then healthy cows, then infected cows.</li>
+<li>Test with the CMT every fortnight.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">Fat is a fibre story</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">6 min · Chart</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3100}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const done = s.done || {0: true, 1: true};
+const pick = s.pick;
+const sD = [
+['Pre-dip', 'Dip each teat in 0.5% iodine or chlorhexidine.'],
+['Wait 30 seconds', 'Give the dip time to work on the skin.'],
+['Wipe dry', 'One clean, dry cloth or towel per cow.'],
+['Post-dip barrier', 'After milking, dip again so the open teat canal is sealed.']
+];
+let first = -1;
+sD.forEach((d, i) => { if (!done[i] && first < 0) first = i; });
+const steps = sD.map((d, i) => {
+const dn = !!done[i];
+const cur = i === first;
+return { name: d[0], note: d[1], done: dn, mark: dn ? '✓' : String(i + 1), dot: dn ? '#0F8A5F' : (cur ? '#123B2C' : '#9DA8A2'), bg: cur ? '#F2F0E6' : '#FFFFFF', bc: cur ? '#123B2C' : '#E7E5DA', pick: () => { const n = Object.assign({}, done); n[i] = !dn; this.setState({ done: n }); } };
+});
+const dn = Object.keys(done).filter((k) => done[k]).length;
+const labels = ['10 seconds', '30 seconds', '5 minutes'];
+const opts = labels.map((label, i) => {
+const picked = pick === i;
+const good = pick !== undefined && i === 1;
+const bad = picked && i !== 1;
+return { label: label, picked: picked, bc: good ? '#0F8A5F' : (bad ? '#E0386A' : '#E7E5DA'), bg: good ? '#DDF4EA' : (bad ? '#FFDDE5' : '#FFFFFF'), pick: () => { if (pick === undefined) this.setState({ pick: i }); } };
+});
+return {
+steps: steps, stepText: dn === 4 ? 'Routine complete for this cow' : dn + ' of 4 steps done',
+opts: opts, answered: pick !== undefined,
+fb: pick === 1 ? 'Correct. About 30 seconds gives the dip time to work.' : 'Not quite. The guide says about 30 seconds.',
+fbInk: pick === 1 ? '#0F5F46' : '#A3173F'
+};
+}
+}
+</script>
+</body>
+</html>

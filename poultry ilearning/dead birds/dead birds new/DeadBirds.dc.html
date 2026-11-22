@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: dead birds</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:3000px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">I-LEARNING · POULTRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:45%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#EADDFB;color:#5B2E91;border-radius:6px;padding:4px 8px">DEAD BIRDS</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">DISEASE CONTROL</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Dead birds: the 24-hour rule</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">Some birds will die on any farm. What you do in the next day decides whether it stays a small loss.</div>
+
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#EADDFB;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<circle cx="195" cy="95" r="62" fill="#FFFFFF"></circle>
+<path d="M195 55v42l28 16" stroke="#5B2E91" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+<text x="195" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#5B2E91">24 HOURS</text>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">A dead bird left in the shed spreads disease and draws flies, rats and stray dogs. It also smells.</p>
+<p style="margin:0">So the rule is simple. <strong>Take dead birds away from the live ones right away</strong>, keep them in a closed container, and dispose of them <strong>within 24 hours</strong>.</p>
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“Fewer birds die when you look after them well. Prevention is the first step.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Pick a method</h2>
+<p style="margin:0">Burying and composting are both safe when done right. Tap each to see what it takes.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5B2E91">TRY IT · METHOD PICKER</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{methods}}" as="m" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{m.on}}" onClick="{{m.pick}}" style="flex:1;min-height:44px;border:0;border-radius:999px;background:{{m.bg}};color:{{m.fg}};font:600 14px Inter,sans-serif">{{m.label}}</button>
+</sc-for>
+</div>
+<div style="background:#F2F0E6;border-radius:16px;padding:14px;font:400 14px Inter,sans-serif;line-height:1.5;color:#2F3F39">{{intro}}</div>
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+<li>
+<button type="button" aria-pressed="{{s.done}}" onClick="{{s.pick}}" style="width:100%;display:flex;align-items:flex-start;gap:12px;text-align:left;border:2px solid {{s.bc}};background:{{s.bg}};border-radius:16px;padding:10px 12px;min-height:56px;font-family:Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:30px;height:30px;border-radius:50%;background:{{s.dot}};color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 13px Inter,sans-serif">{{s.mark}}</span>
+<span style="display:flex;flex-direction:column;gap:2px"><span style="font:700 15px Inter,sans-serif">{{s.name}}</span><span style="font:400 13px Inter,sans-serif;line-height:1.45;color:#44504A">{{s.note}}</span></span>
+</button>
+</li>
+</sc-for>
+</ol>
+<div style="font:600 13px Inter,sans-serif;color:#5B2E91">{{stepText}}</div>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<h2 style="margin:0;font-weight:700;font-size:26px;line-height:1.2">What a burial pit looks like</h2>
+<p style="margin:0">A good pit is deep, narrow and covered. The lid keeps flies and rats out.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5B2E91">SEE IT · BURIAL PIT</div>
+<svg viewBox="0 0 330 260" width="100%" role="img" aria-label="Burial pit 3 to 4 metres deep with a lid, a soil and lime layer, and 3 metres to the water table">
+<rect x="0" y="40" width="330" height="190" fill="#E9D8BE"></rect>
+<rect x="115" y="40" width="100" height="150" fill="#8A5A36"></rect>
+<rect x="105" y="30" width="120" height="12" fill="#B8B4A5"></rect>
+<rect x="150" y="22" width="30" height="8" rx="3" fill="#5C6862"></rect>
+<rect x="115" y="40" width="100" height="26" fill="#C9A878"></rect>
+<text x="165" y="58" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1A1F1B">40 cm soil + lime</text>
+<text x="165" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">carcasses</text>
+<path d="M240 40v150" stroke="#1A1F1B" stroke-width="2"></path><path d="M236 46l4-6 4 6M236 184l4 6 4-6" stroke="#1A1F1B" stroke-width="2" fill="none"></path>
+<text x="250" y="120" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1A1F1B">3 to 4 m</text>
+<text x="250" y="136" font-family="Inter,sans-serif" font-size="11" fill="#1A1F1B">deep</text>
+<path d="M0 225h330" stroke="#5E9BE6" stroke-width="3" stroke-dasharray="6 4"></path>
+<text x="8" y="246" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1F4E9A">Water table: pit bottom stays at least 3 m above</text>
+<text x="110" y="16" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5B2E91">Fly-proof lid</text>
+</svg>
+<div style="font:400 14px Inter,sans-serif;line-height:1.5;color:#44504A">Pit width: 0.8 to 1.2 m. When it is full, cover it with 0.5 m of packed soil, heaped above ground. Keep pits at least 1 m apart.</div>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>Remove dead birds at once and dispose of them within 24 hours.</li>
+<li>Keep them in a closed container until then.</li>
+<li>Bury them deep and covered, or compost them in a roofed, fenced bay.</li>
+<li>Used vaccine vials and syringes follow the solid-waste rules, not the carcass pit.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding: 22px 16px 0; width: 350px; height: 308px">
+<div style="background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#5B2E91">BEFORE YOU MOVE ON · MY FARM</div>
+<sc-for list="{{checks}}" as="c" hint-placeholder-count="4">
+<button type="button" role="checkbox" aria-checked="{{c.on}}" onClick="{{c.toggle}}" style="display:flex;align-items:center;gap:12px;text-align:left;border:0;background:transparent;min-height:52px;padding:0;font:500 15px Inter,sans-serif;color:#1A1F1B"><span style="flex:none;width:28px;height:28px;border-radius:8px;border:2px solid #123B2C;background:{{c.fill}};color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{c.mark}}</span><span style="line-height:1.4">{{c.label}}</span></button>
+</sc-for>
+<div style="font:600 13px Inter,sans-serif;color:#5B2E91;padding-top:4px">{{checkText}}</div>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">Dry litter, fresh air: the daily shed routine</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">5 min · Routine planner</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+<div style="padding:18px 22px 40px;font:400 12px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Central Pollution Control Board, Environmental Guidelines for Poultry Farms (August 2021).</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3000}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const method = s.method || 'bury';
+const done = s.done || {};
+const chk = s.chk || {};
+
+const M = {
+bury: {
+intro: 'Best when you have space on the farm, with the ground water far below. Follow these steps for every bird.',
+steps: [
+['Separate the bird', 'Move it away from the live birds at once.'],
+['Keep it in a closed container', 'Until you dispose of it, never longer than 24 hours.'],
+['Drop it in the pit', 'Use the lid. Keep the pit closed otherwise.'],
+['Cover with soil and lime', 'A layer of soil at least 40 cm deep, with calcium hydroxide (lime).'],
+['Seal the full pit', 'Pack 0.5 m of soil on top, heaped above ground level.']
+]
+},
+compost: {
+intro: 'Best when you lose birds regularly. It needs a proper bay, but it can turn carcasses into compost.',
+steps: [
+['Separate the bird', 'Move it away from the live birds at once.'],
+['Keep it in a closed container', 'Until you dispose of it, never longer than 24 hours.'],
+['Layer it with a carbon source', 'Mix dead birds with straw or husk at about 20 to 25 parts carbon to 1.'],
+['Keep it damp, not soggy', 'About 60% moisture. Wetter smells, drier works slowly.'],
+['Watch the heat', '54 to 66°C is best. If it drops below 49°C after about a week, move it to the second-stage bay.']
+]
+}
+};
+const m = M[method];
+const methods = [['bury', 'Burial'], ['compost', 'Composting']].map((d) => { const on = method === d[0]; return { label: d[1], on: on, bg: on ? '#123B2C' : '#F2F0E6', fg: on ? '#FFFFFF' : '#1A1F1B', pick: () => this.setState({ method: d[0], done: {} }) }; });
+let first = -1;
+m.steps.forEach((d, i) => { if (!done[i] && first < 0) first = i; });
+const steps = m.steps.map((d, i) => {
+const dn = !!done[i];
+const cur = i === first;
+return { name: d[0], note: d[1], done: dn, mark: dn ? '✓' : String(i + 1), dot: dn ? '#0F8A5F' : (cur ? '#123B2C' : '#9DA8A2'), bg: cur ? '#F2F0E6' : '#FFFFFF', bc: cur ? '#123B2C' : '#E7E5DA', pick: () => { const n = Object.assign({}, done); n[i] = !dn; this.setState({ done: n }); } };
+});
+const dn = Object.keys(done).filter((k) => done[k]).length;
+
+const cD = ['I have closed containers for dead birds', 'Dead birds leave the shed the same day', 'My burial pit or compost bay is ready', 'Pits and bays are far from wells and homes'];
+const checks = cD.map((label, i) => { const on = !!chk[i]; return { label: label, on: on, fill: on ? '#123B2C' : '#FFFFFF', mark: on ? '✓' : '', toggle: () => { const n = Object.assign({}, chk); n[i] = !on; this.setState({ chk: n }); } }; });
+const cn = Object.keys(chk).filter((k) => chk[k]).length;
+
+return {
+methods: methods, intro: m.intro, steps: steps,
+stepText: dn === 5 ? 'All steps done' : dn + ' of 5 steps done',
+checks: checks, checkText: cn === 4 ? 'Ready for the 24-hour rule' : cn + ' of 4 done'
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article: build it right</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="width:390px;min-height:3300px;box-sizing:border-box;background:#FBFAF6;color:#1A1F1B;font-family:'Source Serif 4',Georgia,serif;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px 0 8px">
+<button type="button" aria-label="Back" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="font:700 12px Inter,sans-serif;letter-spacing:0.1em;color:#123B2C">FARM SETUP · POULTRY</div>
+<button type="button" aria-label="Save for later" style="width:44px;height:44px;border:0;background:transparent;color:#1A1F1B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="height:4px;background:#E7E5DA;margin:6px 0 0"><div style="width:70%;height:100%;background:#123B2C"></div></div>
+
+<div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:8px;flex-wrap:wrap;font:700 11px Inter,sans-serif;letter-spacing:0.1em">
+<span style="background:#DDF4EA;color:#0F6B50;border-radius:6px;padding:4px 8px">BUILD</span>
+<span style="background:#E1F0F3;color:#0F5F46;border-radius:6px;padding:4px 8px">POULTRY</span>
+</div>
+<h1 style="margin:0;font-weight:700;font-size:35px;line-height:1.1;letter-spacing:-0.02em">Build it right: the farm rule book</h1>
+<div style="font-size:19px;line-height:1.4;color:#44504A">Five parts of your farm that the guidelines care about most, with a checklist you can carry to the site.</div>
+
+</div>
+
+<div style="margin:16px 0 0;height:190px;background:#DDF4EA;overflow:hidden">
+<svg width="390" height="190" viewBox="0 0 390 190" aria-hidden="true">
+<rect y="150" width="390" height="40" fill="#C9D9B9"></rect>
+<rect x="30" y="80" width="110" height="70" fill="#FFFFFF"></rect><path d="M22 84l63-34 63 34z" fill="#1B7F5F"></path>
+<rect x="170" y="100" width="80" height="50" fill="#FFFFFF"></rect><path d="M164 104l46-24 46 24z" fill="#E07B00"></path>
+<rect x="280" y="112" width="80" height="38" fill="#C9A878"></rect><rect x="274" y="108" width="92" height="8" fill="#8A5A36"></rect>
+<path d="M190 150v-14M230 150v-14" stroke="#8A8576" stroke-width="3"></path>
+</svg>
+</div>
+
+<div style="padding:26px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<p style="margin:0">Most trouble on a poultry farm comes from four things: manure, dust, water and dead birds. Build for them from day one and you avoid expensive fixes.</p>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">Your build checklist</h2>
+<p style="margin:0">Open a section, tick what is done or planned. The ring tracks your progress.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;font-family:Inter,sans-serif">
+<div style="display:flex;align-items:center;gap:16px">
+<div style="flex:none;position:relative;width:84px;height:84px;border-radius:50%;background:{{ring}}"><div style="position:absolute;inset:10px;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 18px Inter,sans-serif">{{pct}}%</div></div>
+<div><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">TRY IT · BUILD CHECKLIST</div><div style="font:600 15px Inter,sans-serif;margin-top:4px">{{doneN}} of {{totalN}} items ready</div></div>
+</div>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="5">
+<div style="border:2px solid {{g.bc}};border-radius:18px;overflow:hidden">
+<button type="button" aria-expanded="{{g.open}}" onClick="{{g.toggle}}" style="width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:0;background:{{g.bg}};padding:12px 14px;min-height:56px;font-family:Inter,sans-serif;color:#1A1F1B">
+<span style="flex:none;width:34px;height:34px;border-radius:10px;background:{{g.tint}};color:{{g.ink}};display:flex;align-items:center;justify-content:center;font:700 14px Inter,sans-serif">{{g.n}}</span>
+<span style="flex:1;font:700 15px Inter,sans-serif">{{g.name}}</span>
+<span style="font:600 12px Inter,sans-serif;color:#44504A">{{g.count}}</span>
+<span aria-hidden="true" style="font:500 20px Inter,sans-serif">{{g.sign}}</span>
+</button>
+<sc-if value="{{g.open}}" hint-placeholder-val="{{false}}">
+<div style="padding:4px 14px 10px;display:flex;flex-direction:column;background:{{g.bg}}">
+<sc-for list="{{g.items}}" as="c" hint-placeholder-count="4">
+<button type="button" role="checkbox" aria-checked="{{c.on}}" onClick="{{c.toggle}}" style="display:flex;align-items:flex-start;gap:12px;text-align:left;border:0;background:transparent;min-height:48px;padding:6px 0;font:500 14px Inter,sans-serif;color:#1A1F1B"><span style="flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #123B2C;background:{{c.fill}};color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:700 13px Inter,sans-serif">{{c.mark}}</span><span style="line-height:1.45;padding-top:2px">{{c.label}}</span></button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 0;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.6">
+<div style="border-top:3px solid #123B2C;border-bottom:1px solid #DCDACF;padding:16px 0;font-weight:600;font-size:25px;line-height:1.25;letter-spacing:-0.01em">“Keep dry things dry, and wet things away from drinking water.”</div>
+<h2 style="margin:6px 0 0;font-weight:700;font-size:26px;line-height:1.2">The feed store, at a glance</h2>
+<p style="margin:0">Feed grinding makes dust, and spilled feed brings pests. The feed store sits near the farm gate, apart from the poultry sheds.</p>
+</div>
+
+<div style="margin:18px 16px 0;background:#FFFFFF;border:1px solid #DCDACF;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;font-family:Inter,sans-serif">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F6B50">SEE IT · FEED STORE LAYOUT</div>
+<svg viewBox="0 0 330 190" width="100%" role="img" aria-label="Feed store on raised ground near the gate, with a tyre dip, separate from the sheds">
+<rect x="0" y="150" width="330" height="40" fill="#E9D8BE"></rect>
+<rect x="10" y="132" width="110" height="18" fill="#B8B4A5"></rect>
+<rect x="18" y="70" width="94" height="62" fill="#FFFFFF" stroke="#8A8576" stroke-width="2"></rect>
+<path d="M10 74l55-30 55 30z" fill="#E07B00"></path>
+<text x="65" y="108" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1A1F1B">Feed store</text>
+<text x="65" y="164" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1A1F1B">raised 2 ft+</text>
+<rect x="150" y="136" width="44" height="14" rx="4" fill="#5E9BE6"></rect>
+<text x="172" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1F4E9A">Tyre dip</text>
+<text x="172" y="128" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#44504A">Farm gate</text>
+<rect x="224" y="76" width="96" height="74" fill="#F2F0E6" stroke="#8A8576" stroke-width="2" stroke-dasharray="5 4"></rect>
+<text x="272" y="118" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1A1F1B">Poultry sheds</text>
+</svg>
+</div>
+
+<div style="padding:28px 22px 0">
+<div style="background:#E5F27A;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:8px">
+<div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#2A3A00">KEY TAKEAWAYS</div>
+<ul style="margin:0;padding-left:20px;font-size:17px;line-height:1.55">
+<li>Store manure under cover, on a hard base, 2 m above the water table.</li>
+<li>Raise the feed store floor 2 ft, fit a dust collector, and keep a tyre dip at the gate.</li>
+<li>Collect wash water in a tank and use it on your green belt.</li>
+<li>Have a burial pit, compost bay or incinerator ready before you stock birds.</li>
+</ul>
+</div>
+</div>
+
+<div style="padding:22px 16px 0">
+<div style="background:#E1F0F3;border-radius:22px;padding:18px;display:flex;align-items:center;gap:14px;font-family:Inter,sans-serif">
+<div style="flex:1"><div style="font:700 11px Inter,sans-serif;letter-spacing:0.12em;color:#0F5F46">UP NEXT</div><div style="font:700 18px 'Source Serif 4',Georgia,serif;line-height:1.25;margin-top:4px">Poultry across India: where the birds are</div><div style="font:500 13px Inter,sans-serif;color:#44504A;margin-top:4px">4 min · State chart</div></div>
+<span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:50%;background:#123B2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font:600 20px Inter,sans-serif">›</span>
+</div>
+</div>
+
+<div style="padding:18px 22px 40px;font:400 12px Inter,sans-serif;line-height:1.5;color:#5C6862">Source: Central Pollution Control Board, Environmental Guidelines for Poultry Farms (August 2021).</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":3300}}'>
+class Component extends DCLogic {
+renderVals() {
+const s = this.state || {};
+const open = s.open === undefined ? 0 : s.open;
+const chk = s.chk || {'0-0': true, '0-1': true};
+
+const G = [
+['Manure store', '#FFE2D3', '#A04000', [
+'Base made of stone slabs, concrete or packed clay',
+'Floor at least 2 m above the water table',
+'Roof or cover so rain and run-off stay out',
+'Good ventilation so manure stays dry'
+]],
+['Feed mill and store', '#FFF2D0', '#7A4E00', [
+'On raised ground, near the gate, apart from the sheds',
+'Concrete floor, raised at least 2 ft above ground',
+'Dust collector on the mixing and grinding area',
+'Dust masks for workers',
+'Tyre dip at the farm entrance'
+]],
+['Wash water', '#DDEBFF', '#1F4E9A', [
+'Holding tank for wash water',
+'Green belt or garden to use the water on',
+'Calibrated, leak-free drinkers',
+'Drains that stop standing water'
+]],
+['Dead birds', '#EADDFB', '#5B2E91', [
+'Closed containers for storage',
+'Burial pit, compost bay or incinerator ready',
+'Compost bay at least 300 m from homes and 100 m from wells',
+'Bay fenced with 1.5 m mesh against dogs'
+]],
+['Medicines and waste', '#DDF4EA', '#0F6B50', [
+'Separate bin for used vaccine vials and syringes',
+'Disposal as per the Solid Waste Management Rules, 2016',
+'Antibiotics only on a vet’s prescription'
+]]
+];
+let doneN = 0, totalN = 0;
+const groups = G.map((g, gi) => {
+const items = g[3].map((label, ii) => {
+const k = gi + '-' + ii;
+const on = !!chk[k];
+totalN++;
+if (on) doneN++;
+return { label: label, on: on, fill: on ? '#123B2C' : '#FFFFFF', mark: on ? '✓' : '', toggle: () => { const n = Object.assign({}, chk); n[k] = !on; this.setState({ chk: n }); } };
+});
+const c = items.filter((x) => x.on).length;
+const o = open === gi;
+return { n: String(gi + 1), name: g[0], tint: g[1], ink: g[2], count: c + '/' + items.length, open: o, sign: o ? '−' : '+', bg: o ? '#FBFAF6' : '#FFFFFF', bc: o ? '#123B2C' : '#E7E5DA', items: items, toggle: () => this.setState({ open: o ? -1 : gi }) };
+});
+const pct = Math.round(doneN / totalN * 100);
+return { groups: groups, doneN: doneN, totalN: totalN, pct: pct, ring: 'conic-gradient(#0F8A5F 0 ' + pct + '%, #E7E5DA ' + pct + '% 100%)' };
+}
+}
+</script>
+</body>
+</html>

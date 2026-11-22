@@ -1,0 +1,508 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Farm Setup - Poultry</title>
+<!-- Tailwind CSS CDN with forms & container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Newsreader (Serif) & Inter (Sans) -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&amp;display=swap" rel="stylesheet">
+<!-- BEGIN: Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          colors: {
+            forest: {
+              DEFAULT: '#19382C',
+              hover: '#122920',
+              active: '#0c1b15'
+            },
+            terracotta: '#AF4B22',
+            offwhite: '#FBFBFA',
+            paper: '#FFFFFF',
+            accent: {
+              purple: '#EBE2FD',
+              blue: '#DCEBFE',
+              peach: '#FDE4D2',
+              mint: '#DCF3E6',
+              yellow: '#FEF2CB',
+              cyan: '#E5F3F3'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- END: Tailwind Configuration -->
+<!-- BEGIN: Custom Micro-Styles -->
+<style data-purpose="base-styling">
+    body {
+      background-color: #F8F9FA;
+      -webkit-tap-highlight-color: transparent;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+    .hero-gradient {
+      background: linear-gradient(180deg, #FDE6E9 0%, #E9EDFD 45%, #B7DCFC 100%);
+    }
+    /* Hide scrollbars for clean filter pills */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<!-- END: Custom Micro-Styles -->
+</head>
+<body class="text-[#202124] antialiased flex justify-center selection:bg-emerald-100 min-h-screen">
+<!-- Mobile iOS Frame Wrapper -->
+<div class="w-full max-w-md bg-[#FCFBF8] min-h-screen flex flex-col border-x border-[#EAE9E4] pb-28 relative shadow-sm">
+<!-- BEGIN: TopHeader -->
+<header class="px-5 pt-4 pb-2">
+<!-- iOS Status Bar Space / Top Bar Meta -->
+<div class="flex items-center justify-between text-xs font-semibold tracking-wider uppercase mb-5">
+<span class="text-[#2B3831] font-bold tracking-widest text-[13px]">FARM ONE</span>
+<div class="flex items-center gap-1.5 bg-[#E6F4EA] text-[#137333] px-3 py-1 rounded-full text-[11px] font-medium border border-[#CEEAD6]">
+<span class="h-2 w-2 rounded-full bg-[#34A853] animate-pulse"></span>
+          Works offline
+        </div>
+</div>
+<!-- Main Title -->
+<h1 class="font-serif text-[42px] leading-[1.08] font-bold tracking-tight text-[#161B18] mb-2">
+        Farm Setup
+      </h1>
+<!-- Category Tag -->
+<p class="text-terracotta text-xs font-extrabold tracking-[0.16em] uppercase mb-3">
+        Poultry
+      </p>
+<!-- Subtitle Description -->
+<p class="text-[#4A554E] text-[15.5px] leading-relaxed font-normal">
+        Everything you need to know before you start a poultry farm: the birds, the site, the rules and the build. Written to be read, with tools you can try.
+      </p>
+</header>
+<!-- END: TopHeader -->
+<!-- BEGIN: SearchAndFilters -->
+<section class="px-5 mt-4" data-purpose="search-and-filters">
+<!-- Search Bar -->
+<div class="relative flex items-center">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#707973]">
+<svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<input class="w-full pl-10 pr-4 py-2.5 bg-white border border-[#D5D8D3] rounded-full text-sm text-[#1F2923] placeholder-[#79837B] focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent transition shadow-xs" id="searchInput" placeholder="Search siting, consent, housing" type="text">
+</div>
+<!-- Category Filter Pills -->
+
+</section>
+<!-- END: SearchAndFilters -->
+<!-- BEGIN: HeroFeaturedCard -->
+<section class="px-5 mt-5" data-purpose="featured-hero">
+<div class="hero-gradient rounded-[28px] p-6 shadow-sm border border-white/60 relative overflow-hidden">
+<!-- Tag -->
+<p class="text-[#842721] font-bold text-[11px] tracking-wider uppercase mb-2">
+          START HERE · 6 MIN READ
+        </p>
+<!-- Card Title -->
+<h2 class="font-serif text-[28px] leading-[1.18] font-bold text-[#111915] mb-3">
+          Which kind of poultry farm are you, and what does the law ask?
+        </h2>
+<!-- Card Subtitle -->
+<p class="text-[#394940] text-[15px] leading-snug mb-5 font-normal">
+          Enter your bird count and see your farm size, the permission you need, and how long it lasts.
+        </p>
+<!-- Sub-features/Tags -->
+<div class="flex flex-wrap gap-2 mb-5">
+<button class="bg-white/90 hover:bg-white text-[#213027] text-xs font-semibold px-3 py-1.5 rounded-full shadow-xs border border-white transition flex items-center gap-1 active:scale-95">
+<svg class="w-3.5 h-3.5 text-emerald-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6v12m6-6H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+            Bird counter
+          </button>
+<button class="bg-white/90 hover:bg-white text-[#213027] text-xs font-semibold px-3 py-1.5 rounded-full shadow-xs border border-white transition flex items-center gap-1 active:scale-95">
+<svg class="w-3.5 h-3.5 text-emerald-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Consent guide
+          </button>
+</div>
+<!-- Call to Action Button -->
+<button class="w-full bg-forest text-white py-3.5 rounded-full font-semibold text-[15px] text-center shadow hover:bg-forest-hover active:bg-forest-active transition active:scale-[0.99]">
+          Read the guide
+        </button>
+</div>
+</section>
+<!-- END: HeroFeaturedCard -->
+<!-- BEGIN: JourneySection -->
+<section class="px-5 mt-8" data-purpose="guides-journey">
+<!-- Section Header -->
+<div class="flex items-baseline justify-between mb-4 border-b border-[#252826] pb-1.5">
+<h3 class="font-serif text-[22px] font-bold text-[#141816]">
+          Follow the journey
+        </h3>
+<span class="text-xs text-[#5D6B63] font-medium tracking-wide">
+<span id="guideCount">5</span> guides
+        </span>
+</div>
+<!-- Step List -->
+<div class="flex flex-col gap-3" id="guideList">
+<!-- Step 1 -->
+<article class="guide-item p-4 rounded-2xl bg-white border border-[#EAE9E4] shadow-xs flex gap-4 cursor-pointer group active:scale-[0.99] transition hover:border-[#D5D8D3]">
+<div class="flex-shrink-0">
+<div class="w-9 h-9 rounded-full bg-accent-purple text-[#422C74] font-semibold text-sm flex items-center justify-center">
+              1
+            </div>
+</div>
+<div class="flex-grow pt-0.5">
+<span class="block text-[10.5px] font-bold uppercase tracking-wider text-[#6942A8] mb-0.5">PLAN</span>
+<h4 class="font-serif text-[17px] leading-tight font-bold text-[#161B18] group-hover:text-emerald-900 transition mb-1">
+              From egg to bird: how a poultry farm works
+            </h4>
+<p class="text-[#515D56] text-[13.5px] leading-snug mb-1">
+              Breeders, hatcheries, layers and broilers, week by week.
+            </p>
+<p class="text-[#7F8B83] text-xs">
+              6 min · Life-cycle timeline
+            </p>
+</div>
+</article>
+<!-- Step 2 -->
+<article class="guide-item p-4 rounded-2xl bg-white border border-[#EAE9E4] shadow-xs flex gap-4 cursor-pointer group active:scale-[0.99] transition hover:border-[#D5D8D3]">
+<div class="flex-shrink-0">
+<div class="w-9 h-9 rounded-full bg-accent-blue text-[#1E4D7E] font-semibold text-sm flex items-center justify-center">
+              2
+            </div>
+</div>
+<div class="flex-grow pt-0.5">
+<span class="block text-[10.5px] font-bold uppercase tracking-wider text-[#2B6CB0] mb-0.5">PLAN</span>
+<h4 class="font-serif text-[17px] leading-tight font-bold text-[#161B18] group-hover:text-emerald-900 transition mb-1">
+              What a poultry farm costs and who can build it?</h4>
+<p class="text-[#515D56] text-[13.5px] leading-snug mb-1">Pick a farm and learn how to manage the finances.
+            </p>
+<p class="text-[#7F8B83] text-xs">
+              5 min · Finance checker
+            </p>
+</div>
+</article>
+<!-- Step 3 -->
+<article class="guide-item p-4 rounded-2xl bg-white border border-[#EAE9E4] shadow-xs flex gap-4 cursor-pointer group active:scale-[0.99] transition hover:border-[#D5D8D3]">
+<div class="flex-shrink-0">
+<div class="w-9 h-9 rounded-full bg-accent-peach text-[#8C461E] font-semibold text-sm flex items-center justify-center">
+              3
+            </div>
+</div>
+<div class="flex-grow pt-0.5">
+<span class="block text-[10.5px] font-bold uppercase tracking-wider text-terracotta mb-0.5">REGISTER</span>
+<h4 class="font-serif text-[17px] leading-tight font-bold text-[#161B18] group-hover:text-emerald-900 transition mb-1">Setting rules: where can you build poultry farms?</h4>
+<p class="text-[#515D56] text-[13.5px] leading-snug mb-1">How far from homes, water and roads.&nbsp;</p>
+<p class="text-[#7F8B83] text-xs">
+              6 min · Rules and overview</p>
+</div>
+</article>
+<!-- Step 4 -->
+<article class="guide-item p-4 rounded-2xl bg-white border border-[#EAE9E4] shadow-xs flex gap-4 cursor-pointer group active:scale-[0.99] transition hover:border-[#D5D8D3]">
+<div class="flex-shrink-0">
+<div class="w-9 h-9 rounded-full bg-accent-mint text-[#1A6140] font-semibold text-sm flex items-center justify-center">
+              4
+            </div>
+</div>
+<div class="flex-grow pt-0.5">
+<span class="block text-[10.5px] font-bold uppercase tracking-wider text-[#2E7D32] mb-0.5">BUILD</span>
+<h4 class="font-serif text-[17px] leading-tight font-bold text-[#161B18] group-hover:text-emerald-900 transition mb-1">
+              Build it right: the farm rule book
+            </h4>
+<p class="text-[#515D56] text-[13.5px] leading-snug mb-1">
+              Manure store, feed store, wash water and dead-bird facilities.
+            </p>
+<p class="text-[#7F8B83] text-xs">
+              7 min · Build checklist
+            </p>
+</div>
+</article>
+<!-- Step 5 -->
+<article class="guide-item p-4 rounded-2xl bg-white border border-[#EAE9E4] shadow-xs flex gap-4 cursor-pointer group active:scale-[0.99] transition hover:border-[#D5D8D3]">
+<div class="flex-shrink-0">
+<div class="w-9 h-9 rounded-full bg-accent-yellow text-[#7A610A] font-semibold text-sm flex items-center justify-center">
+              5
+            </div>
+</div>
+<div class="flex-grow pt-0.5">
+<span class="block text-[10.5px] font-bold uppercase tracking-wider text-[#A17900] mb-0.5">MARKET</span>
+<h4 class="font-serif text-[17px] leading-tight font-bold text-[#161B18] group-hover:text-emerald-900 transition mb-1">
+              Poultry across India: where the birds are
+            </h4>
+<p class="text-[#515D56] text-[13.5px] leading-snug mb-1">
+              See how your state ranks.
+            </p>
+<p class="text-[#7F8B83] text-xs">
+              4 min · State chart
+            </p>
+</div>
+</article>
+</div>
+</section>
+<!-- END: JourneySection -->
+<!-- BEGIN: CalloutBanner -->
+<section class="px-5 mt-7" data-purpose="callout-card">
+<div class="bg-accent-cyan/70 border border-[#D1E6E6] rounded-2xl p-5 shadow-xs">
+<h4 class="font-serif text-[18px] font-bold text-[#112423] mb-1.5">
+          Already running a farm?
+        </h4>
+<p class="text-[#394B4A] text-sm leading-relaxed mb-3">
+          Pair these guides with the i-Learning poultry reads: composting, dead birds, shed care and pest control.
+        </p>
+<a class="inline-flex items-center text-[13.5px] font-bold text-[#0B4A45] hover:text-[#063330] group" href="#ilearning" onclick="showToast('Redirecting to i-Learning portal...')">
+<span>Go to i-Learning</span>
+<svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+</div>
+</section>
+<!-- END: CalloutBanner -->
+<!-- BEGIN: BottomNavigation -->
+<nav class="fixed bottom-0 max-w-md w-full bg-white/95 backdrop-blur-md border-t border-[#EAE9E4] px-6 py-2.5 flex items-center justify-around z-20 shadow-lg" data-purpose="mobile-navbar">
+<!-- Nav Item: Guides (Active) -->
+<button class="flex flex-col items-center text-forest group" onclick="setActiveNav(this)">
+<svg class="w-6 h-6 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
+<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-semibold mt-1">Setup</span>
+</button>
+<!-- Nav Item: Calculator -->
+<button class="flex flex-col items-center text-[#7E8B83] hover:text-forest transition" onclick="openModal('counterModal'); setActiveNav(this)">
+<svg class="w-6 h-6 stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-medium mt-1">Calculator</span>
+</button>
+<!-- Nav Item: Checklists -->
+<button class="flex flex-col items-center text-[#7E8B83] hover:text-forest transition" onclick="openModal('checklistModal'); setActiveNav(this)">
+<svg class="w-6 h-6 stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-medium mt-1">Checklist</span>
+</button>
+<!-- Nav Item: Offline Saved -->
+<button class="flex flex-col items-center text-[#7E8B83] hover:text-forest transition" onclick="showToast('4 articles saved offline.'); setActiveNav(this)">
+<svg class="w-6 h-6 stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-medium mt-1">Saved</span>
+</button>
+</nav>
+<!-- END: BottomNavigation -->
+</div>
+<!-- BEGIN: InteractiveModals -->
+<!-- 1. Bird Counter / Farm Category Calculator Modal -->
+
+<!-- 2. Generic Information / Guide Modal -->
+
+<!-- 3. Dynamic Step Modal -->
+
+<!-- 4. Checklist Quick Modal -->
+
+<!-- Toast Notification -->
+
+<!-- END: InteractiveModals -->
+<!-- BEGIN: Logic & Interactivity Script -->
+<script data-purpose="app-logic">
+    // Step Data definitions
+    const stepDatabase = {
+      1: {
+        tag: "PLAN",
+        title: "From egg to bird: how a poultry farm works",
+        content: `
+          <p>Understanding production lifecycles is key before buying stock:</p>
+          <ul class="list-disc pl-4 space-y-1 mt-2">
+            <li><strong>Broilers:</strong> Reared specifically for meat. Fast turnaround from day-old chick to harvest in 35-42 days.</li>
+            <li><strong>Layers:</strong> Reared for table eggs. Growing cycle takes 18-20 weeks, laying cycle spans up to 72 weeks.</li>
+            <li><strong>Hatcheries &amp; Breeders:</strong> High-bio-security parent farms producing fertile eggs for commercial incubation.</li>
+          </ul>
+        `
+      },
+      2: {
+        tag: "PLAN · SITING",
+        title: "Where can you build? The siting rules",
+        content: `
+          <p>National environmental guidelines dictate strict placement boundaries:</p>
+          <ul class="list-disc pl-4 space-y-1 mt-2">
+            <li><strong>500 meters:</strong> Minimum distance from residential areas, schools, hospitals, and public parks.</li>
+            <li><strong>200 meters:</strong> Minimum distance from major water reservoirs, rivers, and canals.</li>
+            <li><strong>100 meters:</strong> Distance from national and state highways to mitigate odour impact.</li>
+          </ul>
+        `
+      },
+      3: {
+        tag: "REGISTER · LEGAL",
+        title: "Which kind of poultry farm are you?",
+        content: `
+          <p>Your bird count directly decides state pollution approvals:</p>
+          <ul class="list-disc pl-4 space-y-1 mt-2">
+            <li><strong>Small (5,000–25,000):</strong> Green Category. Self-declaration and basic SPCB consent.</li>
+            <li><strong>Medium (25,000–1,00,000):</strong> Green/Orange boundary. Requires engineered waste pits.</li>
+            <li><strong>Large (>1,00,000 birds):</strong> Full Orange Category status requiring detailed environment plans and quarterly compliance reports.</li>
+          </ul>
+        `
+      },
+      4: {
+        tag: "BUILD · INFRASTRUCTURE",
+        title: "Build it right: the farm rule book",
+        content: `
+          <p>Engineering recommendations for farm safety and biosecurity:</p>
+          <ul class="list-disc pl-4 space-y-1 mt-2">
+            <li>Orient sheds <strong>East-to-West</strong> to reduce direct sunlight and internal heat load.</li>
+            <li>Maintain clear distance of 30-40 feet between adjacent sheds for cross ventilation.</li>
+            <li>Concrete floors with smooth screed for effective washing between bird batches.</li>
+            <li>Dedicated dry covered shed for manure storage during monsoon months.</li>
+          </ul>
+        `
+      },
+      5: {
+        tag: "MARKET · DISTRIBUTION",
+        title: "Poultry across India: where the birds are",
+        content: `
+          <p>Market dynamics and leading clusters across the states:</p>
+          <ul class="list-disc pl-4 space-y-1 mt-2">
+            <li><strong>Tamil Nadu &amp; Andhra Pradesh:</strong> Largest egg production hubs (Namakkal cluster).</li>
+            <li><strong>Haryana &amp; Punjab:</strong> Primary suppliers for North Indian urban centers.</li>
+            <li><strong>Maharashtra &amp; West Bengal:</strong> Rapidly expanding integrated broiler contract operations.</li>
+          </ul>
+        `
+      }
+    };
+
+    // Modal Control Functions
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Step detail viewer
+    function openStepDetails(stepNumber) {
+      const step = stepDatabase[stepNumber];
+      if (!step) return;
+      document.getElementById('stepTag').innerText = step.tag;
+      document.getElementById('stepTitle').innerText = step.title;
+      document.getElementById('stepContent').innerHTML = step.content;
+      openModal('stepModal');
+    }
+
+    // Bird Calculator logic
+    function calculateFarmCategory() {
+      const birds = parseInt(document.getElementById('birdInput').value) || 0;
+      const resName = document.getElementById('resCategoryName');
+      const resConsent = document.getElementById('resConsent');
+      const resDesc = document.getElementById('resDescription');
+      const resBuffer = document.getElementById('resBuffer');
+
+      if (birds < 5000) {
+        resName.innerText = "Backyard / Unregulated (<5,000 birds)";
+        resConsent.innerText = "No SPCB CTO Needed";
+        resDesc.innerText = "Exempt from complex state board permissions. Must follow basic local sanitation and hygiene guidelines.";
+        resBuffer.innerText = "100 meters";
+      } else if (birds <= 25000) {
+        resName.innerText = "Small Farm (5,000 - 25,000 birds)";
+        resConsent.innerText = "Green Category CTO";
+        resDesc.innerText = "Consent to Operate required from SPCB. Simple fee structure with 5-year renewal.";
+        resBuffer.innerText = "500 meters";
+      } else if (birds <= 100000) {
+        resName.innerText = "Medium Farm (25,000 - 1,00,000 birds)";
+        resConsent.innerText = "Full CTE & CTO Required";
+        resDesc.innerText = "Requires both Consent to Establish and Consent to Operate. Siting verification enforced.";
+        resBuffer.innerText = "500 meters";
+      } else {
+        resName.innerText = "Large Farm (>1,00,000 birds)";
+        resConsent.innerText = "Orange Category Clearance";
+        resDesc.innerText = "Strict regulatory oversight with environmental impact reporting and compulsory mechanical manure drying.";
+        resBuffer.innerText = "1,000 meters";
+      }
+    }
+
+    // Search filter interaction
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase().trim();
+      const items = document.querySelectorAll('.guide-item');
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = 'flex';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      document.getElementById('guideCount').innerText = visibleCount;
+    });
+
+    // Pill Filtering Demo
+    const filterPills = document.querySelectorAll('.filter-pill');
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', function() {
+        filterPills.forEach(p => {
+          p.classList.remove('bg-forest', 'text-white');
+          p.classList.add('bg-white', 'text-[#3E4942]', 'border', 'border-[#D8DCD6]');
+        });
+        this.classList.remove('bg-white', 'text-[#3E4942]', 'border', 'border-[#D8DCD6]');
+        this.classList.add('bg-forest', 'text-white');
+        
+        const type = this.getAttribute('data-filter');
+        showToast(type === 'poultry' ? 'Showing Poultry guides' : `Showing ${this.innerText} guides`);
+      });
+    });
+
+    // Toast notification helper
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toastMessage');
+      msg.innerText = message;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    // Active bottom navigation styling
+    function setActiveNav(button) {
+      const navButtons = document.querySelectorAll('nav button');
+      navButtons.forEach(btn => {
+        btn.classList.remove('text-forest');
+        btn.classList.add('text-[#7E8B83]');
+      });
+      button.classList.add('text-forest');
+      button.classList.remove('text-[#7E8B83]');
+    }
+
+    // Modal background click to close
+    window.addEventListener('click', function(e) {
+      ['counterModal', 'guideModal', 'stepModal', 'checklistModal'].forEach(id => {
+        const modal = document.getElementById(id);
+        if (e.target === modal) {
+          closeModal(id);
+        }
+      });
+    });
+  </script>
+<!-- END: Logic & Interactivity Script -->
+
+
+</body></html>

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useBackLayer } from '../../lib/backStack';
 import { fetchAnimals, getCachedAnimals, SetupError, type Animal, type Species } from '../../lib/animals';
 import {
   deleteRecord,
@@ -119,6 +120,10 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
   const [rescheduleItem, setRescheduleItem] = useState<DueItem | null>(null);
   const [rescheduleDate, setRescheduleDate] = useState<{ date: Date; note: string } | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+
+  useBackLayer(animalMenuOpen, () => setAnimalMenuOpen(false));
+  useBackLayer(typeMenuOpen, () => setTypeMenuOpen(false));
+  useBackLayer(rescheduleItem !== null, () => setRescheduleItem(null));
 
   useEffect(() => {
     let cancelled = false;
@@ -286,16 +291,16 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
         <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: st.strip }} />
         <div className="flex items-center gap-3 pl-1 min-w-0">
           <div
-            className="w-12 h-12 rounded-full flex items-center justify-center text-[17.5px] font-bold shrink-0"
+            className="w-12 h-12 rounded-full flex items-center justify-center text-[19.2px] font-bold shrink-0"
             style={{ backgroundColor: st.avatarBg, color: st.avatarText }}
           >
             {animalName(it.animal).charAt(0).toUpperCase()}
           </div>
           <div className="flex flex-col min-w-0">
-            <h3 className="text-[16.5px] font-bold text-[#191c1b] truncate">{animalName(it.animal)}</h3>
-            <p className="text-[14.5px] text-[#404945] font-medium truncate">{it.ruleName}</p>
-            <span className="text-[11px] font-semibold mt-0.5 flex items-center gap-1" style={{ color: st.timing }}>
-              <Icon name="schedule" size={13} />
+            <h3 className="text-[18.2px] font-bold text-[#191c1b] truncate">{animalName(it.animal)}</h3>
+            <p className="text-[16px] text-[#404945] font-medium truncate">{it.ruleName}</p>
+            <span className="text-[12.1px] font-semibold mt-0.5 flex items-center gap-1" style={{ color: st.timing }}>
+              <Icon name="schedule" size={14} />
               {it.doseLabel} · {timingText(it.daysFromToday)}
             </span>
           </div>
@@ -305,18 +310,18 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
             type="button"
             aria-label={`Reschedule ${animalName(it.animal)}`}
             onClick={() => openReschedule(it)}
-            className="w-[42px] h-[42px] rounded-full bg-[#eceeec] hover:bg-[#e6e9e7] text-[#404945] flex items-center justify-center transition-transform active:scale-95 cursor-pointer"
+            className="w-[48px] h-[48px] rounded-full bg-[#eceeec] hover:bg-[#e6e9e7] text-[#404945] flex items-center justify-center transition-transform active:scale-95 cursor-pointer"
           >
-            <Icon name="calendar_month" size={21} />
+            <Icon name="calendar_month" size={24} />
           </button>
           <button
             type="button"
             aria-label={`Mark ${animalName(it.animal)} ${it.ruleName} done`}
             onClick={() => markDone(it)}
             disabled={savingKeys.includes(it.key)}
-            className="w-[42px] h-[42px] rounded-full bg-[#bde6d7] text-[#284e43] hover:bg-[#003629] hover:text-white flex items-center justify-center transition-all active:scale-95 shadow-sm cursor-pointer"
+            className="w-[48px] h-[48px] rounded-full bg-[#bde6d7] text-[#284e43] hover:bg-[#003629] hover:text-white flex items-center justify-center transition-all active:scale-95 shadow-sm cursor-pointer"
           >
-            <Icon name="check" size={21} fill />
+            <Icon name="check" size={24} fill />
           </button>
         </div>
       </div>
@@ -402,24 +407,24 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
   const pillOff = 'bg-white text-[#404945]';
 
   return (
-    <div className="h-full w-full overflow-hidden bg-[#f8faf8]">
+    <div className="h-full w-full overflow-hidden" style={{ background: 'linear-gradient(rgb(209,243,255) 0%, rgb(209,243,255) 42%, rgb(199,255,204) 60%, rgb(199,255,204) 100%)' }}>
       <div
-        className="flex flex-col relative overflow-hidden bg-[#f8faf8] text-[#191c1b] font-['Plus_Jakarta_Sans',sans-serif] antialiased"
+        className="flex flex-col relative overflow-hidden text-[#191c1b] font-['Plus_Jakarta_Sans',sans-serif] antialiased"
         style={{ width: `${100 / UI_SCALE}%`, height: `${100 / UI_SCALE}%`, transform: `scale(${UI_SCALE})`, transformOrigin: 'top left' }}
       >
         {/* Header */}
-        <header className="shrink-0 z-30 bg-[#f8faf8]/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
-          <div className="h-16 px-4 flex items-center justify-between">
+        <header className="shrink-0 z-30 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
+          <div className="h-16 pl-2 pr-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 aria-label="Go back"
                 onClick={onBack}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-[#003629] hover:bg-[#e6e9e7] transition-colors active:scale-95 cursor-pointer"
+                className="w-10 h-10 rounded-full bg-white border border-[#dde6e0] shadow-sm flex items-center justify-center text-[#003629] hover:bg-[#e6e9e7] transition-colors active:scale-95 cursor-pointer"
               >
                 <Icon name="arrow_back" size={24} />
               </button>
-              <h1 className="text-[18px] font-semibold text-[#003629] tracking-tight">Vaccination Schedule</h1>
+              <h1 className="text-[19.8px] font-semibold text-[#003629] tracking-tight">Vaccination Schedule</h1>
             </div>
             <div className="w-10 h-10 rounded-full bg-[#bde6d7] flex items-center justify-center">
               <Icon name="vaccines" size={22} className="text-[#003629]" />
@@ -429,20 +434,20 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
 
         {/* Toast */}
         <div
-          className={`absolute top-20 left-1/2 -translate-x-1/2 z-50 max-w-[90%] flex items-center gap-2 px-4 py-2 bg-[#003629] text-white rounded-full shadow-lg transition-all duration-300 pointer-events-none ${
+          className={`absolute top-20 left-1/2 -translate-x-1/2 z-50 max-w-[90%] flex items-center gap-2 px-4 py-2.5 text-[#1F4E7A] rounded-2xl border border-[#bcd9f2]/80 backdrop-blur-md shadow-[0_8px_22px_-8px_rgba(60,120,190,0.45)] transition-all duration-300 pointer-events-none ${
             toast ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-12'
           }`}
+          style={{ background: 'rgba(214,234,250,0.94)' }}
         >
-          <Icon name="check_circle" size={18} fill className="text-[#baeed9] shrink-0" />
-          <span className="text-[11px] font-bold">{toast}</span>
+          <Icon name="check_circle" size={18} fill className="text-[#3f7fc0] shrink-0" />
+          <span className="text-[11.5px] font-semibold leading-snug">{toast}</span>
         </div>
 
         <main className="flex-1 overflow-y-auto pb-8 scrollbar-none">
           {/* Date header */}
           <div className="px-4 pt-1 pb-2 flex items-center justify-between">
             <div>
-              <span className="text-[10px] text-[#40665a] uppercase tracking-wider block font-semibold">Livestock Health Docket</span>
-              <p className="text-[16px] text-[#191c1b] font-bold">{fmtDayFull(days[dayIndex])}</p>
+              <p className="text-[21.1px] text-[#191c1b] font-bold">{fmtDayFull(days[dayIndex])}</p>
             </div>
             <span className="text-[10px] px-2.5 py-1 rounded-full font-semibold bg-[#bde6d7] text-[#003629]">
               {dayIndex === 0 ? 'Today' : dayIndex === 1 ? 'Tomorrow' : `In ${dayIndex} days`}
@@ -489,15 +494,15 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
             <div className="w-full bg-white rounded-2xl p-2 shadow-sm flex items-center justify-between gap-1">
               <div className="flex-1 flex items-center justify-center gap-1 py-2 px-1 bg-[#ffdad6]/40 rounded-xl">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#ba1a1a]" />
-                <span className="text-[11px] text-[#ba1a1a] font-bold tracking-tight">{overdue.length} overdue</span>
+                <span className="text-[13.3px] text-[#ba1a1a] font-bold tracking-tight">{overdue.length} overdue</span>
               </div>
               <div className="flex-1 flex items-center justify-center gap-1 py-2 px-1 bg-[#f4ded1]/40 rounded-xl">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#B26A00]" />
-                <span className="text-[11px] text-[#B26A00] font-bold tracking-tight">{week.length} this week</span>
+                <span className="text-[13.3px] text-[#B26A00] font-bold tracking-tight">{week.length} this week</span>
               </div>
               <div className="flex-1 flex items-center justify-center gap-1 py-2 px-1 bg-[#e6e9e7]/60 rounded-xl">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#6B7468]" />
-                <span className="text-[11px] text-[#6B7468] font-bold tracking-tight">{later.length} later</span>
+                <span className="text-[13.3px] text-[#6B7468] font-bold tracking-tight">{later.length} later</span>
               </div>
             </div>
           </div>
@@ -505,7 +510,7 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
           {/* Filters */}
           <div className="px-4 mt-3 flex flex-col gap-2">
             <div className="w-full overflow-x-auto scrollbar-none">
-              <div className="flex items-center gap-1 min-w-max py-0.5">
+              <div className="flex items-center gap-1 min-w-max px-1 pt-0.5 pb-2">
                 {SPECIES_CHIPS.map((c) => (
                   <button
                     key={c.id}
@@ -515,6 +520,7 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
                       chooseSpecies(c.id);
                     }}
                     className={`px-[16px] py-[7.7px] rounded-full text-[14.3px] transition-transform active:scale-95 cursor-pointer ${mode === 'due' && speciesFilter === c.id ? pillOn : `${pillOff} font-bold`}`}
+                    style={{ boxShadow: '0 2px 6px -1px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.08)' }}
                   >
                     {c.label}
                   </button>
@@ -525,6 +531,7 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
                   className={`px-[16px] py-[7.7px] rounded-full text-[14.3px] transition-transform active:scale-95 cursor-pointer ${
                     mode === 'done' ? 'bg-[#cfe8fb] text-[#0a3d62] font-bold shadow-sm' : `${pillOff} font-bold`
                   }`}
+                  style={{ boxShadow: '0 2px 6px -1px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.08)' }}
                 >
                   Done
                 </button>
@@ -536,7 +543,7 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
               <button
                 type="button"
                 onClick={() => setTypeMenuOpen((o) => !o)}
-                className="w-full bg-white flex items-center justify-between px-[14.5px] py-3 rounded-full shadow-sm hover:bg-[#f2f4f2] transition-colors cursor-pointer"
+                className="w-full bg-white flex items-center justify-between px-[14.5px] py-3 rounded-full shadow-[0_4px_14px_-2px_rgba(0,0,0,0.11),0_1px_4px_rgba(0,0,0,0.05)] hover:bg-[#f2f4f2] transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2">
                   <Icon name="filter_list" size={21} className="text-[#003629]" />
@@ -547,8 +554,8 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
               {typeMenuOpen && (
                 <>
                   <div className="fixed inset-0 z-20" onClick={() => setTypeMenuOpen(false)} />
-                  <div className="absolute left-0 right-0 top-12 mt-1 z-30 bg-white rounded-2xl shadow-xl p-1 flex flex-col gap-1">
-                    {TYPE_OPTIONS.map((o) => {
+                  <div className="absolute left-0 right-0 top-12 mt-1 z-30 bg-white rounded-2xl shadow-[0_10px_30px_-4px_rgba(0,0,0,0.28),0_2px_8px_rgba(0,0,0,0.12)] border border-[#dde6e0] p-1 flex flex-col gap-1">
+                    {TYPE_OPTIONS.map((o, idx) => {
                       const on = typeFilter === o.id;
                       return (
                         <button
@@ -558,18 +565,20 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
                             setTypeFilter(o.id);
                             setTypeMenuOpen(false);
                           }}
-                          className={`text-left px-3 py-2 rounded-xl hover:bg-[#eceeec] text-[13px] flex items-center justify-between cursor-pointer ${
+                          className={`text-left px-3 py-2 rounded-xl hover:bg-[#eceeec] text-[14.3px] flex items-center justify-between cursor-pointer ${
+                            idx < TYPE_OPTIONS.length - 1 ? 'border-b border-[#e3ebe5]' : ''
+                          } ${
                             on ? 'text-[#191c1b]' : 'text-[#404945]'
                           }`}
                         >
                           <span>{o.label}</span>
                           <div className="flex items-center gap-1 ml-auto">
                             <span
-                              className={`px-2 py-0.5 rounded-full font-semibold text-[12px] ${on ? 'bg-[#bde6d7] text-[#003629]' : 'bg-[#eceeec] text-[#404945]'}`}
+                              className={`px-2 py-0.5 rounded-full font-semibold text-[13.2px] ${on ? 'bg-[#bde6d7] text-[#003629]' : 'bg-[#eceeec] text-[#404945]'}`}
                             >
                               {typeCount(o.id)}
                             </span>
-                            {on && <Icon name="check" size={16} className="text-[#003629]" />}
+                            {on && <Icon name="check" size={17.6} className="text-[#003629]" />}
                           </div>
                         </button>
                       );

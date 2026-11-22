@@ -75,3 +75,30 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* i-Learning topic card illustrations */
+@keyframes il-cow-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(-1.5deg); }
+}
+@keyframes il-tail-wag {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(18deg); }
+}
+@keyframes il-chick-peck {
+  0%, 55%, 100% { transform: translateY(0) rotate(0deg); }
+  65% { transform: translateY(1px) rotate(9deg); }
+  75% { transform: translateY(0) rotate(0deg); }
+  85% { transform: translateY(1px) rotate(9deg); }
+}
+@keyframes il-chick-hop {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+.il-cow { animation: il-cow-bob 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
+.il-cow-tail { animation: il-tail-wag 1.1s ease-in-out infinite; transform-box: fill-box; transform-origin: 100% 0%; }
+.il-chick { animation: il-chick-hop 2.4s ease-in-out infinite; }
+.il-chick-body { animation: il-chick-peck 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .il-cow, .il-cow-tail, .il-chick, .il-chick-body { animation: none; }
+}
