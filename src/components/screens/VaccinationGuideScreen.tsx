@@ -631,7 +631,7 @@ export const VaccinationGuideScreen: React.FC<Props> = ({ onBack, onOpenTracker 
                 onClick={() => onTab(t.id)}
                 style={{
                   flex: 1,
-                  minHeight: 44,
+                  minHeight: 40,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -644,7 +644,7 @@ export const VaccinationGuideScreen: React.FC<Props> = ({ onBack, onOpenTracker 
                     : active
                       ? 'linear-gradient(180deg, #F7C98B 0%, #F9DDA0 55%, #F6EDB5 100%)'
                       : '#FFFFFF',
-                  color: blue ? '#1F4E7A' : active ? C.greenInk : C.ink,
+                  color: blue ? '#1F4E7A' : '#000000',
                   fontSize: 14,
                   fontWeight: active ? 700 : 600,
                   border: `1.5px solid ${blue ? (active ? '#3B82D6' : '#BCD9F2') : active ? '#F2A33A' : C.line}`,
