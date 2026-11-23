@@ -2,7 +2,7 @@
  * FarmOne Dual ML Engine Integration
  * Re-exports offline inference powered by onnxruntime-web via src/services/mlInference.ts.
  * 
- * 100% Offline execution across Android (.apk), iOS (.ipa), and mobile Web.
+ * 100% Offline execution for Android (.apk) and mobile Web.
  * Zero external network calls.
  */
 

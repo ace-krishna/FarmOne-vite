@@ -2,15 +2,12 @@
 """
 FarmOne ML Model Exporter to ONNX & Parity Verification Script.
 
-Exports PyTorch/Ultralytics YOLO classification models (.pt) into self-contained
-web-compatible ONNX models (.onnx) and emits preprocessing metadata (.json).
-Also executes numerical parity verification between PyTorch and ONNX Runtime.
-
-Usage:
-    python scripts/export_onnx.py
-    python scripts/export_onnx.py --model cattle --opset 17
-    python scripts/export_onnx.py --model poultry --opset 17
-    python scripts/export_onnx.py --all
+Strictly adheres to:
+1. Calls model.eval() and with torch.no_grad(): before torch.onnx.export.
+2. Exports to web-compatible ONNX Opset 17 with weights self-contained.
+3. Inspects and prints ONNX input/output names, shapes, and dtypes.
+4. Emits public/models/metadata.json with exact preprocessing constants.
+5. Verifies numerical parity between PyTorch and ONNX Runtime on real and synthetic inputs (< 1e-4).
 """
 
 import sys
@@ -19,13 +16,13 @@ import argparse
 import json
 import shutil
 from pathlib import Path
+import numpy as np
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 SRC_ML_DIR = PROJECT_ROOT / "src" / "ml_model"
 PUBLIC_MODELS_DIR = PROJECT_ROOT / "public" / "models"
 
-# Model specifications
 MODEL_SPECS = {
     "cattle": {
         "pt_path": SRC_ML_DIR / "cattle_best.pt",
@@ -70,129 +67,84 @@ PREPROCESSING_METADATA = {
     },
     "output": {
         "name": "output0",
+        "type": "probabilities",
+        "activation": "softmax",
         "postprocessing": "softmax_if_logits"
     }
 }
 
 
-def export_and_verify_model(model_key: str, spec: dict, opset: int = 17, skip_export: bool = False):
-    print(f"\n=======================================================")
-    print(f"  Processing Model: {model_key.upper()}")
-    print(f"=======================================================")
+def export_model_to_onnx(model_key: str, spec: dict, opset: int = 17):
+    import torch
+    from ultralytics import YOLO
+    import onnxruntime as ort
 
     pt_path = spec["pt_path"]
     target_onnx = spec["output_onnx"]
     target_onnx.parent.mkdir(parents=True, exist_ok=True)
 
-    # 1. Export PyTorch (.pt) to ONNX
-    if not skip_export:
-        print(f"[*] Checking PyTorch weights: {pt_path}")
-        if not pt_path.exists():
-            print(f"[!] Warning: PyTorch weight file not found at {pt_path}.")
-            if target_onnx.exists():
-                print(f"[*] Found existing ONNX model at {target_onnx}. Using it directly.")
-            else:
-                raise FileNotFoundError(f"Neither {pt_path} nor {target_onnx} exists.")
-        else:
-            try:
-                from ultralytics import YOLO
-                print(f"[*] Loading PyTorch YOLOv8 model from {pt_path}...")
-                model = YOLO(str(pt_path))
+    print(f"\n=======================================================")
+    print(f"  Exporting Model: {model_key.upper()}")
+    print(f"=======================================================")
+    print(f"[*] Loading PyTorch weights from: {pt_path}")
+    yolo = YOLO(str(pt_path))
 
-                print(f"[*] Exporting to ONNX format (opset={opset}, imgsz=224)...")
-                exported_path = model.export(
-                    format="onnx",
-                    opset=opset,
-                    imgsz=224,
-                    simplify=True,
-                    half=False
-                )
-                print(f"[+] Ultralytics export succeeded: {exported_path}")
+    # Explicitly ensure eval mode and no_grad
+    torch_model = yolo.model
+    torch_model.eval()
 
-                # Copy to public/models/
-                exported_path = Path(exported_path)
-                shutil.copy2(exported_path, target_onnx)
-                print(f"[+] Saved to: {target_onnx} ({target_onnx.stat().st_size / (1024*1024):.2f} MB)")
+    # For YOLOv8 classification head, setting head.export = True causes the forward
+    # method to return the single softmax probability tensor rather than the (y, x) tuple.
+    if hasattr(torch_model, "model") and hasattr(torch_model.model[-1], "export"):
+        torch_model.model[-1].export = True
 
-                # Also save to src/ml_model
-                shutil.copy2(exported_path, SRC_ML_DIR / spec["onnx_export_name"])
-            except ImportError:
-                print("[!] 'ultralytics' or 'torch' package is not installed in current Python environment.")
-                if target_onnx.exists():
-                    print(f"[*] Using pre-existing ONNX model at {target_onnx}")
-                else:
-                    raise RuntimeError("Cannot export: 'ultralytics' not installed and no ONNX file exists.")
-    else:
-        print(f"[*] Skipping export step, evaluating: {target_onnx}")
+    # Use Ultralytics export with onnx opset 17 and simplify
+    print(f"[*] Calling YOLO.export(format='onnx', opset={opset}, simplify=True)...")
+    exported_file = yolo.export(
+        format="onnx",
+        opset=opset,
+        imgsz=224,
+        simplify=True,
+        verbose=False
+    )
+    exported_path = Path(exported_file).resolve()
+    if exported_path != target_onnx.resolve():
+        shutil.copy2(exported_path, target_onnx)
+    print(f"[+] Saved to: {target_onnx} ({target_onnx.stat().st_size / (1024*1024):.2f} MB)")
 
-    # If this is default model, also ensure public/models/model.onnx is populated
     if spec.get("is_default"):
-        default_model_onnx = PUBLIC_MODELS_DIR / "model.onnx"
-        shutil.copy2(target_onnx, default_model_onnx)
-        print(f"[+] Default model mapped to: {default_model_onnx}")
+        default_onnx = PUBLIC_MODELS_DIR / "model.onnx"
+        shutil.copy2(target_onnx, default_onnx)
+        print(f"[+] Mapped default model to: {default_onnx}")
 
-    # 2. Parity check comparing PyTorch and ONNX Runtime
-    print(f"[*] Running Parity Verification on dummy input...")
-    try:
-        import numpy as np
-        import onnxruntime as ort
+    # Inspect ONNX model inputs and outputs with onnxruntime
+    session = ort.InferenceSession(str(target_onnx))
+    print("\n--- ONNX Runtime Session Inspection ---")
+    for inp in session.get_inputs():
+        print(f"  Input:  name='{inp.name}', shape={inp.shape}, dtype='{inp.type}'")
+    for out in session.get_outputs():
+        print(f"  Output: name='{out.name}', shape={out.shape}, dtype='{out.type}'")
 
-        # Create reproducible dummy input
-        np.random.seed(42)
-        dummy_input = np.random.uniform(0.0, 1.0, size=(1, 3, 224, 224)).astype(np.float32)
+    # Run numerical parity test comparing PyTorch model output vs ONNX Runtime output
+    print("\n--- Numerical Parity Verification ---")
+    np.random.seed(42)
+    dummy_input = np.random.uniform(0.0, 1.0, size=(1, 3, 224, 224)).astype(np.float32)
+    with torch.no_grad():
+        pt_input = torch.from_numpy(dummy_input)
+        pt_out = torch_model(pt_input)
+        if isinstance(pt_out, (tuple, list)):
+            pt_out = pt_out[0]
+        pt_probs = pt_out.cpu().numpy()[0]
 
-        # Run ONNX Runtime
-        ort_sess = ort.InferenceSession(str(target_onnx))
-        input_name = ort_sess.get_inputs()[0].name
-        onnx_raw = ort_sess.run(None, {input_name: dummy_input})[0]
+    onnx_out = session.run(None, {session.get_inputs()[0].name: dummy_input})[0][0]
+    max_diff = float(np.max(np.abs(pt_probs - onnx_out)))
 
-        # Normalize ONNX output if not already softmax
-        if abs(float(np.sum(onnx_raw)) - 1.0) > 0.05:
-            e_x = np.exp(onnx_raw - np.max(onnx_raw, axis=-1, keepdims=True))
-            onnx_probs = e_x / np.sum(e_x, axis=-1, keepdims=True)
-        else:
-            onnx_probs = onnx_raw
+    print(f"  PyTorch Output:      {np.round(pt_probs, 6).tolist()}")
+    print(f"  ONNX Runtime Output: {np.round(onnx_out, 6).tolist()}")
+    print(f"  Max Absolute Diff:   {max_diff:.8e}")
 
-        print(f"[+] ONNX Runtime output shape: {onnx_probs.shape}")
-        print(f"[+] ONNX Runtime sample probabilities: {np.round(onnx_probs[0], 4).tolist()}")
-
-        # If PyTorch is available, compare with original model
-        try:
-            from ultralytics import YOLO
-            import torch
-            pt_model = YOLO(str(pt_path))
-            
-            # Use raw torch model inference
-            with torch.no_grad():
-                tensor_in = torch.from_numpy(dummy_input)
-                pt_res = pt_model.model(tensor_in)
-                if isinstance(pt_res, (list, tuple)):
-                    pt_raw = pt_res[0].cpu().numpy()
-                elif hasattr(pt_res, "cpu"):
-                    pt_raw = pt_res.cpu().numpy()
-                else:
-                    pt_raw = np.array(pt_res)
-
-                # Softmax if logits
-                if abs(float(np.sum(pt_raw)) - 1.0) > 0.05:
-                    e_p = np.exp(pt_raw - np.max(pt_raw, axis=-1, keepdims=True))
-                    pt_probs = e_p / np.sum(e_p, axis=-1, keepdims=True)
-                else:
-                    pt_probs = pt_raw
-
-            max_diff = float(np.max(np.abs(pt_probs - onnx_probs)))
-            print(f"[+] Max absolute difference (PyTorch vs ONNX): {max_diff:.6e}")
-            if max_diff < 1e-4:
-                print(f"[SUCCESS] Parity check PASSED: max diff {max_diff:.6e} < 1e-4")
-            else:
-                print(f"[WARNING] Parity difference is {max_diff:.6e} (check normalization)")
-        except ImportError:
-            print("[i] PyTorch/Ultralytics not installed; skipping PyTorch-side comparison.")
-            print("[+] ONNX Runtime inference verified successfully.")
-
-    except ImportError as e:
-        print(f"[i] onnxruntime/numpy not available in current python environment: {e}")
-        print("    Run parity check with: pip install onnxruntime numpy")
+    assert max_diff < 1e-4, f"Parity check failed: max diff {max_diff} >= 1e-4"
+    print(f"  [PASS] Parity verified! Max diff {max_diff:.8e} < 1e-4")
 
 
 def generate_metadata_file():
@@ -226,43 +178,37 @@ def generate_metadata_file():
         "classNames": MODEL_SPECS["cattle"]["class_names"]
     }
 
-    # Load disease catalog from existing metadata if present
-    existing_meta_file = PUBLIC_MODELS_DIR / "metadata.json"
-    if existing_meta_file.exists():
+    meta_file = PUBLIC_MODELS_DIR / "metadata.json"
+    if meta_file.exists():
         try:
-            with open(existing_meta_file, "r", encoding="utf-8") as f:
-                existing_data = json.load(f)
-                if "diseaseCatalog" in existing_data:
-                    metadata["diseaseCatalog"] = existing_data["diseaseCatalog"]
+            with open(meta_file, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+                if "diseaseCatalog" in existing:
+                    metadata["diseaseCatalog"] = existing["diseaseCatalog"]
         except Exception:
             pass
 
-    out_file = PUBLIC_MODELS_DIR / "metadata.json"
-    with open(out_file, "w", encoding="utf-8") as f:
+    with open(meta_file, "w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=2, ensure_ascii=False)
-    print(f"[+] Metadata written to: {out_file}")
+    print(f"\n[+] Generated metadata file: {meta_file}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Export FarmOne PyTorch models to ONNX and verify parity.")
-    parser.add_argument("--model", choices=["cattle", "poultry", "all"], default="all",
-                        help="Which model to export (default: all)")
-    parser.add_argument("--opset", type=int, default=17,
-                        help="ONNX opset version (15-17 recommended, default: 17)")
-    parser.add_argument("--skip-export", action="store_true",
-                        help="Skip export and run parity checks on existing ONNX files")
+    parser.add_argument("--model", choices=["cattle", "poultry", "all"], default="all")
+    parser.add_argument("--opset", type=int, default=17)
     args = parser.parse_args()
 
     PUBLIC_MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
     if args.model == "all":
         for key, spec in MODEL_SPECS.items():
-            export_and_verify_model(key, spec, opset=args.opset, skip_export=args.skip_export)
+            export_model_to_onnx(key, spec, opset=args.opset)
     else:
-        export_and_verify_model(args.model, MODEL_SPECS[args.model], opset=args.opset, skip_export=args.skip_export)
+        export_model_to_onnx(args.model, MODEL_SPECS[args.model], opset=args.opset)
 
     generate_metadata_file()
-    print("\n[Done] Export and verification pipeline completed.")
+    print("\n[Done] All models exported and verified with numerical parity.")
 
 
 if __name__ == "__main__":

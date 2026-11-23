@@ -16,3 +16,4 @@ design/
 __pycache__/
 *.pyc
 test_dataset/
+*.apk

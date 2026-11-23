@@ -44,6 +44,13 @@ export default defineConfig(() => {
               stripBase: true,
             },
           },
+          {
+            src: 'node_modules/onnxruntime-web/dist/*.{wasm,mjs}',
+            dest: 'assets/ort',
+            rename: {
+              stripBase: true,
+            },
+          },
         ],
       }),
     ],

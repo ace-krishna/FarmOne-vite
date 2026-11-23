@@ -42,6 +42,8 @@
   },
   "output": {
     "name": "output0",
+    "type": "probabilities",
+    "activation": "softmax",
     "postprocessing": "softmax_if_logits"
   },
   "models": {
