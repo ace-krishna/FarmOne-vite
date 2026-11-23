@@ -420,9 +420,9 @@ export const VaccinationScreen: React.FC<Props> = ({ onBack }) => {
                 type="button"
                 aria-label="Go back"
                 onClick={onBack}
-                className="w-10 h-10 rounded-full bg-white border border-[#dde6e0] shadow-sm flex items-center justify-center text-[#003629] hover:bg-[#e6e9e7] transition-colors active:scale-95 cursor-pointer"
+                className="w-14 h-14 rounded-full bg-white border border-[#dde6e0] shadow-sm flex items-center justify-center text-[#003629] hover:bg-[#e6e9e7] transition-colors active:scale-95 cursor-pointer"
               >
-                <Icon name="arrow_back" size={24} />
+                <Icon name="arrow_back" size={30} />
               </button>
               <h1 className="text-[19.8px] font-semibold text-[#003629] tracking-tight">Vaccination Schedule</h1>
             </div>

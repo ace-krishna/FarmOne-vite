@@ -41,7 +41,7 @@ interface SpeciesDef {
   swatches: Swatch[];
 }
 
-const SPECIES: SpeciesDef[] = [
+export const SPECIES: SpeciesDef[] = [
   {
     id: 'cow',
     title: 'Cow',

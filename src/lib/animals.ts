@@ -77,3 +77,11 @@ export async function fetchAnimals(): Promise<Animal[]> {
   setCachedAnimals(data as Animal[]);
   return data as Animal[];
 }
+
+/** Deletes an animal (its vaccination records go with it) and updates the local cache. */
+export async function deleteAnimal(id: string): Promise<void> {
+  if (!isSupabaseConfigured) throw new SetupError('Supabase is not set up yet.');
+  const { error } = await supabase.from('animals').delete().eq('id', id);
+  if (error) throw error;
+  setCachedAnimals(getCachedAnimals().filter((a) => a.id !== id));
+}

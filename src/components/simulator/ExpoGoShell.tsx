@@ -4,6 +4,8 @@ import { goBack, pushLayer } from '../../lib/backStack';
 import { StitchHomeScreen } from '../screens/StitchHomeScreen';
 import { RegisterAnimalScreen } from '../screens/RegisterAnimalScreen';
 import { VaccinationScreen } from '../screens/VaccinationScreen';
+import { MyAnimalsScreen } from '../screens/MyAnimalsScreen';
+import { VaccinationGuideScreen } from '../screens/VaccinationGuideScreen';
 import { FarmSetupScreen } from '../screens/FarmSetupScreen';
 import { DairyFarmSetupScreen } from '../screens/DairyFarmSetupScreen';
 import { DairyCostArticleScreen } from '../screens/DairyCostArticleScreen';
@@ -34,7 +36,7 @@ import { PestsArticleScreen } from '../screens/PestsArticleScreen';
 import { HealthyChicksArticleScreen } from '../screens/HealthyChicksArticleScreen';
 
 export const ExpoGoShell: React.FC = () => {
-  type Screen = 'home' | 'farm-setup' | 'dairy-setup' | 'poultry-setup' | 'poultry-type-article' | 'poultry-rule-article' | 'poultry-across-article' | 'poultry-siting-article' | 'poultry-egg-article' | 'poultry-cost-article' | 'dairy-cost-article' | 'chaff-article' | 'dairy-insure-article' | 'gov-schemes' | 'gov-finder-article' | 'gov-apply-article' | 'gov-calc-article' | 'register' | 'vaccination' | 'ilearning' | 'poultry-ilearning' | 'dairy-ilearning' | 'heat-article' | 'water-article' | 'teat-article' | 'fat-article' | 'manure-article' | 'deadbirds-article' | 'litter-article' | 'pests-article' | 'chicks-article';
+  type Screen = 'home' | 'farm-setup' | 'dairy-setup' | 'poultry-setup' | 'poultry-type-article' | 'poultry-rule-article' | 'poultry-across-article' | 'poultry-siting-article' | 'poultry-egg-article' | 'poultry-cost-article' | 'dairy-cost-article' | 'chaff-article' | 'dairy-insure-article' | 'gov-schemes' | 'gov-finder-article' | 'gov-apply-article' | 'gov-calc-article' | 'register' | 'vaccination' | 'my-animals' | 'vaccination-guide' | 'ilearning' | 'poultry-ilearning' | 'dairy-ilearning' | 'heat-article' | 'water-article' | 'teat-article' | 'fat-article' | 'manure-article' | 'deadbirds-article' | 'litter-article' | 'pests-article' | 'chicks-article';
   const [screen, setScreen] = useState<Screen>('home');
   const [costSection, setCostSection] = useState<'shed' | 'paperwork' | 'yield' | undefined>(undefined);
   const screenRef = useRef<Screen>(screen);
@@ -110,6 +112,10 @@ export const ExpoGoShell: React.FC = () => {
             />
         {screen === 'register' ? (
       <RegisterAnimalScreen onClose={back} />
+    ) : screen === 'my-animals' ? (
+      <MyAnimalsScreen onBack={back} />
+    ) : screen === 'vaccination-guide' ? (
+      <VaccinationGuideScreen onBack={back} onOpenTracker={() => go('vaccination')} />
     ) : screen === 'vaccination' ? (
       <VaccinationScreen onBack={back} />
     ) : screen === 'farm-setup' ? (
@@ -175,6 +181,8 @@ export const ExpoGoShell: React.FC = () => {
       <StitchHomeScreen
         onAddAnimal={() => go('register')}
         onOpenVaccination={() => go('vaccination')}
+        onOpenMyAnimals={() => go('my-animals')}
+        onOpenVaccinationGuide={() => go('vaccination-guide')}
         onOpenILearning={() => go('ilearning')}
         onOpenFarmSetup={() => go('farm-setup')}
       />
