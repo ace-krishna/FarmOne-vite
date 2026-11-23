@@ -70,13 +70,111 @@ To open Android Studio:
 npm run android:open    # opens android/ in Android Studio
 ```
 
-To build the debug APK via CLI:
+To build the debug APK via CLI (Linux/macOS):
 ```bash
 cd android
 ./gradlew assembleDebug
 ```
 The output APK is generated at:
 `android/app/build/outputs/apk/debug/app-debug.apk`
+
+---
+
+## Windows Automated Build & Android Deployment
+
+A complete automated build and deployment script is provided at [`build-android.ps1`](build-android.ps1) for Windows users. It automatically detects Node.js, Java JDK (17/21), and Android SDK, configures `local.properties` and environment variables, builds the web assets, compiles the APK with `gradlew.bat`, and can install it directly to an Android phone over USB.
+
+### 1. Prerequisites on Windows
+If you haven't installed the prerequisites yet, you can install them in Windows PowerShell (Run as Administrator) via `winget`:
+```powershell
+# 1. Install Node.js LTS
+winget install OpenJS.NodeJS.LTS
+
+# 2. Install Java JDK 21 (Microsoft OpenJDK or Eclipse Temurin)
+winget install Microsoft.OpenJDK.21
+
+# 3. Install Android Studio (includes Android SDK, command-line tools, and platform-tools)
+winget install Google.AndroidStudio
+```
+> [!TIP]
+> If Android Studio is installed, the Android SDK is automatically located at `%LOCALAPPDATA%\Android\Sdk` and Java JDK is located at `C:\Program Files\Android\Android Studio\jbr`. The script auto-detects these paths without manual configuration.
+
+### 2. Run the Automated Build Script
+Open Windows PowerShell in the `FarmOne-vite` directory and run:
+
+```powershell
+# Allow script execution for the current session (if restricted)
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+# Run the automated build
+.\build-android.ps1
+```
+*Or run via npm:*
+```powershell
+npm run build:apk
+```
+
+The script will:
+1. Verify Node.js, Java JDK, and Android SDK.
+2. Auto-configure `JAVA_HOME`, `ANDROID_HOME`, and `android/local.properties`.
+3. Run `npm install` and synchronize ONNX WebAssembly binaries (`public/ort/`).
+4. Run `npm run build` and `npx cap sync android`.
+5. Compile the Android Debug APK using `gradlew.bat assembleDebug`.
+6. Copy the output APK to `./FarmOne-debug.apk` (bundled with offline ONNX models and WASM engines).
+
+### 3. Command Options & Fast Rebuilds
+
+| Command | Purpose |
+| :--- | :--- |
+| `.\build-android.ps1` | Full build (installs npm dependencies, bundles Vite, compiles APK) |
+| `.\build-android.ps1 -Install` | Full build + automatically installs to connected Android phone |
+| `.\build-android.ps1 -SkipDeps` | Fast incremental rebuild (skips `npm install`) |
+| `.\build-android.ps1 -SkipDeps -Install` | Fast rebuild and instant install on your phone |
+| `.\build-android.ps1 -Clean` | Cleans previous build caches (`dist/`, `build/`, `FarmOne-debug.apk`) |
+| `.\build-android.ps1 -JdkPath "C:\Path\To\JDK"` | Custom JDK directory override |
+| `.\build-android.ps1 -AndroidSdkPath "C:\Path\To\Sdk"` | Custom Android SDK directory override |
+
+---
+
+## Installing the APK on an Android Device from Windows
+
+### Method 1: Automatic 1-Click Install via USB (`adb`)
+1. On your Android phone, enable **Developer Options** and **USB Debugging**:
+   - Go to **Settings -> About Phone**.
+   - Tap **Build Number** 7 times until you see *"You are now a developer!"*.
+   - Go back to **Settings -> System -> Developer Options** (or search "Developer options").
+   - Enable **USB Debugging**.
+2. Connect your phone to your Windows PC with a USB cable.
+3. Unlock your phone. If an authorization prompt appears (*"Allow USB debugging?"*), check **Always allow from this computer** and tap **Allow**.
+4. In Windows PowerShell, run:
+   ```powershell
+   .\build-android.ps1 -Install
+   ```
+   *Or install directly with adb:*
+   ```powershell
+   adb install -r .\FarmOne-debug.apk
+   ```
+5. FarmOne will be installed and ready in your phone's app drawer!
+
+### Method 2: Manual USB Cable Transfer
+1. Connect your Android phone to your PC via USB cable.
+2. On your phone, pull down the notification shade and set USB mode to **File Transfer / MTP**.
+3. In Windows File Explorer, open your phone's storage and navigate to the **Downloads** folder.
+4. Drag and drop `FarmOne-debug.apk` from the `FarmOne-vite` project folder into your phone's **Downloads** folder.
+5. On your phone, open the **Files** / **My Files** app, navigate to **Downloads**, and tap **`FarmOne-debug.apk`**.
+6. If prompted with *"For your security, your phone is not allowed to install unknown apps from this source"*, tap **Settings** and toggle **Allow from this source**.
+7. Tap **Install** (or **Update**).
+
+### Method 3: Wireless Local Network Transfer
+If you don't have a USB cable handy:
+1. In Windows PowerShell inside the project directory, run:
+   ```powershell
+   npx serve -p 8080 .
+   ```
+2. On your Android phone (connected to the same Wi-Fi), open Chrome and navigate to `http://<YOUR_PC_IP>:8080/FarmOne-debug.apk`.
+3. Download the file and tap **Open -> Install**.
+
+---
 
 ### 7. Automated CI/CD (GitHub Actions)
 The repository includes [.github/workflows/mobile-build.yml](.github/workflows/mobile-build.yml) which automatically builds the Android Debug APK and attaches `FarmOne-debug-apk` as a downloadable artifact on pushes to `main` or manual trigger (`workflow_dispatch`).
