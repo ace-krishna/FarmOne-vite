@@ -5,12 +5,15 @@
 
 import React from 'react';
 import { LanguageProvider } from './context/LanguageContext';
+import { AuthProvider } from './context/AuthContext';
 import { ExpoGoShell } from './components/simulator/ExpoGoShell';
 
 export default function App() {
   return (
     <LanguageProvider>
-      <ExpoGoShell />
+      <AuthProvider>
+        <ExpoGoShell />
+      </AuthProvider>
     </LanguageProvider>
   );
 }

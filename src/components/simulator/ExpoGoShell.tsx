@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { goBack, pushLayer } from '../../lib/backStack';
 import { StitchHomeScreen } from '../screens/StitchHomeScreen';
@@ -35,11 +35,18 @@ import { DeadBirdsArticleScreen } from '../screens/DeadBirdsArticleScreen';
 import { DryLitterArticleScreen } from '../screens/DryLitterArticleScreen';
 import { PestsArticleScreen } from '../screens/PestsArticleScreen';
 import { HealthyChicksArticleScreen } from '../screens/HealthyChicksArticleScreen';
+import { LoginScreen } from '../screens/LoginScreen';
+import { useAuth } from '../../context/AuthContext';
 
 export const ExpoGoShell: React.FC = () => {
   type Screen = 'home' | 'farm-setup' | 'marketplace' | 'dairy-setup' | 'poultry-setup' | 'poultry-type-article' | 'poultry-rule-article' | 'poultry-across-article' | 'poultry-siting-article' | 'poultry-egg-article' | 'poultry-cost-article' | 'dairy-cost-article' | 'chaff-article' | 'dairy-insure-article' | 'gov-schemes' | 'gov-finder-article' | 'gov-apply-article' | 'gov-calc-article' | 'register' | 'vaccination' | 'my-animals' | 'vaccination-guide' | 'ilearning' | 'poultry-ilearning' | 'dairy-ilearning' | 'heat-article' | 'water-article' | 'teat-article' | 'fat-article' | 'manure-article' | 'deadbirds-article' | 'litter-article' | 'pests-article' | 'chicks-article';
+  const { session, loading, signIn, signUp } = useAuth();
   const [screen, setScreen] = useState<Screen>('home');
   const [costSection, setCostSection] = useState<'shed' | 'paperwork' | 'yield' | undefined>(undefined);
+  // After signing out, the next person to sign in starts at Home
+  useEffect(() => {
+    if (!session) setScreen('home');
+  }, [session]);
   const screenRef = useRef<Screen>(screen);
   screenRef.current = screen;
 
@@ -97,6 +104,13 @@ export const ExpoGoShell: React.FC = () => {
       <div 
         className="w-full sm:max-w-[375px] h-[100dvh] sm:h-[812px] bg-[#f9faf8] sm:rounded-[36px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] overflow-clip flex flex-col relative select-none isolate"
       >
+        {loading ? (
+          <div className="absolute inset-0 bg-[#0f2a44]" aria-busy="true" />
+        ) : !session ? (
+          <LoginScreen
+            onSubmit={(mode, v) => (mode === 'signup' ? signUp(v.name, v.email, v.password) : signIn(v.email, v.password))}
+          />
+        ) : (
         <AnimatePresence initial={false} custom={dir}>
           <motion.div
             key={screen}
@@ -197,6 +211,7 @@ export const ExpoGoShell: React.FC = () => {
     )}
           </motion.div>
         </AnimatePresence>
+        )}
       </div>
     </div>
   );

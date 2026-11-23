@@ -2,6 +2,7 @@ import React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useBackLayer } from '../../lib/backStack';
 import { useLanguage } from '../../context/LanguageContext';
+import { useAuth } from '../../context/AuthContext';
 
 const serif = "font-['Newsreader',Georgia,serif]";
 
@@ -44,6 +45,7 @@ const TXT = {
 export const ProfileSheet: React.FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const { language } = useLanguage();
   const x = TXT[(language as Lang) in TXT ? (language as Lang) : 'en'];
+  const { name, email, signOut } = useAuth();
   useBackLayer(open, onClose);
 
   return (
@@ -81,6 +83,22 @@ export const ProfileSheet: React.FC<{ open: boolean; onClose: () => void }> = ({
                 className="w-8 h-8 shrink-0 rounded-full bg-white shadow-sm flex items-center justify-center cursor-pointer active:scale-90 transition-transform"
               >
                 <span className="material-symbols-outlined text-[18px] text-[#404945]">close</span>
+              </button>
+            </div>
+            <div className="shrink-0 mx-4 mb-3 bg-white rounded-[22px] p-3.5 flex items-center gap-3 shadow-[0_8px_22px_-12px_rgba(19,78,63,0.3)] border border-black/[0.03]">
+              <span className="w-11 h-11 shrink-0 rounded-full bg-[#134e3f] text-white flex items-center justify-center text-[18px] font-bold uppercase">
+                {(name || email || '?').charAt(0)}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-[14px] font-bold text-[#191c1b] truncate">{name || 'Farmer'}</p>
+                <p className="text-[11.5px] text-[#6b7571] truncate">{email}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => { onClose(); void signOut(); }}
+                className="shrink-0 px-3 py-1.5 rounded-full bg-[#fde8e6] text-[#93000a] text-[12px] font-bold cursor-pointer active:scale-95 transition-transform"
+              >
+                Sign out
               </button>
             </div>
             <div className="flex-1 overflow-y-auto scrollbar-none px-4 pb-8 space-y-3">
