@@ -4,6 +4,8 @@ import { goBack, pushLayer } from '../../lib/backStack';
 import { StitchHomeScreen } from '../screens/StitchHomeScreen';
 import { RegisterAnimalScreen } from '../screens/RegisterAnimalScreen';
 import { VaccinationScreen } from '../screens/VaccinationScreen';
+import { MyAnimalsScreen } from '../screens/MyAnimalsScreen';
+import { VaccinationGuideScreen } from '../screens/VaccinationGuideScreen';
 import { FarmSetupScreen } from '../screens/FarmSetupScreen';
 import { DairyFarmSetupScreen } from '../screens/DairyFarmSetupScreen';
 import { DairyCostArticleScreen } from '../screens/DairyCostArticleScreen';
@@ -34,7 +36,7 @@ import { PestsArticleScreen } from '../screens/PestsArticleScreen';
 import { HealthyChicksArticleScreen } from '../screens/HealthyChicksArticleScreen';
 
 export const ExpoGoShell: React.FC = () => {
-  type Screen = 'home' | 'farm-setup' | 'dairy-setup' | 'poultry-setup' | 'poultry-type-article' | 'poultry-rule-article' | 'poultry-across-article' | 'poultry-siting-article' | 'poultry-egg-article' | 'poultry-cost-article' | 'dairy-cost-article' | 'chaff-article' | 'dairy-insure-article' | 'gov-schemes' | 'gov-finder-article' | 'gov-apply-article' | 'gov-calc-article' | 'register' | 'vaccination' | 'ilearning' | 'poultry-ilearning' | 'dairy-ilearning' | 'heat-article' | 'water-article' | 'teat-article' | 'fat-article' | 'manure-article' | 'deadbirds-article' | 'litter-article' | 'pests-article' | 'chicks-article';
+  type Screen = 'home' | 'farm-setup' | 'dairy-setup' | 'poultry-setup' | 'poultry-type-article' | 'poultry-rule-article' | 'poultry-across-article' | 'poultry-siting-article' | 'poultry-egg-article' | 'poultry-cost-article' | 'dairy-cost-article' | 'chaff-article' | 'dairy-insure-article' | 'gov-schemes' | 'gov-finder-article' | 'gov-apply-article' | 'gov-calc-article' | 'register' | 'vaccination' | 'my-animals' | 'vaccination-guide' | 'ilearning' | 'poultry-ilearning' | 'dairy-ilearning' | 'heat-article' | 'water-article' | 'teat-article' | 'fat-article' | 'manure-article' | 'deadbirds-article' | 'litter-article' | 'pests-article' | 'chicks-article';
   const [screen, setScreen] = useState<Screen>('home');
   const [costSection, setCostSection] = useState<'shed' | 'paperwork' | 'yield' | undefined>(undefined);
   const screenRef = useRef<Screen>(screen);
@@ -77,12 +79,13 @@ export const ExpoGoShell: React.FC = () => {
   // Only transform / opacity are animated: they run on the GPU, so the slide stays smooth
   const variants = {
     enter: (d: Dir) =>
-      d === 'push' ? { x: '100%', zIndex: 2 } : d === 'pop' ? { x: '-24%', zIndex: 1 } : { opacity: 0, zIndex: 2 },
+      d === 'push' ? { x: '100%', zIndex: 2 } : d === 'pop' ? { x: '-24%', zIndex: 1 } : { opacity: 1, zIndex: 2 },
     center: (d: Dir) => ({ x: 0, opacity: 1, zIndex: d === 'pop' ? 1 : 2 }),
     exit: (d: Dir) =>
       d === 'push' ? { x: '-24%', zIndex: 1 } : d === 'pop' ? { x: '100%', zIndex: 2 } : { opacity: 0.999, zIndex: 1 },
   };
-  const duration = reduceMotion ? 0 : dir === 'fade' ? (fastRef.current ? 0.12 : 0.22) : 0.3;
+  // Dock / tab switches are instant (no fade), like Instagram or WhatsApp; only push/pop slide
+  const duration = reduceMotion || dir === 'fade' ? 0 : 0.3;
 
   return (
     <div className="min-h-[100dvh] w-full bg-[#e8ece7] flex items-center justify-center sm:py-4 selection:bg-emerald-200 font-['Plus_Jakarta_Sans',sans-serif]">
@@ -110,6 +113,10 @@ export const ExpoGoShell: React.FC = () => {
             />
         {screen === 'register' ? (
       <RegisterAnimalScreen onClose={back} />
+    ) : screen === 'my-animals' ? (
+      <MyAnimalsScreen onBack={back} />
+    ) : screen === 'vaccination-guide' ? (
+      <VaccinationGuideScreen onBack={back} onOpenTracker={() => go('vaccination')} />
     ) : screen === 'vaccination' ? (
       <VaccinationScreen onBack={back} />
     ) : screen === 'farm-setup' ? (
@@ -175,6 +182,8 @@ export const ExpoGoShell: React.FC = () => {
       <StitchHomeScreen
         onAddAnimal={() => go('register')}
         onOpenVaccination={() => go('vaccination')}
+        onOpenMyAnimals={() => go('my-animals')}
+        onOpenVaccinationGuide={() => go('vaccination-guide')}
         onOpenILearning={() => go('ilearning')}
         onOpenFarmSetup={() => go('farm-setup')}
       />

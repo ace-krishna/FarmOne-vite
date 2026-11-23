@@ -39,11 +39,13 @@ const HOME_TEXT = {
 interface StitchHomeScreenProps {
   onAddAnimal?: () => void;
   onOpenVaccination?: () => void;
+  onOpenMyAnimals?: () => void;
+  onOpenVaccinationGuide?: () => void;
   onOpenILearning?: () => void;
   onOpenFarmSetup?: () => void;
 }
 
-export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal, onOpenVaccination, onOpenILearning, onOpenFarmSetup }) => {
+export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal, onOpenVaccination, onOpenMyAnimals, onOpenVaccinationGuide, onOpenILearning, onOpenFarmSetup }) => {
   const { language, setLanguage, t } = useLanguage();
   const H = HOME_TEXT[language as 'en' | 'hi' | 'mr'] ?? HOME_TEXT.en;
 
@@ -264,6 +266,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
             <motion.button
               whileTap={{ scale: 0.98 }}
               type="button"
+              onClick={onOpenMyAnimals}
               className="flex items-center gap-2 p-1.5 pl-2 rounded-full bg-white border border-[#bfc9c3]/30 shadow-sm text-left hover:bg-[#f3f4f2] transition-colors cursor-pointer"
             >
               <div className="w-9 h-9 rounded-full bg-[#b5efda] flex items-center justify-center text-[#002018] shrink-0">
@@ -283,6 +286,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
             <motion.button
               whileTap={{ scale: 0.98 }}
               type="button"
+              onClick={onOpenVaccinationGuide}
               className="flex items-center gap-2 p-1.5 pl-2 rounded-full bg-white border border-[#bfc9c3]/30 shadow-sm text-left hover:bg-[#f3f4f2] transition-colors cursor-pointer"
             >
               <div className="w-9 h-9 rounded-full bg-[#ffdcc3] flex items-center justify-center text-[#2f1500] shrink-0">
