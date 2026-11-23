@@ -1,0 +1,245 @@
+{
+  "name": "FarmOne Animal Disease Classifier",
+  "version": "1.0.0",
+  "defaultModel": "cattle",
+  "input": {
+    "name": "images",
+    "shape": [
+      1,
+      3,
+      224,
+      224
+    ],
+    "width": 224,
+    "height": 224,
+    "channels": 3,
+    "layout": "NCHW",
+    "colorSpace": "RGB",
+    "dataType": "float32",
+    "resize": {
+      "mode": "center_crop_aspect_ratio",
+      "targetWidth": 224,
+      "targetHeight": 224,
+      "interpolation": "bilinear"
+    },
+    "normalization": {
+      "scale": 0.00392156862745098,
+      "mean": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "std": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "pixelRange": [
+        0.0,
+        1.0
+      ]
+    }
+  },
+  "output": {
+    "name": "output0",
+    "type": "probabilities",
+    "activation": "softmax",
+    "postprocessing": "softmax_if_logits"
+  },
+  "models": {
+    "cattle": {
+      "filename": "cattle_best.onnx",
+      "modelPath": "/models/cattle_best.onnx",
+      "fallbackPath": "/models/model.onnx",
+      "inputName": "images",
+      "outputName": "output0",
+      "classes": {
+        "0": "foot-and-mouth",
+        "1": "healthy",
+        "2": "lumpy"
+      },
+      "classNames": [
+        "foot-and-mouth",
+        "healthy",
+        "lumpy"
+      ]
+    },
+    "poultry": {
+      "filename": "poultry_best.onnx",
+      "modelPath": "/models/poultry_best.onnx",
+      "fallbackPath": "/models/poultry_best.onnx",
+      "inputName": "images",
+      "outputName": "output0",
+      "classes": {
+        "0": "Bumblefoot",
+        "1": "Fowlpox",
+        "2": "Healthy",
+        "3": "coryza",
+        "4": "crd"
+      },
+      "classNames": [
+        "Bumblefoot",
+        "Fowlpox",
+        "Healthy",
+        "coryza",
+        "crd"
+      ]
+    }
+  },
+  "classes": {
+    "0": "foot-and-mouth",
+    "1": "healthy",
+    "2": "lumpy"
+  },
+  "classNames": [
+    "foot-and-mouth",
+    "healthy",
+    "lumpy"
+  ],
+  "diseaseCatalog": {
+    "foot-and-mouth": {
+      "severity": "critical",
+      "displayName": {
+        "en": "Foot-and-Mouth Disease (FMD)",
+        "hi": "खुरपका-मुंहपका रोग (FMD)",
+        "mr": "लाळ-खुरकूत रोग (FMD)"
+      },
+      "symptoms": {
+        "en": "Blisters and sores in mouth and hooves, excessive salivation, lameness, and sudden high fever.",
+        "hi": "मुंह व खुरों के बीच छाले, अत्यधिक लार टपकना, लंगड़ापन और तेज बुखार।",
+        "mr": "तोंड व खुरांमध्ये फोड, सतत लाळ गळणे, लंगडणे आणि तीव्र ताप."
+      },
+      "action": {
+        "en": "Isolate animal immediately. Apply 1% potassium permanganate or boro-glycerine to mouth sores. Contact veterinary doctor immediately.",
+        "hi": "पशु को तुरंत अलग करें। मुंह के छालों पर 1% पोटेशियम परमैंगनेट लगाएं। तुरंत पशु चिकित्सक से संपर्क करें।",
+        "mr": "बाधित जनावराला त्वरित वेगळे करा. पोटॅशियम परमँगनेटच्या पाण्याने तोंड धुवा. तात्काळ पशुवैद्यकांचा सल्ला घ्या."
+      }
+    },
+    "lumpy": {
+      "severity": "critical",
+      "displayName": {
+        "en": "Lumpy Skin Disease (LSD)",
+        "hi": "लम्पी त्वचा रोग (LSD)",
+        "mr": "लंपी त्वचा रोग (LSD)"
+      },
+      "symptoms": {
+        "en": "Hard, raised nodules (2-5 cm) on skin, fever, enlarged lymph nodes, and sharp drop in milk production.",
+        "hi": "त्वचा पर सख्त गांठें (2-5 सेमी), तेज बुखार, लिम्फ नोड्स में सूजन और दूध उत्पादन में कमी।",
+        "mr": "त्वचेवर गाठी (२-५ सेमी), ताप, लिम्फ नोड्सना सूज आणि दुधात घट."
+      },
+      "action": {
+        "en": "Isolate the animal. Spray neem oil/repellents to deter vectors (flies/mosquitoes). Administer fever relief under veterinary care.",
+        "hi": "पशु को अलग रखें। मक्खी-मच्छरों से बचाव के लिए नीम तेल का छिड़काव करें। पशु चिकित्सक की देखरेख में दवाएं दें।",
+        "mr": "जनावराला वेगळे ठेवा. डास-माशांपासून संरक्षणासाठी कडुनिंबाचा धूर/तेल वापरा. डॉक्टरांच्या सल्ल्याने औषध द्या."
+      }
+    },
+    "healthy": {
+      "severity": "normal",
+      "displayName": {
+        "en": "Healthy Cattle",
+        "hi": "स्वस्थ मवेशी",
+        "mr": "निरोगी जनावर"
+      },
+      "symptoms": {
+        "en": "Bright alert eyes, smooth coat, normal rumination and active appetite.",
+        "hi": "चमकदार आंखें, सामान्य जुगाली, स्वस्थ त्वचा और अच्छी भूख।",
+        "mr": "टवटवीत डोळे, नियमित रवंथ, चांगली भूक व तजेलदार त्वचा."
+      },
+      "action": {
+        "en": "Maintain regular balanced nutrition, clean water, and stay up to date with vaccination schedules.",
+        "hi": "संतुलित आहार, स्वच्छ पानी दें और टीकाकरण शेड्यूल समय पर पूरा रखें।",
+        "mr": "नियमित सकस आहार, स्वच्छ पाणी द्या आणि लसीकरण वेळेवर पूर्ण ठेवा."
+      }
+    },
+    "Bumblefoot": {
+      "severity": "moderate",
+      "displayName": {
+        "en": "Bumblefoot (Pododermatitis)",
+        "hi": "बम्बलफूट (पैर का संक्रमण)",
+        "mr": "बंबलफूट (पायाचे संक्रमण)"
+      },
+      "symptoms": {
+        "en": "Swollen footpad, limping, and black necrotic scab on the sole of the foot.",
+        "hi": "पंजे में सूजन, लंगड़ाना, तलवे पर काला घाव या पपड़ी।",
+        "mr": "पायाच्या तळव्यात सूज, लंगडणे, तळव्यावर काळी खपली."
+      },
+      "action": {
+        "en": "Soak foot in warm Epsom salt water. Clean with betadine, apply antibacterial ointment, and wrap securely.",
+        "hi": "गुनगुने एप्सम नमक के पानी में पैर भिगोएं। बीटाडीन से साफ कर मलहम लगाएं व पट्टी बांधें।",
+        "mr": "कोमट मिठाच्या पाण्यात पाय भिजवा. बिटाडिनने जखम स्वच्छ करून मलमपट्टी करा."
+      }
+    },
+    "Fowlpox": {
+      "severity": "moderate",
+      "displayName": {
+        "en": "Fowl Pox (Avian Pox)",
+        "hi": "फाउल पॉक्स (मुर्गी की चेचक)",
+        "mr": "कोंबड्यांची देवी (फाऊल पॉक्स)"
+      },
+      "symptoms": {
+        "en": "Wart-like nodules and scabs on comb, wattles, eyelids, and beak area.",
+        "hi": "कलगी, गलकंबल और आंखों के पास मस्से जैसे दाने व पपड़ी।",
+        "mr": "तुरा, गळ्यातील पोळी व डोळ्यांभोवती चामखीळीसारखे फोड."
+      },
+      "action": {
+        "en": "Isolate affected birds. Dab lesions with dilute iodine. Add Vitamin A to drinking water and vaccinate flock.",
+        "hi": "बीमार पक्षियों को अलग करें। दानों पर आयोडीन लगाएं। पीने के पानी में विटामिन-ए दें।",
+        "mr": "आजारी पक्षी वेगळे करा. फोडांवर सौम्य आयोडीन लावा. पिण्याच्या पाण्यातून जीवनसत्त्व-अ द्या."
+      }
+    },
+    "coryza": {
+      "severity": "critical",
+      "displayName": {
+        "en": "Infectious Coryza",
+        "hi": "संक्रामक कोरायजा",
+        "mr": "संसर्गजन्य कोरायझा"
+      },
+      "symptoms": {
+        "en": "Facial swelling, foul-smelling nasal discharge, conjunctivitis, and noisy labored breathing.",
+        "hi": "चेहरे पर सूजन, नाक से दुर्गंधयुक्त स्राव, आंखों से पानी, सांस लेने में तकलीफ।",
+        "mr": "चेहऱ्यावर सूज, नाकातून दुर्गंधीयुक्त पाणी, डोळे चोळणे, धाप लागणे."
+      },
+      "action": {
+        "en": "Isolate infected birds immediately. Administer vet-prescribed antibiotics. Sanitize and disinfect all waterers.",
+        "hi": "तुरंत अलग करें। डॉक्टर की सलाह से एंटीबायोटिक दें। पानी के बर्तनों को कीटाणुरहित करें।",
+        "mr": "तात्काळ विलगीकरण करा. डॉक्टरांच्या सल्ल्याने प्रतिजैविके द्या. पिण्याच्या भांड्यांची स्वच्छता राखा."
+      }
+    },
+    "crd": {
+      "severity": "critical",
+      "displayName": {
+        "en": "Chronic Respiratory Disease (CRD)",
+        "hi": "क्रॉनिक रेस्पिरेटरी डिजीज (CRD)",
+        "mr": "क्रॉनिक रेस्पिरेटरी डिसीज (CRD)"
+      },
+      "symptoms": {
+        "en": "Persistent coughing, rattling breathing sounds, nasal discharge, foamy eyes, and stunted growth.",
+        "hi": "लगातार खांसी, सांस में घरघराहट, नाक बहना, आंखों में झाग।",
+        "mr": "सतत खोकला, श्वास घेताना घरघर आवाज येणे, डोळ्यांत फेस येणे."
+      },
+      "action": {
+        "en": "Administer antibiotics (Tylosin/Doxycycline) as advised by avian vet. Eliminate dampness and improve ventilation.",
+        "hi": "डॉक्टर की सलाह से टायलोसिन दवा दें। बाड़े में वेंटिलेशन सुधारें और नमी हटाएं।",
+        "mr": "पशुवैद्यकांच्या सल्ल्याने टायलोसिन औषध द्या. गोठ्यात हवा खेळती ठेवा व ओलावा नष्ट करा."
+      }
+    },
+    "Healthy": {
+      "severity": "normal",
+      "displayName": {
+        "en": "Healthy Poultry",
+        "hi": "स्वस्थ मुर्गी / पक्षी",
+        "mr": "निरोगी पक्षी"
+      },
+      "symptoms": {
+        "en": "Bright red comb, alert posture, clear eyes, clean feathers, and energetic feeding.",
+        "hi": "लाल कलगी, फुर्तीली चाल, साफ आंखें, सामान्य दाना चुगना।",
+        "mr": "लाल तुरा, चपळ हालचाल, स्वच्छ डोळे व चांगली भूक."
+      },
+      "action": {
+        "en": "Provide quality feed and fresh water. Maintain clean dry litter and regular biosecurity.",
+        "hi": "संतुलित आहार व साफ पानी दें। बाड़े में सूखा बिछावन व स्वच्छता रखें।",
+        "mr": "सकस खाद्य व ताजे पाणी द्यावे. गोठ्यात स्वच्छता राखावी."
+      }
+    }
+  }
+}

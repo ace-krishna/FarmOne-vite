@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FarmOne</string>
+    <string name="title_activity_main">FarmOne</string>
+    <string name="package_name">com.sudoashish.farmone</string>
+    <string name="custom_url_scheme">com.sudoashish.farmone</string>
+</resources>

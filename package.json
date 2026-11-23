@@ -8,9 +8,18 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "postinstall": "node scripts/copy-ort-wasm.js",
+    "verify:parity": "tsx scripts/verify_full_parity.mjs",
+    "mobile:sync": "npm run build && npx cap sync android",
+    "build:apk": "powershell -ExecutionPolicy Bypass -File .\\build-android.ps1",
+    "build:apk:install": "powershell -ExecutionPolicy Bypass -File .\\build-android.ps1 -Install",
+    "android:open": "npx cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
     "@supabase/supabase-js": "^2.119.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",
@@ -24,12 +33,16 @@
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/pngjs": "^6.0.5",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.4.21",
+    "canvas": "^3.2.3",
+    "pngjs": "^7.0.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite-plugin-static-copy": "^4.1.1"
   }
 }
