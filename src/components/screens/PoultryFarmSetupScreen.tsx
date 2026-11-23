@@ -163,14 +163,7 @@ export const PoultryFarmSetupScreen: React.FC<Props> = ({ onBack, onHome, onOpen
       {/* Dock (same as home, Farm Setup active) */}
       <nav className="absolute inset-x-4 max-w-[390px] mx-auto z-40" style={{ bottom: 'max(12px, env(safe-area-inset-bottom))' }}>
         <div
-          className="relative w-full rounded-full p-1.5 grid grid-cols-4 items-center"
-          style={{
-            background: 'rgba(255,255,255,0.72)',
-            backdropFilter: 'blur(28px) saturate(190%)',
-            WebkitBackdropFilter: 'blur(28px) saturate(190%)',
-            border: '1px solid rgba(255,255,255,0.85)',
-            boxShadow: 'rgba(19,78,63,0.16) 0px 16px 36px -4px, rgba(255,255,255,0.95) 0px 1.5px 1.5px 0px inset',
-          }}
+          className="liquid-glass relative w-full rounded-full p-1.5 grid grid-cols-4 items-center"
         >
           {dock.map((tab, index) => {
             const active = index === 1;

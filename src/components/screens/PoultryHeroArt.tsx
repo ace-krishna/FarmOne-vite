@@ -147,7 +147,7 @@ export const ChickFigure: React.FC<{ walking?: boolean; inPlace?: boolean; width
 };
 
 /** A little chick that wanders randomly around its (positioned) parent. Never intercepts taps. */
-export const WanderingChick: React.FC = () => {
+export const WanderingChick: React.FC<{ avoidRef?: React.RefObject<HTMLElement | null> }> = ({ avoidRef }) => {
   const boxRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 24, y: 24, faceLeft: false, ms: 0, walking: false });
 
@@ -157,13 +157,49 @@ export const WanderingChick: React.FC = () => {
     let cancelled = false;
     let cur = { x: 24, y: 24 };
 
+    // Optional invisible boundary (e.g. a title + description) the chick must never enter or cross
+    const forbidden = () => {
+      const box = boxRef.current;
+      const el = avoidRef?.current;
+      if (!box || !el) return null;
+      const b = box.getBoundingClientRect();
+      const a = el.getBoundingClientRect();
+      const pad = 8;
+      return { l: a.left - b.left - pad, t: a.top - b.top - pad, r: a.right - b.left + pad, b: a.bottom - b.top + pad };
+    };
+    const hits = (f: NonNullable<ReturnType<typeof forbidden>>, x: number, y: number) =>
+      x < f.r && x + CHICK_W > f.l && y < f.b && y + CHICK_H > f.t;
+    const pathClear = (x0: number, y0: number, x1: number, y1: number) => {
+      const f = forbidden();
+      if (!f) return true;
+      for (let i = 0; i <= 24; i++) {
+        const k = i / 24;
+        if (hits(f, x0 + (x1 - x0) * k, y0 + (y1 - y0) * k)) return false;
+      }
+      return true;
+    };
+
     const step = () => {
       const box = boxRef.current;
       if (!box || cancelled) return;
       const maxX = Math.max(0, box.clientWidth - CHICK_W);
       const maxY = Math.max(0, box.clientHeight - CHICK_H);
-      const nx = Math.random() * maxX;
-      const ny = Math.random() * maxY;
+      let nx = cur.x;
+      let ny = cur.y;
+      let found = false;
+      for (let i = 0; i < 40 && !found; i++) {
+        const tx = Math.random() * maxX;
+        const ty = Math.random() * maxY;
+        if (pathClear(cur.x, cur.y, tx, ty)) {
+          nx = tx;
+          ny = ty;
+          found = true;
+        }
+      }
+      if (!found) {
+        timer = window.setTimeout(step, 1500);
+        return;
+      }
       const dist = Math.hypot(nx - cur.x, ny - cur.y);
       const ms = Math.max(900, (dist / 38) * 1000); // ~38px per second
       setPos({ x: nx, y: ny, faceLeft: nx < cur.x, ms, walking: true });
@@ -173,6 +209,27 @@ export const WanderingChick: React.FC = () => {
         timer = window.setTimeout(step, 600 + Math.random() * 1600); // rest / peck a moment
       }, ms);
     };
+
+    // Start somewhere outside the boundary
+    const box0 = boxRef.current;
+    if (box0) {
+      const f = forbidden();
+      const maxX = Math.max(0, box0.clientWidth - CHICK_W);
+      const maxY = Math.max(0, box0.clientHeight - CHICK_H);
+      let sx = maxX;
+      let sy = maxY;
+      for (let i = 0; i < 60; i++) {
+        const tx = Math.random() * maxX;
+        const ty = Math.random() * maxY;
+        if (!f || !hits(f, tx, ty)) {
+          sx = tx;
+          sy = ty;
+          break;
+        }
+      }
+      cur = { x: sx, y: sy };
+      setPos({ x: sx, y: sy, faceLeft: false, ms: 0, walking: false });
+    }
 
     timer = window.setTimeout(step, 800);
     return () => {

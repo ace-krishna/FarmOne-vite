@@ -51,8 +51,9 @@ const COW_W = 72;
 const COW_H = 50;
 
 /** The cow drawing on its own. Walks in place when `walking`, otherwise grazes. */
-export const CowFigure: React.FC<{ walking?: boolean; inPlace?: boolean; width?: number; height?: number }> = ({
+export const CowFigure: React.FC<{ walking?: boolean; inPlace?: boolean; noGraze?: boolean; width?: number; height?: number }> = ({
   walking = false,
+  noGraze = false, // when stopped, just stand (no head-down lean)
   inPlace = false, // stand still: only the legs move
   width = COW_W,
   height = COW_H,
@@ -74,7 +75,7 @@ export const CowFigure: React.FC<{ walking?: boolean; inPlace?: boolean; width?:
   return (
     <div
       style={{
-        animation: inPlace ? 'none' : w ? 'dl-bob 0.7s ease-in-out infinite' : 'dl-graze 2.4s ease-in-out infinite',
+        animation: inPlace ? 'none' : w ? 'dl-bob 0.7s ease-in-out infinite' : noGraze ? 'none' : 'dl-graze 2.4s ease-in-out infinite',
         transformOrigin: '80% 80%',
       }}
     >
@@ -128,7 +129,7 @@ export const CowFigure: React.FC<{ walking?: boolean; inPlace?: boolean; width?:
 };
 
 /** A small cow that wanders around its (positioned) parent. Never intercepts taps. */
-export const WanderingCow: React.FC = () => {
+export const WanderingCow: React.FC<{ noGraze?: boolean; avoidRef?: React.RefObject<HTMLElement | null> }> = ({ noGraze = false, avoidRef }) => {
   const boxRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 24, y: 40, faceLeft: false, ms: 0, walking: false });
 
@@ -138,13 +139,50 @@ export const WanderingCow: React.FC = () => {
     let cancelled = false;
     let cur = { x: 24, y: 40 };
 
+    // Optional invisible boundary (e.g. a title + description) the cow must never enter or cross
+    const forbidden = () => {
+      const box = boxRef.current;
+      const el = avoidRef?.current;
+      if (!box || !el) return null;
+      const b = box.getBoundingClientRect();
+      const a = el.getBoundingClientRect();
+      const pad = 8;
+      return { l: a.left - b.left - pad, t: a.top - b.top - pad, r: a.right - b.left + pad, b: a.bottom - b.top + pad };
+    };
+    const hits = (f: NonNullable<ReturnType<typeof forbidden>>, x: number, y: number) =>
+      x < f.r && x + COW_W > f.l && y < f.b && y + COW_H > f.t;
+    // the whole straight walk (not just the destination) has to stay clear of it
+    const pathClear = (x0: number, y0: number, x1: number, y1: number) => {
+      const f = forbidden();
+      if (!f) return true;
+      for (let i = 0; i <= 24; i++) {
+        const k = i / 24;
+        if (hits(f, x0 + (x1 - x0) * k, y0 + (y1 - y0) * k)) return false;
+      }
+      return true;
+    };
+
     const step = () => {
       const box = boxRef.current;
       if (!box || cancelled) return;
       const maxX = Math.max(0, box.clientWidth - COW_W);
       const maxY = Math.max(0, box.clientHeight - COW_H);
-      const nx = Math.random() * maxX;
-      const ny = Math.random() * maxY;
+      let nx = cur.x;
+      let ny = cur.y;
+      let found = false;
+      for (let i = 0; i < 40 && !found; i++) {
+        const tx = Math.random() * maxX;
+        const ty = Math.random() * maxY;
+        if (pathClear(cur.x, cur.y, tx, ty)) {
+          nx = tx;
+          ny = ty;
+          found = true;
+        }
+      }
+      if (!found) {
+        timer = window.setTimeout(step, 1500); // nowhere safe to go right now: stay put
+        return;
+      }
       const dist = Math.hypot(nx - cur.x, ny - cur.y);
       const ms = Math.max(1200, (dist / 28) * 1000); // cows amble
       setPos({ x: nx, y: ny, faceLeft: nx < cur.x, ms, walking: true });
@@ -154,6 +192,27 @@ export const WanderingCow: React.FC = () => {
         timer = window.setTimeout(step, 900 + Math.random() * 2200); // graze a moment
       }, ms);
     };
+
+    // Start somewhere outside the boundary
+    const box0 = boxRef.current;
+    if (box0) {
+      const f = forbidden();
+      const maxX = Math.max(0, box0.clientWidth - COW_W);
+      const maxY = Math.max(0, box0.clientHeight - COW_H);
+      let sx = maxX;
+      let sy = maxY;
+      for (let i = 0; i < 60; i++) {
+        const tx = Math.random() * maxX;
+        const ty = Math.random() * maxY;
+        if (!f || !hits(f, tx, ty)) {
+          sx = tx;
+          sy = ty;
+          break;
+        }
+      }
+      cur = { x: sx, y: sy };
+      setPos({ x: sx, y: sy, faceLeft: false, ms: 0, walking: false });
+    }
 
     timer = window.setTimeout(step, 800);
     return () => {
@@ -174,7 +233,7 @@ export const WanderingCow: React.FC = () => {
         }}
       >
         <div style={{ transform: pos.faceLeft ? 'scaleX(-1)' : 'none' }}>
-          <CowFigure walking={pos.walking} />
+          <CowFigure walking={pos.walking} noGraze={noGraze} />
         </div>
       </div>
     </div>

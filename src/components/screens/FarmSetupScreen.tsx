@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react';
+import { DockPill } from './DockPill';
+import { ProfileSheet } from './ProfileSheet';
 import { motion, AnimatePresence } from 'motion/react';
 import { GrassTop, WanderingCow } from './DairyHeroArt';
 import { HayTop, WanderingChick } from './PoultryHeroArt';
@@ -6,6 +8,7 @@ import { useLanguage } from '../../context/LanguageContext';
 
 interface Props {
   onHome: () => void;
+  onOpenMarketplace?: () => void;
   onBack: () => void;
   onOpenDairy?: () => void;
   onOpenDairySetup?: () => void;
@@ -232,11 +235,12 @@ const TopicsCarousel: React.FC<{ onOpen: (id: string) => void }> = ({ onOpen }) 
   );
 };
 
-export const FarmSetupScreen: React.FC<Props> = ({ onHome, onBack, onOpenDairy, onOpenDairySetup, onOpenPoultrySetup, onOpenChaff, onOpenCostArticle, onOpenEggArticle, onOpenGov, onOpenPoultryCost, onOpenInsureArticle, onOpenRuleBook, onOpenPoultry, onOpenChicksArticle }) => {
+export const FarmSetupScreen: React.FC<Props> = ({ onOpenMarketplace, onHome, onBack, onOpenDairy, onOpenDairySetup, onOpenPoultrySetup, onOpenChaff, onOpenCostArticle, onOpenEggArticle, onOpenGov, onOpenPoultryCost, onOpenInsureArticle, onOpenRuleBook, onOpenPoultry, onOpenChicksArticle }) => {
   const { t } = useLanguage();
   const featured = useCarousel('.featured-card');
   const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [soonToast, setSoonToast] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const soonTimer = useRef<number | undefined>(undefined);
   const showSoon = () => {
     setSoonToast(true);
@@ -258,8 +262,8 @@ export const FarmSetupScreen: React.FC<Props> = ({ onHome, onBack, onOpenDairy, 
   const dock = [
     { icon: 'home', label: t('home'), onClick: onHome },
     { icon: 'storefront', label: t('farmSetup'), onClick: () => {} },
-    { icon: 'shopping_cart', label: t('marketplace'), onClick: () => {} },
-    { icon: 'account_circle', label: t('farmerProfile'), onClick: () => {} },
+    { icon: 'shopping_cart', label: t('marketplace'), onClick: () => (onOpenMarketplace ? onOpenMarketplace() : showSoon()) },
+    { icon: 'account_circle', label: t('farmerProfile'), onClick: () => setProfileOpen(true) },
   ];
 
   return (
@@ -291,7 +295,7 @@ export const FarmSetupScreen: React.FC<Props> = ({ onHome, onBack, onOpenDairy, 
         <path d="M0 520 C 100 470, 200 570, 290 520 S 355 490, 375 505 L375 812 L0 812 Z" fill="url(#fsWaveB)" />
       </svg>
       {/* Top bar (same style as the home screen's upper dock) */}
-      <header className="relative z-30 shrink-0 w-full py-2.5 px-3 backdrop-blur-md bg-white/70 border-b border-white/30 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+      <header className="liquid-glass !rounded-none !border-0 !shadow-[0_6px_24px_-10px_rgba(19,78,63,0.22)] absolute inset-x-0 top-0 z-30 w-full py-2.5 px-3">
         <div className="flex items-center justify-between gap-2 min-h-[35px]">
           <div className="flex flex-col min-w-0">
             <h1 className={`${serif} text-[17px] font-bold text-[#191c1b] leading-tight whitespace-nowrap`}>The farmer’s library</h1>
@@ -302,7 +306,7 @@ export const FarmSetupScreen: React.FC<Props> = ({ onHome, onBack, onOpenDairy, 
           </span>
         </div>
       </header>
-      <div className="relative z-10 flex-1 overflow-y-auto scrollbar-none px-3 pt-3 pb-28">
+      <div className="relative z-10 flex-1 overflow-y-auto scrollbar-none px-3 pt-[70px] pb-28">
         <h2 className={`${serif} text-[26px] font-bold tracking-tight text-gray-950 leading-tight px-1`}>Farm Setup</h2>
         <p className="text-[12.5px] leading-relaxed text-gray-600 mt-1 mb-5 px-1">
           Simple guides on costs, schemes and safe farming for dairy, goat and poultry farmers.
@@ -522,17 +526,12 @@ export const FarmSetupScreen: React.FC<Props> = ({ onHome, onBack, onOpenDairy, 
         )}
       </AnimatePresence>
 
+      <ProfileSheet open={profileOpen} onClose={() => setProfileOpen(false)} />
+
       {/* Dock (same as home, Farm Setup active) */}
       <nav className="absolute inset-x-4 max-w-[390px] mx-auto z-40" style={{ bottom: 'max(12px, env(safe-area-inset-bottom))' }}>
         <div
-          className="relative w-full rounded-full p-1.5 grid grid-cols-4 items-center"
-          style={{
-            background: 'rgba(255,255,255,0.72)',
-            backdropFilter: 'blur(28px) saturate(190%)',
-            WebkitBackdropFilter: 'blur(28px) saturate(190%)',
-            border: '1px solid rgba(255,255,255,0.85)',
-            boxShadow: 'rgba(19,78,63,0.16) 0px 16px 36px -4px, rgba(255,255,255,0.95) 0px 1.5px 1.5px 0px inset',
-          }}
+          className="liquid-glass relative w-full rounded-full p-1.5 grid grid-cols-4 items-center"
         >
           {dock.map((tab, index) => {
             const active = index === 1;
@@ -544,15 +543,7 @@ export const FarmSetupScreen: React.FC<Props> = ({ onHome, onBack, onOpenDairy, 
                 aria-current={active ? 'page' : undefined}
                 className={`relative flex flex-col items-center justify-center h-[52px] min-w-0 whitespace-nowrap rounded-full cursor-pointer ${active ? 'text-[#00362a]' : 'text-[#404945]'}`}
               >
-                {active && (
-                  <motion.span
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(19,78,63,0.14) 0%, rgba(181,239,218,0.42) 100%)',
-                      border: '1px solid rgba(255,255,255,0.95)',
-                    }}
-                  />
-                )}
+                {active && <DockPill index={index} />}
                 <span className="relative material-symbols-outlined text-[26px] leading-none" style={{ fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0" }}>
                   {tab.icon}
                 </span>

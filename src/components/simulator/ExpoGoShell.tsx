@@ -7,6 +7,7 @@ import { VaccinationScreen } from '../screens/VaccinationScreen';
 import { MyAnimalsScreen } from '../screens/MyAnimalsScreen';
 import { VaccinationGuideScreen } from '../screens/VaccinationGuideScreen';
 import { FarmSetupScreen } from '../screens/FarmSetupScreen';
+import { MarketplaceScreen } from '../screens/MarketplaceScreen';
 import { DairyFarmSetupScreen } from '../screens/DairyFarmSetupScreen';
 import { DairyCostArticleScreen } from '../screens/DairyCostArticleScreen';
 import { PoultryFarmSetupScreen } from '../screens/PoultryFarmSetupScreen';
@@ -36,7 +37,7 @@ import { PestsArticleScreen } from '../screens/PestsArticleScreen';
 import { HealthyChicksArticleScreen } from '../screens/HealthyChicksArticleScreen';
 
 export const ExpoGoShell: React.FC = () => {
-  type Screen = 'home' | 'farm-setup' | 'dairy-setup' | 'poultry-setup' | 'poultry-type-article' | 'poultry-rule-article' | 'poultry-across-article' | 'poultry-siting-article' | 'poultry-egg-article' | 'poultry-cost-article' | 'dairy-cost-article' | 'chaff-article' | 'dairy-insure-article' | 'gov-schemes' | 'gov-finder-article' | 'gov-apply-article' | 'gov-calc-article' | 'register' | 'vaccination' | 'my-animals' | 'vaccination-guide' | 'ilearning' | 'poultry-ilearning' | 'dairy-ilearning' | 'heat-article' | 'water-article' | 'teat-article' | 'fat-article' | 'manure-article' | 'deadbirds-article' | 'litter-article' | 'pests-article' | 'chicks-article';
+  type Screen = 'home' | 'farm-setup' | 'marketplace' | 'dairy-setup' | 'poultry-setup' | 'poultry-type-article' | 'poultry-rule-article' | 'poultry-across-article' | 'poultry-siting-article' | 'poultry-egg-article' | 'poultry-cost-article' | 'dairy-cost-article' | 'chaff-article' | 'dairy-insure-article' | 'gov-schemes' | 'gov-finder-article' | 'gov-apply-article' | 'gov-calc-article' | 'register' | 'vaccination' | 'my-animals' | 'vaccination-guide' | 'ilearning' | 'poultry-ilearning' | 'dairy-ilearning' | 'heat-article' | 'water-article' | 'teat-article' | 'fat-article' | 'manure-article' | 'deadbirds-article' | 'litter-article' | 'pests-article' | 'chicks-article';
   const [screen, setScreen] = useState<Screen>('home');
   const [costSection, setCostSection] = useState<'shed' | 'paperwork' | 'yield' | undefined>(undefined);
   const screenRef = useRef<Screen>(screen);
@@ -47,7 +48,7 @@ export const ExpoGoShell: React.FC = () => {
   const [dir, setDir] = useState<Dir>('fade');
   const fastRef = useRef(false); // true while a dock tap steps back through several screens
   const reduceMotion = useReducedMotion();
-  const isTab = (sc: Screen) => sc === 'home' || sc === 'farm-setup';
+  const isTab = (sc: Screen) => sc === 'home' || sc === 'farm-setup' || sc === 'marketplace';
 
   // Moving forward records a history entry, so the phone's Back button / gesture returns here
   const go = (next: Screen) => {
@@ -55,6 +56,9 @@ export const ExpoGoShell: React.FC = () => {
     const tabSwitch = isTab(prev) && isTab(next);
     setDir(tabSwitch ? 'fade' : 'push');
     setScreen(next);
+    // Dock switch between two tabs: swap in place. The history entry from Home stays, so Back
+    // (and the Home dock button) always returns to Home instead of bouncing between tabs.
+    if (tabSwitch && prev !== 'home') return;
     pushLayer(() => {
       setDir(tabSwitch || fastRef.current ? 'fade' : 'pop');
       setScreen(prev);
@@ -119,8 +123,10 @@ export const ExpoGoShell: React.FC = () => {
       <VaccinationGuideScreen onBack={back} onOpenTracker={() => go('vaccination')} />
     ) : screen === 'vaccination' ? (
       <VaccinationScreen onBack={back} />
+    ) : screen === 'marketplace' ? (
+      <MarketplaceScreen onHome={back} onFarmSetup={() => go('farm-setup')} onOpenILearning={() => go('ilearning')} />
     ) : screen === 'farm-setup' ? (
-      <FarmSetupScreen onHome={back} onBack={back} onOpenDairy={() => go('dairy-ilearning')} onOpenDairySetup={() => go('dairy-setup')} onOpenChaff={() => go('chaff-article')} onOpenGov={() => go('gov-schemes')} onOpenPoultryCost={() => go('poultry-cost-article')} onOpenInsureArticle={() => go('dairy-insure-article')} onOpenRuleBook={() => go('poultry-rule-article')} onOpenCostArticle={() => { setCostSection(undefined); go('dairy-cost-article'); }} onOpenEggArticle={() => go('poultry-egg-article')} onOpenPoultry={() => go('poultry-ilearning')} onOpenPoultrySetup={() => go('poultry-setup')} onOpenChicksArticle={() => go('chicks-article')} />
+      <FarmSetupScreen onOpenMarketplace={() => go('marketplace')} onHome={back} onBack={back} onOpenDairy={() => go('dairy-ilearning')} onOpenDairySetup={() => go('dairy-setup')} onOpenChaff={() => go('chaff-article')} onOpenGov={() => go('gov-schemes')} onOpenPoultryCost={() => go('poultry-cost-article')} onOpenInsureArticle={() => go('dairy-insure-article')} onOpenRuleBook={() => go('poultry-rule-article')} onOpenCostArticle={() => { setCostSection(undefined); go('dairy-cost-article'); }} onOpenEggArticle={() => go('poultry-egg-article')} onOpenPoultry={() => go('poultry-ilearning')} onOpenPoultrySetup={() => go('poultry-setup')} onOpenChicksArticle={() => go('chicks-article')} />
     ) : screen === 'poultry-setup' ? (
       <PoultryFarmSetupScreen onOpenGuide={() => go('poultry-egg-article')} onOpenStep={(id) => { if (id === 'cost') go('poultry-cost-article'); else if (id === 'siting') go('poultry-siting-article'); else if (id === 'rule') go('poultry-rule-article'); else if (id === 'across') go('poultry-across-article'); else if (id === 'type') go('poultry-type-article'); }} onBack={back} onHome={() => backUntil('home')} onOpenILearning={() => go('ilearning')} />
     ) : screen === 'poultry-type-article' ? (
@@ -186,6 +192,7 @@ export const ExpoGoShell: React.FC = () => {
         onOpenVaccinationGuide={() => go('vaccination-guide')}
         onOpenILearning={() => go('ilearning')}
         onOpenFarmSetup={() => go('farm-setup')}
+        onOpenMarketplace={() => go('marketplace')}
       />
     )}
           </motion.div>

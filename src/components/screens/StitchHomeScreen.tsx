@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { DockPill } from './DockPill';
+import { ProfileSheet } from './ProfileSheet';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../../context/LanguageContext';
 import { CameraScanScreen, PhotoConfirmScreen } from './CameraScanScreen';
@@ -43,9 +45,10 @@ interface StitchHomeScreenProps {
   onOpenVaccinationGuide?: () => void;
   onOpenILearning?: () => void;
   onOpenFarmSetup?: () => void;
+  onOpenMarketplace?: () => void;
 }
 
-export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal, onOpenVaccination, onOpenMyAnimals, onOpenVaccinationGuide, onOpenILearning, onOpenFarmSetup }) => {
+export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal, onOpenVaccination, onOpenMyAnimals, onOpenVaccinationGuide, onOpenILearning, onOpenFarmSetup, onOpenMarketplace }) => {
   const { language, setLanguage, t } = useLanguage();
   const H = HOME_TEXT[language as 'en' | 'hi' | 'mr'] ?? HOME_TEXT.en;
 
@@ -108,6 +111,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
 
   // Bottom dock active tab (Home = 0, Farm Setup = 1, Marketplace = 2, Farmer Profile = 3)
   const [activeDockIndex, setActiveDockIndex] = useState(0);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [dockNotification, setDockNotification] = useState<string | null>(null);
 
 
@@ -190,6 +194,14 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
       onOpenFarmSetup();
       return;
     }
+    if (index === 2 && onOpenMarketplace) {
+      onOpenMarketplace();
+      return;
+    }
+    if (index === 3) {
+      setProfileOpen(true);
+      return;
+    }
     setActiveDockIndex(index);
     if (dockToastTimer.current) clearTimeout(dockToastTimer.current);
     if (index !== 0) {
@@ -206,7 +218,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
       style={{ background: 'linear-gradient(rgb(209,243,255) 0%, rgb(209,243,255) 42%, rgb(199,255,204) 60%, rgb(199,255,204) 100%)' }}
     >
       {/* HEADER: FARM FAMILY | Home + Language Toggle */}
-      <header className="shrink-0 w-full z-30 py-2.5 px-4 backdrop-blur-md bg-white/70 border-b border-white/30 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+      <header className="liquid-glass !rounded-none !border-0 !shadow-[0_6px_24px_-10px_rgba(19,78,63,0.22)] absolute inset-x-0 top-0 z-30 w-full py-2.5 px-4">
         <div className="flex items-center justify-between">
           {/* Brand & Heading */}
           <div className="flex flex-col">
@@ -251,7 +263,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
       </header>
 
       {/* MAIN SCROLLABLE CONTENT */}
-      <main className="flex-1 overflow-y-auto flex flex-col pt-3 pb-24 px-4 gap-4 scrollbar-none">
+      <main className="flex-1 overflow-y-auto flex flex-col pt-[70px] pb-24 px-4 gap-4 scrollbar-none">
         {/* SECTION 1: QUICK ACCESS CHIPS (PILL SHAPED) */}
         <section>
           <div className="flex items-center justify-between mb-1.5 px-1">
@@ -541,6 +553,8 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
         </section>
       </main>
 
+      <ProfileSheet open={profileOpen} onClose={() => setProfileOpen(false)} />
+
       {/* SECTION 5: ULTRA-PREMIUM LIQUID GLASS DOCK (SLEEK PILL) */}
       <nav
         id="liquidDockContainer"
@@ -549,15 +563,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
       >
         <div
           id="liquidGlassDock"
-          className="relative w-full rounded-full p-1.5 grid grid-cols-[repeat(4,minmax(0,1fr))] items-center"
-          style={{
-            background: 'rgba(255, 255, 255, 0.72)',
-            backdropFilter: 'blur(28px) saturate(190%)',
-            WebkitBackdropFilter: 'blur(28px) saturate(190%)',
-            border: '1px solid rgba(255, 255, 255, 0.85)',
-            boxShadow:
-              'rgba(19,78,63,0.16) 0px 16px 36px -4px, rgba(0,0,0,0.04) 0px 4px 12px 0px, rgba(255,255,255,0.95) 0px 1.5px 1.5px 0px inset, rgba(19,78,63,0.08) 0px -1px 2px 0px inset',
-          }}
+          className="liquid-glass relative w-full rounded-full p-1.5 grid grid-cols-[repeat(4,minmax(0,1fr))] items-center"
         >
           {([
             { icon: 'home', label: t('home') },
@@ -576,19 +582,7 @@ export const StitchHomeScreen: React.FC<StitchHomeScreenProps> = ({ onAddAnimal,
                   active ? 'text-[#00362a]' : 'text-[#404945] hover:text-[#00362a]'
                 }`}
               >
-                {active && (
-                  <motion.span
-                    layoutId="dockPill"
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(19,78,63,0.14) 0%, rgba(181,239,218,0.42) 100%)',
-                      border: '1px solid rgba(255,255,255,0.95)',
-                      boxShadow:
-                        'rgba(19,78,63,0.12) 0px 4px 16px, rgba(255,255,255,0.95) 0px 1px 2px inset, rgba(19,78,63,0.05) 0px -1px 2px inset',
-                    }}
-                    transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                  />
-                )}
+                {active && <DockPill index={index} />}
                 <span
                   className="relative material-symbols-outlined text-[26px] leading-none"
                   style={{ fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0" }}
