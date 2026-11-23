@@ -122,7 +122,7 @@ export const LoginScreen: React.FC<Props> = ({ onSubmit, onBack }) => {
         <div className="ls-orb2 absolute top-40 right-4 w-52 h-52 rounded-full bg-indigo-400/20 blur-3xl" />
       </div>
 
-      <div className="relative z-10 flex-1 flex flex-col justify-between px-6 pt-5 pb-5 overflow-y-auto">
+      <div className="relative z-10 flex-1 flex flex-col justify-between px-6 pb-5 overflow-y-auto" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 20px)' }}>
         <div>
           <div className="ls-a1 h-10">
             {!isSignup && (

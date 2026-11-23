@@ -120,8 +120,8 @@ export const ExpoGoShell: React.FC = () => {
             animate="center"
             exit="exit"
             transition={{ duration, ease: [0.32, 0.72, 0, 1] }}
-            style={{ willChange: 'transform' }}
-            className="absolute inset-0 flex flex-col bg-[#f9faf8]"
+            style={{ willChange: 'transform', top: 'env(safe-area-inset-top)' }}
+            className="absolute inset-x-0 bottom-0 flex flex-col bg-[#f9faf8]"
           >
             {/* soft edge shadow that travels with the sliding screen */}
             <span
